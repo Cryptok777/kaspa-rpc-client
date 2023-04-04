@@ -1,0 +1,33 @@
+{
+  "name": "kaspa-rpc-client",
+  "version": "0.0.5",
+  "main": "index.ts",
+  "repository": "https://github.com/Cryptok777/kaspa-rpc-client.git",
+  "author": "kkhhaalil <119089486+Cryptok777@users.noreply.github.com>",
+  "license": "MIT",
+  "scripts": {
+    "start:dev": "npx nodemon",
+    "build": "rimraf ./build && tsc",
+    "start": "npm run build && node build/demo.js",
+    "lint": "eslint . --ext .ts"
+  },
+  "dependencies": {
+    "@grpc/grpc-js": "^1.8.13",
+    "ts-node": "^10.9.1",
+    "ts-retry": "^4.1.1"
+  },
+  "devDependencies": {
+    "@types/node": "^18.15.11",
+    "@typescript-eslint/eslint-plugin": "^5.57.0",
+    "@typescript-eslint/parser": "^5.57.0",
+    "eslint": "^8.37.0",
+    "eslint-config-prettier": "^8.8.0",
+    "eslint-plugin-import": "^2.27.5",
+    "eslint-plugin-jsdoc": "^40.1.1",
+    "eslint-plugin-prefer-arrow": "^1.2.3",
+    "eslint-plugin-prettier": "^4.2.1",
+    "nodemon": "^2.0.22",
+    "rimraf": "^4.4.1",
+    "typescript": "^5.0.3"
+  }
+}
