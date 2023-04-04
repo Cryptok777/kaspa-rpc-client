@@ -1,1 +1,1 @@
-export { KaspadClientWrapper as KaspaRpcClient } from "./client/KaspadClientWrapper"
+export { KaspadClientWrapper as KaspaRpcClient } from './client/KaspadClientWrapper'

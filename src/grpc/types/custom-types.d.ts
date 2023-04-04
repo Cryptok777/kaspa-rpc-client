@@ -1,11 +1,11 @@
 import {
   GrpcObject,
   ServiceClientConstructor,
-} from "@grpc/grpc-js/build/src/make-client"
+} from '@grpc/grpc-js/build/src/make-client'
 export { ServiceClientConstructor }
 
 export type bytes = string // base84 string
-export * from "./rpc"
+export * from './rpc'
 
 export interface QueueItem {
   method: string

@@ -1,7 +1,7 @@
-//([^\n \t].*) (.*) = \d{1,};
-//$2: $1;
+// ([^\n \t].*) (.*) = \d{1,};
+// $2: $1;
 
-export declare type bytes = string //base64 encoded string
+export declare type bytes = string // base64 encoded string
 
 export namespace RPC {
   interface Error {
@@ -36,7 +36,7 @@ export namespace RPC {
     amount: number
     scriptPublicKey: ScriptPublicKey
     blockBlueScore: number
-    //blockDaaScore: number;
+    // blockDaaScore: number;
     isCoinbase: boolean
   }
 
@@ -305,8 +305,8 @@ export interface IRPC {
     addresses: string[],
     callback: Rpc.callback<Rpc.UtxosChangedNotification>
   ): RPC.SubPromise<RPC.NotifyUtxosChangedResponse>
-  unSubscribeUtxosChanged(uid: string = "")
-  unSubscribe(eventName: string, uid: string = "")
+  unSubscribeUtxosChanged(uid: string = '')
+  unSubscribe(eventName: string, uid: string = '')
 
   // Common
   request?(method: string, data: any)

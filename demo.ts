@@ -2,16 +2,15 @@ import { KaspaRpcClient } from "./src/"
 
 const run = async () => {
   const client = new KaspaRpcClient({
-    hosts: [
-      // "65.21.88.223:16110",
-      // "79.120.76.62:16110",
-      // "89.108.117.245:16110",
-      // "141.95.124.98:16110",
-      "149.28.241.71:16110",
-    ],
+    hosts: ["kaspadns.kaspacalc.net:16110"],
     // verbose: true,
   })
   await client.initialize()
+
+  const resp = await client.request("getBlockRequest", {
+    hash: "a7052f5afa83bf39d0ba1dde5536389b49c9d87e107e2daacdf62b9b28247216",
+  })
+  console.log(resp)
 
   client.subscribe("notifyVirtualDaaScoreChangedRequest", {}, (data: any) => {
     console.log(data)

@@ -1,7 +1,7 @@
-import { Client as RpcClient } from "../grpc/lib/client"
-import { retryAsync } from "ts-retry"
-import { RPC } from "../grpc/types/custom-types"
-import { RPC as Rpc } from "../grpc/types/custom-types"
+import { Client as RpcClient } from '../grpc/lib/client'
+import { retryAsync } from 'ts-retry'
+import { RPC } from '../grpc/types/custom-types'
+import { RPC as Rpc } from '../grpc/types/custom-types'
 interface RequestProps {
   command: string
   payload?: object
@@ -9,9 +9,9 @@ interface RequestProps {
   retries?: number
 }
 
-export default class KaspaClient {
+export class KaspadClient {
   rpc: RpcClient
-  ready: boolean = false
+  ready = false
 
   constructor({ host, verbose }: { host: string; verbose?: boolean }) {
     this.rpc = new RpcClient({
@@ -24,10 +24,14 @@ export default class KaspaClient {
     await this.rpc.connect()
   }
 
+  isReady(): boolean {
+    return this.ready
+  }
+
   async ping() {
     try {
       const resp = (await this.request({
-        command: "getInfoRequest",
+        command: 'getInfoRequest',
         retries: 4,
       })) as RPC.GetInfoResponse
       const synced = resp.isSynced

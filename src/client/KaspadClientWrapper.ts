@@ -1,4 +1,4 @@
-import KaspadClient from "./KaspadClient"
+import { KaspadClient } from './KaspadClient'
 
 export class KaspadClientWrapper {
   clients: KaspadClient[]
@@ -12,13 +12,17 @@ export class KaspadClientWrapper {
     await Promise.any(this.clients.map((client) => client.ping()))
   }
 
-  async sleep(ms: number = 1000) {
+  async sleep(ms = 1000) {
     await new Promise((resolve) => setTimeout(resolve, ms))
   }
 
   async request(command: string, payload: object = {}) {
     const client = await this._getClient()
-    return await client.request({ command, payload, retries: 4 })
+    try {
+      return await client.request({ command, payload })
+    } catch (error) {
+      return await client.request({ command, payload, retries: 3 })
+    }
   }
 
   subscribe(subject: string, data: any = {}, callback: Function) {
@@ -34,13 +38,11 @@ export class KaspadClientWrapper {
   }
 
   async _getClient(): Promise<KaspadClient> {
-    let client = this.clients.find((client) => client.ready)
-
+    let client = this.clients.find((client) => client.isReady())
     while (!client) {
-      console.log("No available client found, waiting and re-connecting...")
       await this.sleep(500)
       await this.initialize()
-      client = this.clients.find((client) => client.ready)
+      client = this.clients.find((client) => client.isReady())
     }
 
     return client
