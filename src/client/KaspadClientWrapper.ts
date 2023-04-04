@@ -3,30 +3,46 @@ import KaspadClient from "./KaspadClient"
 export class KaspadClientWrapper {
   clients: KaspadClient[]
 
-  constructor(hosts: string[]) {
-    this.clients = hosts.map((host) => new KaspadClient(host))
-  }
-
-  getClient() {
-    return this.clients.find((client) => client.ready)
+  constructor({ hosts, verbose }: { hosts: string[]; verbose?: boolean }) {
+    this.clients = hosts.map((host) => new KaspadClient({ host, verbose }))
   }
 
   async initialize() {
-    await Promise.all(this.clients.map((client) => client.ping()))
+    await Promise.any(this.clients.map((client) => client.connect()))
+    await Promise.any(this.clients.map((client) => client.ping()))
   }
 
-  async sleep(ms: number = 2000) {
+  async sleep(ms: number = 1000) {
     await new Promise((resolve) => setTimeout(resolve, ms))
   }
 
   async request(command: string, payload: object = {}) {
-    let client = this.getClient()
+    const client = await this._getClient()
+    return await client.request({ command, payload, retries: 4 })
+  }
+
+  subscribe(subject: string, data: any = {}, callback: Function) {
+    this._getClient().then((client) => {
+      client.subscribe(subject, data, callback)
+    })
+  }
+
+  unSubscribe(subject: string) {
+    this._getClient().then((client) => {
+      client.unSubscribe(subject)
+    })
+  }
+
+  async _getClient(): Promise<KaspadClient> {
+    let client = this.clients.find((client) => client.ready)
+
     while (!client) {
-      console.debug("No available client found, waiting and re-connecting...")
-      await this.sleep()
-      client = this.getClient()
+      console.log("No available client found, waiting and re-connecting...")
+      await this.sleep(500)
+      await this.initialize()
+      client = this.clients.find((client) => client.ready)
     }
 
-    return await client.request({ command, payload, retries: 4 })
+    return client
   }
 }

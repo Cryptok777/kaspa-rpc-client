@@ -5,6 +5,9 @@
   "repository": "https://github.com/Cryptok777/kaspa-rpc-client.git",
   "author": "kkhhaalil <119089486+Cryptok777@users.noreply.github.com>",
   "license": "MIT",
+  "engines": {
+    "node": ">=15.0.0"
+  },
   "scripts": {
     "start:dev": "npx nodemon",
     "build": "rimraf ./build && tsc",

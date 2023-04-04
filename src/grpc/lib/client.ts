@@ -79,7 +79,7 @@ export class Client {
     return RPC
   }
 
-  connect() {
+  async connect() {
     this.options.reconnect = true
     return this._connect()
   }
@@ -93,6 +93,7 @@ export class Client {
         gRPC.credentials.createInsecure(),
         {
           "grpc.max_receive_message_length": -1,
+          "grpc.enable_retries": 1,
         }
       )
     } else {
@@ -121,7 +122,10 @@ export class Client {
   }
 
   async _connectClient() {
-    this.client.waitForReady(2500, (connect_error: any) => {
+    const deadline = new Date()
+    deadline.setSeconds(deadline.getSeconds() + 2)
+
+    this.client.waitForReady(deadline, (connect_error: any) => {
       if (connect_error) {
         this._reconnect("client connect deadline reached")
         return resolve()
