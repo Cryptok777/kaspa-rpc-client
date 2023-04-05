@@ -164,7 +164,7 @@ Example code can be found in [demo.ts](https://github.com/Cryptok777/kaspa-rpc-c
 
 You can also find [interface for all requests/response](https://github.com/Cryptok777/kaspa-rpc-client/blob/main/types/rpc.d.ts), but it's likely that your IDE will show this information for you since it's written in TypeScript
 
-## Contribute
+## Contribute ✨
 
 If you find that the RPC endpoint you are looking for is not exposed by the client library, feel free to create a pull request to add it:
 
