@@ -3,14 +3,14 @@
     "target": "es2021",
     "lib": ["es6", "ES2021"],
     "module": "commonjs",
-    "rootDir": "src",
     "resolveJsonModule": true,
     "allowJs": true,
-    "outDir": "build",
+    "outDir": "dist",
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
     "strict": true,
     "noImplicitAny": true,
     "skipLibCheck": true
-  }
+  },
+  "exclude": ["node_modules", "demo.ts", "jest.config.js"]
 }

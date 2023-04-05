@@ -1,4 +1,4 @@
-import { KaspadClientWrapper } from "./src/"
+const { KaspadClientWrapper } = require('kaspa-rpc-client')
 
 const run = async () => {
   // Initilize the clients

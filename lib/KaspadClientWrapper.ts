@@ -8,8 +8,8 @@ export class KaspadClientWrapper {
   }
 
   async initialize() {
-    await Promise.any(this.clients.map((client) => client.connect()))
-    await Promise.any(this.clients.map((client) => client.ping()))
+    await Promise.race(this.clients.map((client) => client.connect()))
+    await Promise.race(this.clients.map((client) => client.ping()))
   }
 
   async sleep(ms = 1000) {

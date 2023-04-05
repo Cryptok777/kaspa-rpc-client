@@ -45,7 +45,7 @@ export class Client {
 
   constructor(options: ClientProps) {
     const defaultOptions = {
-      protoPath: __dirname + "/../proto/messages.proto",
+      protoPath: __dirname + "/../../proto/messages.proto",
       host: "localhost:16210",
       reconnect: true,
       verbose: false,

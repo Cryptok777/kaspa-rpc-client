@@ -1,5 +1,5 @@
-import { Client as RpcClient } from "../grpc/lib/client"
-import { RPC as Rpc } from "../grpc/types/custom-types"
+import { Client as RpcClient } from "../client/client"
+import { RPC as Rpc } from "../types/custom-types"
 
 export class KaspadClient {
   rpc: RpcClient
