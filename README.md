@@ -74,7 +74,7 @@ const utxos = await client.getUtxosByAddresses({
 })
 ```
 
-#### Get a block by hash
+#### Get balance by address
 
 ```javascript
 const balance = await client.getBalanceByAddress({
@@ -83,7 +83,7 @@ const balance = await client.getBalanceByAddress({
 })
 ```
 
-#### Get a block by hash
+#### Get balances by addresses
 
 ```javascript
 const balances = await client.getBalancesByAddresses({
@@ -121,7 +121,7 @@ const blockDagInfo = await client.getBlockDagInfo()
 const info = await client.getInfoRequest()
 ```
 
-#### Get an estimate of the current network's hashes per second
+#### Get an estimate of the network's hashes per second
 
 ```javascript
 const networkHashRate = await client.estimateNetworkHashesPerSecond({
