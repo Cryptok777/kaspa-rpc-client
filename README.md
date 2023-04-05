@@ -1,4 +1,4 @@
-# Kaspa RPC Client Library 📚
+# Kaspa RPC Client Library for Node.js 📚
 
 ## Table of Contents 📑
 
