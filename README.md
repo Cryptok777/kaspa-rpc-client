@@ -118,7 +118,7 @@ const blockDagInfo = await client.getBlockDagInfo()
 #### Get information about the node's current state
 
 ```javascript
-const info = await client.getInfoRequest()
+const info = await client.getInfo()
 ```
 
 #### Get an estimate of the network's hashes per second
