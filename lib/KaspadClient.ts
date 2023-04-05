@@ -30,7 +30,9 @@ export class KaspadClient {
       const synced = resp.isSynced
       const indexed = resp.isUtxoIndexed
       this.ready = synced && indexed
-    } catch (error) {}
+    } catch (error) {
+      this.ready = false
+    }
     return this.ready
   }
 
