@@ -48,6 +48,7 @@ export class KaspadClient {
     return this.rpc.unSubscribe(method, uid)
   }
 
+  // RPC endpoints
   getBlock(data: Rpc.GetBlockRequestMessage) {
     return this.request<Rpc.GetBlockResponseMessage>("getBlockRequest", data)
   }
