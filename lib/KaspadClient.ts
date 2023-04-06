@@ -26,7 +26,7 @@ export class KaspadClient {
 
   async ping() {
     try {
-      const resp = await this.getInfoRequest()
+      const resp = await this.getInfo()
       const synced = resp.isSynced
       const indexed = resp.isUtxoIndexed
       this.ready = synced && indexed
@@ -108,7 +108,7 @@ export class KaspadClient {
     )
   }
 
-  getInfoRequest() {
+  getInfo() {
     return this.request<Rpc.GetInfoResponseMessage>("getInfoRequest", {})
   }
 
@@ -126,6 +126,104 @@ export class KaspadClient {
       "getCoinSupplyRequest",
       {}
     )
+  }
+
+  getCurrentNetwork() {
+    return this.request<Rpc.GetCurrentNetworkResponseMessage>(
+      "getCurrentNetworkRequest",
+      {}
+    )
+  }
+
+  getPeerAddresses() {
+    return this.request<Rpc.GetPeerAddressesResponseMessage>(
+      "getPeerAddressesRequest",
+      {}
+    )
+  }
+
+  getSelectedTipHash() {
+    return this.request<Rpc.GetSelectedTipHashResponseMessage>(
+      "getSelectedTipHashRequest",
+      {}
+    )
+  }
+
+  getMempoolEntry(data: Rpc.GetMempoolEntryRequestMessage) {
+    return this.request<Rpc.GetMempoolEntryResponseMessage>(
+      "getMempoolEntryRequest",
+      data
+    )
+  }
+
+  getMempoolEntries(data: Rpc.GetMempoolEntriesRequestMessage) {
+    return this.request<Rpc.GetMempoolEntriesResponseMessage>(
+      "getMempoolEntriesRequest",
+      data
+    )
+  }
+
+  getConnectedPeerInfo() {
+    return this.request<Rpc.GetConnectedPeerInfoResponseMessage>(
+      "getConnectedPeerInfoRequest",
+      {}
+    )
+  }
+
+  getSubnetwork(data: Rpc.GetSubnetworkRequestMessage) {
+    return this.request<Rpc.GetSubnetworkResponseMessage>(
+      "getSubnetworkRequest",
+      data
+    )
+  }
+
+  getVirtualSelectedParentChainFromBlock(
+    data: Rpc.GetVirtualSelectedParentChainFromBlockRequestMessage
+  ) {
+    return this.request<Rpc.GetVirtualSelectedParentChainFromBlockResponseMessage>(
+      "getVirtualSelectedParentChainFromBlockRequest",
+      data
+    )
+  }
+
+  getBlocks(data: Rpc.GetBlocksRequestMessage) {
+    return this.request<Rpc.GetBlocksResponseMessage>("getBlocksRequest", data)
+  }
+
+  getBlockCount() {
+    return this.request<Rpc.GetBlockCountResponseMessage>(
+      "getBlockCountRequest",
+      {}
+    )
+  }
+
+  getHeaders(data: Rpc.GetHeadersRequestMessage) {
+    return this.request<Rpc.GetHeadersResponseMessage>(
+      "getHeadersRequest",
+      data
+    )
+  }
+
+  getMempoolEntriesByAddresses(
+    data: Rpc.GetMempoolEntriesByAddressesRequestMessage
+  ) {
+    return this.request<Rpc.GetMempoolEntriesByAddressesResponseMessage>(
+      "getMempoolEntriesByAddressesRequest",
+      data
+    )
+  }
+
+  subscribeNewBlockTemplate(
+    callback: Rpc.callback<Rpc.NewBlockTemplateNotificationMessage>
+  ) {
+    return this.subscribe<
+      Rpc.NotifyNewBlockTemplateResponseMessage,
+      Rpc.NewBlockTemplateNotificationMessage
+    >("notifyNewBlockTemplateRequest", {}, callback)
+  }
+
+  unSubscribeNewBlockTemplate(uid: string = "") {
+    this.unSubscribe("notifyNewBlockTemplateRequest", uid)
   }
 
   subscribeVirtualDaaScoreChanged(
@@ -192,5 +290,19 @@ export class KaspadClient {
 
   unSubscribeUtxosChanged(uid: string = "") {
     this.unSubscribe("notifyUtxosChangedRequest", uid)
+  }
+
+  subscribeVirtualSelectedParentChainChanged(
+    data: Rpc.NotifyVirtualSelectedParentChainChangedRequestMessage,
+    callback: Rpc.callback<Rpc.VirtualSelectedParentChainChangedNotificationMessage>
+  ) {
+    return this.subscribe<
+      Rpc.NotifyVirtualSelectedParentChainChangedResponseMessage,
+      Rpc.VirtualSelectedParentChainChangedNotificationMessage
+    >("notifyVirtualSelectedParentChainChangedRequest", data, callback)
+  }
+
+  unSubscribeVirtualSelectedParentChainChanged(uid: string = "") {
+    this.unSubscribe("notifyVirtualSelectedParentChainChangedRequest", uid)
   }
 }

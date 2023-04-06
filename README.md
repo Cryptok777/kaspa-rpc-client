@@ -1,4 +1,4 @@
-# Kaspa RPC Client Library 📚
+# Kaspa RPC Client for Node.js 📚
 
 ## Table of Contents 📑
 
@@ -74,7 +74,7 @@ const utxos = await client.getUtxosByAddresses({
 })
 ```
 
-#### Get a block by hash
+#### Get balance by address
 
 ```javascript
 const balance = await client.getBalanceByAddress({
@@ -83,7 +83,7 @@ const balance = await client.getBalanceByAddress({
 })
 ```
 
-#### Get a block by hash
+#### Get balances by addresses
 
 ```javascript
 const balances = await client.getBalancesByAddresses({
@@ -118,10 +118,10 @@ const blockDagInfo = await client.getBlockDagInfo()
 #### Get information about the node's current state
 
 ```javascript
-const info = await client.getInfoRequest()
+const info = await client.getInfo()
 ```
 
-#### Get an estimate of the current network's hashes per second
+#### Get an estimate of the network's hashes per second
 
 ```javascript
 const networkHashRate = await client.estimateNetworkHashesPerSecond({
@@ -164,7 +164,7 @@ Example code can be found in [demo.ts](https://github.com/Cryptok777/kaspa-rpc-c
 
 You can also find [interface for all requests/response](https://github.com/Cryptok777/kaspa-rpc-client/blob/main/types/rpc.d.ts), but it's likely that your IDE will show this information for you since it's written in TypeScript
 
-## Contribute
+## Contribute ✨
 
 If you find that the RPC endpoint you are looking for is not exposed by the client library, feel free to create a pull request to add it:
 

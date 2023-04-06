@@ -60,7 +60,7 @@ const run = async () => {
   console.log(blockDagInfo)
 
   // Get information about the node's current state:
-  const info = await client.getInfoRequest()
+  const info = await client.getInfo()
   console.log(info)
 
   // Get an estimate of the current network's hashes per second:
