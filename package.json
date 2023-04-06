@@ -10,10 +10,10 @@
     "node": ">=15.0.0"
   },
   "scripts": {
-    "start:dev": "npx nodemon",
-    "build": "rimraf ./dist && tsc",
-    "start": "npm run build && node build/demo.js",
-    "test": "jest"
+    "start:dev": "rimraf ./dist && tsc-watch --onSuccess \"npm run copy-wasm\"",
+    "build": "rimraf ./dist && rm -f package-lock.json && npm install --also=dev && tsc && npm run copy-wasm",
+    "test": "jest",
+    "copy-wasm": "cp ./wasm/kaspa_wasm_bg.wasm ./dist/wasm"
   },
   "dependencies": {
     "@grpc/grpc-js": "^1.8.13",
@@ -21,16 +21,16 @@
     "ts-retry": "^4.1.1"
   },
   "devDependencies": {
-    "ts-proto": "^1.146.0",
     "@types/jest": "^29.5.0",
     "@types/node": "^18.15.11",
     "@types/sinon": "^10.0.13",
     "jest": "^29.5.0",
-    "nodemon": "^2.0.22",
     "prettier": "^2.8.7",
     "rimraf": "^4.4.1",
     "sinon": "^15.0.3",
     "ts-jest": "^29.1.0",
+    "ts-proto": "^1.146.0",
+    "tsc-watch": "^6.0.0",
     "typescript": "^5.0.3"
   },
   "files": [
