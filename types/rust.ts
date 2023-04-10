@@ -1,38 +1,38 @@
 export namespace Rust {
-  interface Transaction {
+  export interface Transaction {
     inputs: Input[]
     outputs: Output[]
   }
 
-  interface Input {
+  export interface Input {
     previousOutpoint: Outpoint
     signatureScript: number[]
     sequence: bigint
     sigOpCount: number
   }
 
-  interface Outpoint {
+  export interface Outpoint {
     transactionId: string
     index: number
   }
 
-  interface Output {
+  export interface Output {
     value: bigint
     scriptPublicKey: ScriptPublicKey
   }
 
-  interface ScriptPublicKey {
+  export interface ScriptPublicKey {
     version: number
     script: number[]
   }
 
-  interface UTXO {
+  export interface UTXO {
     address: string
     outpoint: Outpoint | undefined
     utxoEntry: UTXOEntry | undefined
   }
 
-  interface UTXOEntry {
+  export interface UTXOEntry {
     amount: bigint
     scriptPublicKey: ScriptPublicKey | undefined
     blockDaaScore: bigint

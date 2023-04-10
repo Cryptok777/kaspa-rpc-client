@@ -754,9 +754,9 @@ export namespace RPC {
   }
 
   // Shared
-  interface SubPromise<T> extends Promise<T> {
+  export interface SubPromise<T> extends Promise<T> {
     uid: string
   }
 
-  declare type callback<T> = (result: T) => void
+  export type callback<T> = (result: T) => void
 }

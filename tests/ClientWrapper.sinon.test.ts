@@ -1,5 +1,5 @@
-import { ClientWrapper } from "./ClientWrapper"
-import { Client } from "./Client"
+import { ClientWrapper } from "../lib/ClientWrapper"
+import { Client } from "../lib/Client"
 import sinon, { SinonStub } from "sinon"
 
 describe("ClientWrapper (Sinon)", () => {
