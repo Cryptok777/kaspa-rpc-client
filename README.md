@@ -16,7 +16,7 @@
 
 ## Requirements
 
-- `Node >= 15.0.0`
+- `Node >= 16.14`
 
 ## Installation
 
