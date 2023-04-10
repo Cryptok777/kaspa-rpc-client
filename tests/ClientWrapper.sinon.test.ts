@@ -1,22 +1,22 @@
-import { KaspadClientWrapper } from "./KaspadClientWrapper"
-import { KaspadClient } from "./KaspadClient"
+import { ClientWrapper } from "../lib/ClientWrapper"
+import { Client } from "../lib/Client"
 import sinon, { SinonStub } from "sinon"
 
-describe("KaspadClientWrapper (Sinon)", () => {
+describe("ClientWrapper (Sinon)", () => {
   afterEach(() => {
     sinon.restore()
   })
 
   test("Initialize class with one host and test request method", async () => {
     const hosts = ["host1"]
-    const wrapper = new KaspadClientWrapper({ hosts })
+    const wrapper = new ClientWrapper({ hosts })
 
-    sinon.stub(KaspadClient.prototype, "connect").resolves()
-    sinon.stub(KaspadClient.prototype, "ping").resolves()
+    sinon.stub(Client.prototype, "connect").resolves()
+    sinon.stub(Client.prototype, "ping").resolves()
     sinon
-      .stub(KaspadClient.prototype, "getVirtualSelectedParentBlueScore")
+      .stub(Client.prototype, "getVirtualSelectedParentBlueScore")
       .resolves({ blueScore: 10000, error: undefined })
-    sinon.stub(KaspadClient.prototype, "isReady").returns(true)
+    sinon.stub(Client.prototype, "isReady").returns(true)
 
     await wrapper.initialize()
     const client = await wrapper.getClient()
@@ -26,14 +26,14 @@ describe("KaspadClientWrapper (Sinon)", () => {
 
   test("Initialize class with one host and test re-connection", async () => {
     const hosts = ["host1"]
-    const wrapper = new KaspadClientWrapper({ hosts })
+    const wrapper = new ClientWrapper({ hosts })
 
-    sinon.stub(KaspadClient.prototype, "connect").resolves()
-    sinon.stub(KaspadClient.prototype, "ping").resolves()
+    sinon.stub(Client.prototype, "connect").resolves()
+    sinon.stub(Client.prototype, "ping").resolves()
     sinon
-      .stub(KaspadClient.prototype, "getVirtualSelectedParentBlueScore")
+      .stub(Client.prototype, "getVirtualSelectedParentBlueScore")
       .resolves({ blueScore: 10000, error: undefined })
-    const isReadyStub: SinonStub = sinon.stub(KaspadClient.prototype, "isReady")
+    const isReadyStub: SinonStub = sinon.stub(Client.prototype, "isReady")
 
     isReadyStub.onFirstCall().returns(false)
     isReadyStub.onSecondCall().returns(true)

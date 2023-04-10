@@ -7,4 +7,4 @@ wget -q --show-progress https://raw.githubusercontent.com/kaspanet/kaspad/master
 wget -q --show-progress https://raw.githubusercontent.com/kaspanet/kaspad/master/infrastructure/network/netadapter/server/grpcserver/protowire/rpc.proto
 
 # Auto gen ts interface
-protoc --plugin=./node_modules/.bin/protoc-gen-ts_proto --ts_proto_opt=onlyTypes=true --ts_proto_out=. ./proto/rpc.proto
+protoc --plugin=./node_modules/.bin/protoc-gen-ts_proto --ts_proto_opt=onlyTypes=true --ts_proto_opt=forceLong=bigint --ts_proto_out=. ./proto/rpc.proto
