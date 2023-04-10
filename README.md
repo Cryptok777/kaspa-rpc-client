@@ -2,28 +2,29 @@
 
 ## Table of Contents 📑
 
-- [Features](#features-🌟)
-- [Requirements](#requirements-🛠️)
-- [Installation](#installation-💿)
-- [Usage](#usage-🚀)
-- [Donation](#donation-💖)
+- [Features](#features)
+- [Requirements](#requirements)
+- [Installation](#installation)
+- [Usage](#usage)
+- [Contribute](#contribute)
+- [Donation](#donation)
 
-## Features 🌟
+## Features
 
 - This library is written in TypeScript, with methods auto-generated from the Kaspa [RPC server](https://github.com/kaspanet/kaspad/blob/c5aade7e7fe2ada7d97a0e30df9b4b36b4842f9e/infrastructure/network/netadapter/server/grpcserver/protowire/rpc.md#protowire.NotifyUtxosChangedRequestMessage). All requests and responses are typed for easier development.
 - Supports multiple RPC connections with different servers and automatically handles failover if one of the servers fails to connect.
 
-## Requirements 🛠️
+## Requirements
 
-- `Node >= 15.0.0`
+- `Node >= 16.14`
 
-## Installation 💿
+## Installation
 
 ```bash
 npm install kaspa-rpc-client
 ```
 
-## Usage 🚀
+## Usage
 
 Here's an example of how to use the Kaspa RPC Client library:
 
@@ -164,7 +165,7 @@ Example code can be found in [demo.ts](https://github.com/Cryptok777/kaspa-rpc-c
 
 You can also find [interface for all requests/response](https://github.com/Cryptok777/kaspa-rpc-client/blob/main/types/rpc.d.ts), but it's likely that your IDE will show this information for you since it's written in TypeScript
 
-## Contribute ✨
+## Contribute
 
 If you find that the RPC endpoint you are looking for is not exposed by the client library, feel free to create a pull request to add it:
 
@@ -173,6 +174,6 @@ If you find that the RPC endpoint you are looking for is not exposed by the clie
 3. Expose the method with the typed interfaces from the last step in `./lib/Client.ts`
 
 
-## Donation 💖
+## Donation
 
 This project is built by the team that brought you [Kas.fyi](https://kas.fyi/). If you find this library useful, feel free to donate to `kaspa:qpnsy5fc592kcnu6vnx8aknskhmu6x9qksec084v043pjk5hur6vw9e87wpg2`. Your support is greatly appreciated!

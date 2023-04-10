@@ -15,7 +15,6 @@ import {
   ClientOptionsTypes,
   ClientProps,
 } from "../types/custom-types"
-import { resolve } from "path"
 
 const delay = (delay: number, fn: () => void): SetTimeoutType => {
   return setTimeout(fn, delay || 0)
@@ -126,44 +125,47 @@ export class RpcClient {
     const deadline = new Date()
     deadline.setSeconds(deadline.getSeconds() + 2)
 
-    this.client.waitForReady(deadline, (connect_error: any) => {
-      if (connect_error) {
-        this._reconnect("client connect deadline reached")
-        return resolve()
-      }
-
-      this.log("client connected")
-
-      this.stream = this.createStream()
-      this.initIntake(this.stream)
-
-      this.stream.on("error", (error: any) => {
-        this.errorCBs.forEach((fn) => fn(error.toString(), error))
-        this.log("stream:error", error)
-        this._reconnect(error)
-      })
-
-      this.stream.on("end", (...args: any) => {
-        this.log("stream:end", ...args)
-        this._reconnect("stream end")
-      })
-
-      if (this.options.disableConnectionCheck) return resolve()
-
-      delay(100, async () => {
-        const response: any = await this.call(
-          "getVirtualSelectedParentBlueScoreRequest",
-          {}
-        ).catch((e) => {
-          this.connectFailureCBs.forEach((fn) => fn(e))
-        })
-        this.log("getVirtualSelectedParentBlueScoreRequest:response", response)
-        if (response && response.blueScore) {
-          this._setConnected(true)
+    return new Promise((resolve) => {
+      this.client.waitForReady(deadline, (connect_error: any) => {
+        if (connect_error) {
+          this._reconnect("client connect deadline reached")
+          return resolve(false)
         }
-        resolve()
+  
+        this.log("client connected")
+  
+        this.stream = this.createStream()
+        this.initIntake(this.stream)
+  
+        this.stream.on("error", (error: any) => {
+          this.errorCBs.forEach((fn) => fn(error.toString(), error))
+          this.log("stream:error", error)
+          this._reconnect(error)
+        })
+  
+        this.stream.on("end", (...args: any) => {
+          this.log("stream:end", ...args)
+          this._reconnect("stream end")
+        })
+  
+        if (this.options.disableConnectionCheck) return resolve(true)
+  
+        delay(100, async () => {
+          const response: any = await this.call(
+            "getVirtualSelectedParentBlueScoreRequest",
+            {}
+          ).catch((e) => {
+            this.connectFailureCBs.forEach((fn) => fn(e))
+          })
+          this.log("getVirtualSelectedParentBlueScoreRequest:response", response)
+          if (response && response.blueScore) {
+            this._setConnected(true)
+          }
+          return resolve(true)
+        })
       })
     })
+
   }
 
   _setConnected(isConnected: boolean) {
