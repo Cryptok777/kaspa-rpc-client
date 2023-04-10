@@ -102,14 +102,17 @@ export class Utils {
   }
 
   static async estimateFee({
-    utxoSet,
+    utxos,
     recipient,
     amount,
   }: {
-    utxoSet: UtxoSet
+    utxos: Rpc.UtxosByAddressesEntry[]
     recipient: string | Address
     amount: bigint
   }): Promise<bigint> {
+    const rustUtxos = Utils.convertGRpcUtxosToRustUtxos(utxos)
+    const utxoSet = UtxoSet.from({ entries: rustUtxos })
+
     const utxoSelection = await utxoSet.select(
       BigInt(amount),
       UtxoOrdering.AscendingAmount

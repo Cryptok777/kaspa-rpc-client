@@ -29,15 +29,12 @@ export class Address {
     priorityFee = 0,
   }: SendCommonProps) {
     const utxos = await this.utxos()
-    const rustUtxos = Utils.convertGRpcUtxosToRustUtxos(utxos)
-    const utxoSet = UtxoSet.from({ entries: rustUtxos })
-
     const balance = await this.balance()
 
     let finalizedFee = fee
     if (fee === Config.DEFAULT_FEE) {
       finalizedFee = await Utils.estimateFee({
-        utxoSet,
+        utxos,
         recipient,
         amount: balance,
       })
