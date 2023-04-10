@@ -1,13 +1,13 @@
 {
   "name": "kaspa-rpc-client",
   "description": "Kaspa gRPC client for Node.js, written in Typescript",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "main": "dist/index.js",
   "repository": "https://github.com/Cryptok777/kaspa-rpc-client.git",
   "author": "Cryptok777",
   "license": "MIT",
   "engines": {
-    "node": ">=15.0.0"
+    "node": ">=16.14"
   },
   "scripts": {
     "start:dev": "rm -rf ./dist && tsc-watch",
