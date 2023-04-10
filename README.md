@@ -27,18 +27,18 @@ npm install kaspa-rpc-client
 
 Here's an example of how to use the Kaspa RPC Client library:
 
-### Step 1: Import `KaspadClientWrapper`
+### Step 1: Import `ClientWrapper`
 
 ```javascript
-const { KaspadClientWrapper } = require("kaspa-rpc-client")
+const { ClientWrapper } = require("kaspa-rpc-client")
 ```
 
-### Step 2: Initialize `KaspadClientWrapper`
+### Step 2: Initialize `ClientWrapper`
 
 You can pass multiple hosts to the wrapper, the wrappper will figure out which one to use. You can also enable the verbose log by `verbose: true`
 
 ```javascript
-const wrapper = new KaspadClientWrapper({
+const wrapper = new ClientWrapper({
   hosts: ["kaspadns.kaspacalc.net:16110"],
   verbose: true,
 })
@@ -160,7 +160,7 @@ client.subscribeVirtualSelectedParentBlueScoreChanged((res) => {
   console.log(`subscribeVirtualSelectedParentBlueScoreChanged callback: ${res}`)
 })
 ```
-Example code can be found in [demo.ts](https://github.com/Cryptok777/kaspa-rpc-client/blob/main/demo.ts). This is not the full list of available methods, refer to [here for all available methods](https://github.com/Cryptok777/kaspa-rpc-client/blob/main/lib/KaspadClient.ts).
+Example code can be found in [demo.ts](https://github.com/Cryptok777/kaspa-rpc-client/blob/main/demo.ts). This is not the full list of available methods, refer to [here for all available methods](https://github.com/Cryptok777/kaspa-rpc-client/blob/main/lib/Client.ts).
 
 You can also find [interface for all requests/response](https://github.com/Cryptok777/kaspa-rpc-client/blob/main/types/rpc.d.ts), but it's likely that your IDE will show this information for you since it's written in TypeScript
 
@@ -170,7 +170,7 @@ If you find that the RPC endpoint you are looking for is not exposed by the clie
 
 1. Run `./scripts/update-proto.sh` to fetch the latest proto files from the Kaspad repo. This will automatically generate the TypeScript interfaces for you
 2. Copy the request/response interfaces that you would like to add to `./types/rpc.d.ts`
-3. Expose the method with the typed interfaces from the last step in `./lib/KaspadClient.ts`
+3. Expose the method with the typed interfaces from the last step in `./lib/Client.ts`
 
 
 ## Donation 💖

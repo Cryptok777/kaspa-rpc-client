@@ -1,2 +1,3 @@
-export * from "./lib/KaspadClientWrapper";
-export * from "./lib/KaspaWallet";
+export * from "./lib/ClientWrapper"
+// export * from "./lib/Wallet"
+export * from "./lib/Wallet"

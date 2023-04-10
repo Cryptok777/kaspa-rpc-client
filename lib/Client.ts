@@ -1,11 +1,13 @@
-import { Client as RpcClient } from "../client/client"
+import { RpcClient } from "../rpc/rpc"
 import { RPC as Rpc } from "../types/custom-types"
+import { ClientProvider } from "./ClientProvider"
 
-export class KaspadClient {
+export class Client extends ClientProvider {
   rpc: RpcClient
   ready = false
 
   constructor({ host, verbose }: { host: string; verbose?: boolean }) {
+    super()
     this.rpc = new RpcClient({
       host,
       verbose,

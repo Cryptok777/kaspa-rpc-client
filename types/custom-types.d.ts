@@ -6,6 +6,7 @@ export { ServiceClientConstructor }
 
 export type bytes = string // base84 string
 export * from './rpc'
+export * from './rust'
 
 export interface QueueItem {
   method: string

@@ -1,5 +1,20 @@
 export namespace RPC {
-  // Generated from proto
+  /**
+   * RPC-related types. Request messages, response messages, and dependant types.
+   *
+   * Clients are expected to build RequestMessages and wrap them in KaspadMessage. (see messages.proto)
+   *
+   * Having received a RequestMessage, (wrapped in a KaspadMessage) the RPC server will respond with a
+   * ResponseMessage (likewise wrapped in a KaspadMessage) respective to the original RequestMessage.
+   *
+   * **IMPORTANT:** This API is a work in progress and is subject to break between versions.
+   */
+
+  /**
+   * RPCError represents a generic non-internal error.
+   *
+   * Receivers of any ResponseMessage are expected to check whether its error field is not null.
+   */
   export interface RPCError {
     message: string
   }
@@ -16,13 +31,13 @@ export namespace RPC {
     hashMerkleRoot: string
     acceptedIdMerkleRoot: string
     utxoCommitment: string
-    timestamp: number
+    timestamp: bigint
     bits: number
-    nonce: number
-    daaScore: number
+    nonce: bigint
+    daaScore: bigint
     blueWork: string
     pruningPoint: string
-    blueScore: number
+    blueScore: bigint
   }
 
   export interface RpcBlockLevelParents {
@@ -35,7 +50,7 @@ export namespace RPC {
     selectedParentHash: string
     transactionIds: string[]
     isHeaderOnly: boolean
-    blueScore: number
+    blueScore: bigint
     childrenHashes: string[]
     mergeSetBluesHashes: string[]
     mergeSetRedsHashes: string[]
@@ -46,9 +61,9 @@ export namespace RPC {
     version: number
     inputs: RpcTransactionInput[]
     outputs: RpcTransactionOutput[]
-    lockTime: number
+    lockTime: bigint
     subnetworkId: string
-    gas: number
+    gas: bigint
     payload: string
     verboseData: RpcTransactionVerboseData | undefined
   }
@@ -56,7 +71,7 @@ export namespace RPC {
   export interface RpcTransactionInput {
     previousOutpoint: RpcOutpoint | undefined
     signatureScript: string
-    sequence: number
+    sequence: bigint
     sigOpCount: number
     verboseData: RpcTransactionInputVerboseData | undefined
   }
@@ -67,7 +82,7 @@ export namespace RPC {
   }
 
   export interface RpcTransactionOutput {
-    amount: number
+    amount: bigint
     scriptPublicKey: RpcScriptPublicKey | undefined
     verboseData: RpcTransactionOutputVerboseData | undefined
   }
@@ -78,18 +93,18 @@ export namespace RPC {
   }
 
   export interface RpcUtxoEntry {
-    amount: number
+    amount: bigint
     scriptPublicKey: RpcScriptPublicKey | undefined
-    blockDaaScore: number
+    blockDaaScore: bigint
     isCoinbase: boolean
   }
 
   export interface RpcTransactionVerboseData {
     transactionId: string
     hash: string
-    mass: number
+    mass: bigint
     blockHash: string
-    blockTime: number
+    blockTime: bigint
   }
 
   export interface RpcTransactionInputVerboseData {}
@@ -237,7 +252,7 @@ export namespace RPC {
   }
 
   export interface MempoolEntry {
-    fee: number
+    fee: bigint
     transaction: RpcTransaction | undefined
     isOrphan: boolean
   }
@@ -257,15 +272,15 @@ export namespace RPC {
     id: string
     address: string
     /** How long did the last ping/pong exchange take */
-    lastPingDuration: number
+    lastPingDuration: bigint
     /** Whether this kaspad initiated the connection */
     isOutbound: boolean
-    timeOffset: number
+    timeOffset: bigint
     userAgent: string
     /** The protocol version that this peer claims to support */
     advertisedProtocolVersion: number
     /** The timestamp of when this peer connected to this kaspad */
-    timeConnected: number
+    timeConnected: bigint
     /** Whether this peer is the IBD peer (if IBD is running) */
     isIbdPeer: boolean
   }
@@ -347,7 +362,7 @@ export namespace RPC {
   }
 
   export interface GetSubnetworkResponseMessage {
-    gasLimit: number
+    gasLimit: bigint
     error: RPCError | undefined
   }
 
@@ -401,8 +416,8 @@ export namespace RPC {
   export interface GetBlockCountRequestMessage {}
 
   export interface GetBlockCountResponseMessage {
-    blockCount: number
-    headerCount: number
+    blockCount: bigint
+    headerCount: bigint
     error: RPCError | undefined
   }
 
@@ -414,14 +429,14 @@ export namespace RPC {
 
   export interface GetBlockDagInfoResponseMessage {
     networkName: string
-    blockCount: number
-    headerCount: number
+    blockCount: bigint
+    headerCount: bigint
     tipHashes: string[]
     difficulty: number
-    pastMedianTime: number
+    pastMedianTime: bigint
     virtualParentHashes: string[]
     pruningPointHash: string
-    virtualDaaScore: number
+    virtualDaaScore: bigint
     error: RPCError | undefined
   }
 
@@ -460,7 +475,7 @@ export namespace RPC {
    */
   export interface GetHeadersRequestMessage {
     startHash: string
-    limit: number
+    limit: bigint
     isAscending: boolean
   }
 
@@ -542,7 +557,7 @@ export namespace RPC {
   }
 
   export interface GetBalanceByAddressResponseMessage {
-    balance: number
+    balance: bigint
     error: RPCError | undefined
   }
 
@@ -552,7 +567,7 @@ export namespace RPC {
 
   export interface BalancesByAddressEntry {
     address: string
-    balance: number
+    balance: bigint
     error: RPCError | undefined
   }
 
@@ -568,7 +583,7 @@ export namespace RPC {
   export interface GetVirtualSelectedParentBlueScoreRequestMessage {}
 
   export interface GetVirtualSelectedParentBlueScoreResponseMessage {
-    blueScore: number
+    blueScore: bigint
     error: RPCError | undefined
   }
 
@@ -591,7 +606,7 @@ export namespace RPC {
    * See NotifyVirtualSelectedParentBlueScoreChangedRequestMessage
    */
   export interface VirtualSelectedParentBlueScoreChangedNotificationMessage {
-    virtualSelectedParentBlueScore: number
+    virtualSelectedParentBlueScore: bigint
   }
 
   /**
@@ -613,7 +628,7 @@ export namespace RPC {
    * See NotifyVirtualDaaScoreChangedRequestMessage
    */
   export interface VirtualDaaScoreChangedNotificationMessage {
-    virtualDaaScore: number
+    virtualDaaScore: bigint
   }
 
   /**
@@ -675,7 +690,7 @@ export namespace RPC {
 
   export interface GetInfoResponseMessage {
     p2pId: string
-    mempoolSize: number
+    mempoolSize: bigint
     serverVersion: string
     isUtxoIndexed: boolean
     isSynced: boolean
@@ -688,7 +703,7 @@ export namespace RPC {
   }
 
   export interface EstimateNetworkHashesPerSecondResponseMessage {
-    networkHashesPerSecond: number
+    networkHashesPerSecond: bigint
     error: RPCError | undefined
   }
 
@@ -733,8 +748,8 @@ export namespace RPC {
 
   export interface GetCoinSupplyResponseMessage {
     /** note: this is a hard coded maxSupply, actual maxSupply is expected to deviate by upto -5%, but cannot be measured exactly. */
-    maxSompi: number
-    circulatingSompi: number
+    maxSompi: bigint
+    circulatingSompi: bigint
     error: RPCError | undefined
   }
 

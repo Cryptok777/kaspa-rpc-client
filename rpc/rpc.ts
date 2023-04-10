@@ -25,7 +25,7 @@ const clearDelay = (id: SetTimeoutType) => {
   clearTimeout(id)
 }
 
-export class Client {
+export class RpcClient {
   client: any | undefined
   options: ClientOptionsTypes
   stream: IStream
