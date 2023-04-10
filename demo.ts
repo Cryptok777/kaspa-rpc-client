@@ -1,8 +1,8 @@
-const { KaspadClientWrapper } = require('kaspa-rpc-client')
+const { ClientWrapper } = require('kaspa-rpc-client')
 
 const run = async () => {
   // Initilize the clients
-  const wrapper = new KaspadClientWrapper({
+  const wrapper = new ClientWrapper({
     hosts: ["kaspadns.kaspacalc.net:16110"],
     // verbose: true, ---> Verbose log
   })
@@ -11,7 +11,7 @@ const run = async () => {
   // Get one client from the pool
   const client = await wrapper.getClient()
 
-  // Example method calls for KaspadClient class methods starting with "get":
+  // Example method calls for Client class methods starting with "get":
 
   // Get a block by hash:
   const block = await client.getBlock({

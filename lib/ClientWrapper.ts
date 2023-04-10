@@ -1,10 +1,10 @@
-import { KaspadClient } from "./KaspadClient"
+import { Client } from "./Client"
 
-export class KaspadClientWrapper {
-  clients: KaspadClient[]
+export class ClientWrapper {
+  clients: Client[]
 
   constructor({ hosts, verbose }: { hosts: string[]; verbose?: boolean }) {
-    this.clients = hosts.map((host) => new KaspadClient({ host, verbose }))
+    this.clients = hosts.map((host) => new Client({ host, verbose }))
   }
 
   async initialize() {
@@ -16,7 +16,7 @@ export class KaspadClientWrapper {
     await new Promise((resolve) => setTimeout(resolve, ms))
   }
 
-  async getClient(): Promise<KaspadClient> {
+  async getClient(): Promise<Client> {
     let client = this.clients.find((client) => client.isReady())
     while (!client) {
       await this.sleep(500)

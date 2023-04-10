@@ -1,7 +1,7 @@
-import { Client as RpcClient } from "../client/client"
+import { RpcClient } from "../rpc/rpc"
 import { RPC as Rpc } from "../types/custom-types"
 
-export class KaspadClient {
+export class Client {
   rpc: RpcClient
   ready = false
 
