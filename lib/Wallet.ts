@@ -8,19 +8,19 @@ interface ConfigProps {
   DEFAULT_FEE: bigint
   DEFAULT_COMPOUND_FEE: bigint
   SCAN_BATCH_SIZE: number
+  MAX_SCAN_SIZE: number
 }
 
 export const Config: ConfigProps = {
-  // Reserved fee, if the actual fee is lower,
-  // remaining will be sent to change address
   DEFAULT_FEE: 0n,
   DEFAULT_COMPOUND_FEE: 1000000n,
   SCAN_BATCH_SIZE: 50,
+  MAX_SCAN_SIZE: 5000,
 }
 
-export class HDWallet {
+export class Wallet {
   private clientProvider: ClientProvider
-  private root: string
+  private root: string // xPrv
 
   constructor(clientProvider: ClientProvider) {
     this.clientProvider = clientProvider
@@ -29,21 +29,25 @@ export class HDWallet {
   }
 
   static fromPhrase(clientProvider: ClientProvider, phrase: string) {
-    const wallet = new HDWallet(clientProvider)
+    const wallet = new Wallet(clientProvider)
     const xPrv = new XPrv(new RustMnemonic(phrase).toSeed(""))
     wallet.setRoot(xPrv.intoString("xprv"))
     return wallet
   }
 
   static fromSeed(clientProvider: ClientProvider, seed: string) {
-    const wallet = new HDWallet(clientProvider)
+    const wallet = new Wallet(clientProvider)
     const xPrv = new XPrv(seed)
     wallet.setRoot(xPrv.intoString("xprv"))
     return wallet
   }
 
   static fromPrivateKey(clientProvider: ClientProvider, xPrv: string) {
-    const wallet = new HDWallet(clientProvider)
+    if (!xPrv) {
+      throw new Error("Private key should not be empty")
+    }
+
+    const wallet = new Wallet(clientProvider)
     wallet.setRoot(xPrv)
     return wallet
   }

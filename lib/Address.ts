@@ -1,5 +1,5 @@
-import { UtxoSet, PrivateKey } from "../wasm/kaspa_wasm"
-import { RPC as Rpc } from "../types/custom-types"
+import { PrivateKey } from "../wasm/kaspa_wasm"
+import { RPC } from "../types/custom-types"
 import { ClientProvider } from "./ClientProvider"
 import { SendCommonProps, SendProps } from "../types/custom-types"
 import { Utils } from "./Utils"
@@ -28,8 +28,12 @@ export class Address {
     fee = Config.DEFAULT_FEE,
     priorityFee = 0,
   }: SendCommonProps) {
+    if (!recipient) {
+      throw new Error("params missing")
+    }
+
     const utxos = await this.utxos()
-    const balance = await this.balance()
+    const balance = Utils.getUtxosSum(utxos)
 
     let finalizedFee = fee
     if (fee === Config.DEFAULT_FEE) {
@@ -42,7 +46,10 @@ export class Address {
 
     const amountAfterFee = balance - finalizedFee - BigInt(priorityFee)
 
-    return this.send({
+    return Utils.sendTransaction({
+      clientProvider: this.clientProvider,
+      utxos,
+      privateKeys: [this.privateKey],
       recipient,
       amount: amountAfterFee,
       changeAddress: recipient,
@@ -58,8 +65,22 @@ export class Address {
     fee = Config.DEFAULT_FEE,
     priorityFee = 0,
   }: SendProps &
-    SendCommonProps): Promise<Rpc.SubmitTransactionResponseMessage> {
+    SendCommonProps): Promise<RPC.SubmitTransactionResponseMessage> {
+    if (!recipient || !amount || !changeAddress) {
+      throw new Error("params missing")
+    }
+
     const utxos = await this.utxos()
+
+    let finalizedFee = fee
+    if (fee === Config.DEFAULT_FEE) {
+      finalizedFee = await Utils.estimateFee({
+        utxos,
+        recipient,
+        amount,
+      })
+    }
+
     return Utils.sendTransaction({
       clientProvider: this.clientProvider,
       utxos,
@@ -67,7 +88,7 @@ export class Address {
       recipient,
       amount,
       changeAddress,
-      fee,
+      fee: finalizedFee,
       priorityFee,
     })
   }

@@ -3,7 +3,6 @@ import {
   XPrv,
   XPublicKey,
   XPrivateKey,
-  UtxoSet,
 } from "../wasm/kaspa_wasm"
 import {
   AddressType,
@@ -14,7 +13,7 @@ import {
 import { ClientProvider } from "./ClientProvider"
 import { Address } from "./Address"
 import { Utils } from "./Utils"
-import { Config, HDWallet } from "./Wallet"
+import { Config, Wallet } from "./Wallet"
 
 export class Account {
   private clientProvider: ClientProvider
@@ -41,7 +40,7 @@ export class Account {
     phrase: string,
     index: bigint
   ) {
-    const wallet = new HDWallet(clientProvider)
+    const wallet = new Wallet(clientProvider)
     const xPrv = new XPrv(new RustMnemonic(phrase).toSeed(""))
     wallet.setRoot(xPrv.intoString("xprv"))
     return wallet.account(index)
@@ -52,7 +51,7 @@ export class Account {
     seed: string,
     index: bigint = 0n
   ) {
-    const wallet = new HDWallet(clientProvider)
+    const wallet = new Wallet(clientProvider)
     const xPrv = new XPrv(seed)
     wallet.setRoot(xPrv.intoString("xprv"))
     return wallet.account(index)
@@ -63,7 +62,7 @@ export class Account {
     xPrv: string,
     index: bigint = 0n
   ) {
-    const wallet = new HDWallet(clientProvider)
+    const wallet = new Wallet(clientProvider)
     wallet.setRoot(xPrv)
     return wallet.account(index)
   }
@@ -94,18 +93,42 @@ export class Account {
 
   async scan() {
     // Scan all addresses with balance
-    const MAX_INDEX = 5000
-    let index = 0
+    const MAX_INDEX = Config.MAX_SCAN_SIZE
     const size = Config.SCAN_BATCH_SIZE
+    let index = 0
 
     let addresses: Address[] = []
 
+    // Scan receive
     while (index < MAX_INDEX) {
       const receives = await this.addresses(
         index,
         index + size,
         AddressType.Receive
       )
+
+      // Check for non-zero addresses
+      const receivesUtxos = await Promise.all(receives.map((i) => i.utxos()))
+
+      // Save to scannedAddress
+      let filtered: Address[] = receives.filter((_, index) => {
+        return receivesUtxos[index].length > 0
+      })
+
+      addresses = addresses.concat(filtered)
+
+      if (filtered.length === 0) {
+        console.log("finished scanning")
+        break
+      }
+
+      index += size
+    }
+
+    index = 0
+
+    // Scan change
+    while (index < MAX_INDEX) {
       const changes = await this.addresses(
         index,
         index + size,
@@ -113,22 +136,12 @@ export class Account {
       )
 
       // Check for non-zero addresses
-      const receivesUtxos = await Promise.all(receives.map((i) => i.utxos()))
       const changesUtxos = await Promise.all(changes.map((i) => i.utxos()))
 
       // Save to scannedAddress
-      let filtered: Address[] = []
-
-      filtered = filtered.concat(
-        receives.filter((_, index) => {
-          return receivesUtxos[index].length > 0
-        })
-      )
-      filtered = filtered.concat(
-        changes.filter((_, index) => {
-          return changesUtxos[index].length > 0
-        })
-      )
+      let filtered: Address[] = changes.filter((_, index) => {
+        return changesUtxos[index].length > 0
+      })
 
       addresses = addresses.concat(filtered)
 
@@ -156,11 +169,20 @@ export class Account {
       throw new Error("params missing")
     }
 
-    const utxos = await this.utxos()
     const addresses = await this.scan()
+    const utxos = await this.utxosForAddresses(addresses)
 
-    if (!utxos || !addresses) {
+    if (utxos.length === 0 || addresses.length === 0) {
       throw new Error("UTXO/address not found")
+    }
+
+    let finalizedFee = fee
+    if (fee === Config.DEFAULT_FEE) {
+      finalizedFee = await Utils.estimateFee({
+        utxos,
+        recipient,
+        amount,
+      })
     }
 
     return Utils.sendTransaction({
@@ -170,7 +192,7 @@ export class Account {
       recipient,
       amount,
       changeAddress,
-      fee,
+      fee: finalizedFee,
       priorityFee,
     })
   }
@@ -180,8 +202,13 @@ export class Account {
     fee = Config.DEFAULT_FEE,
     priorityFee = 0,
   }: SendCommonProps) {
-    const utxos = await this.utxos()
-    const balance = await this.balance()
+    if (!recipient) {
+      throw new Error("params missing")
+    }
+
+    const addresses = await this.scan()
+    const utxos = await this.utxosForAddresses(addresses)
+    const balance = Utils.getUtxosSum(utxos)
 
     let finalizedFee = fee
     if (fee === Config.DEFAULT_FEE) {
@@ -194,11 +221,14 @@ export class Account {
 
     const amountAfterFee = balance - finalizedFee - BigInt(priorityFee)
 
-    return this.send({
+    return Utils.sendTransaction({
+      clientProvider: this.clientProvider,
+      utxos,
+      privateKeys: addresses.map((i) => i.privateKey),
       recipient,
       amount: amountAfterFee,
       changeAddress: recipient,
-      fee,
+      fee: finalizedFee,
       priorityFee,
     })
   }
@@ -217,6 +247,15 @@ export class Account {
 
   async balance() {
     const addresses = await this.scan()
+    return this.balanceForAddresses(addresses)
+  }
+
+  async utxos() {
+    const addresses = await this.scan()
+    return this.utxosForAddresses(addresses)
+  }
+
+  private async balanceForAddresses(addresses: Address[]) {
     return this.clientProvider
       .getBalancesByAddresses({
         addresses: addresses.map((i) => i.toString()),
@@ -228,8 +267,7 @@ export class Account {
       })
   }
 
-  async utxos() {
-    const addresses = await this.scan()
+  private async utxosForAddresses(addresses: Address[]) {
     return this.clientProvider
       .getUtxosByAddresses({
         addresses: addresses.map((i) => i.toString()),

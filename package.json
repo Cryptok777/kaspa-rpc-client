@@ -10,9 +10,10 @@
     "node": ">=16.14"
   },
   "scripts": {
-    "start:dev": "rm -rf ./dist && tsc-watch",
-    "build": "rm -rf ./dist && rm -f package-lock.json && npm install --also=dev && tsc",
+    "start:dev": "rm -rf ./dist && tsc-watch --onSuccess \"npm run copy-wasm\"",
+    "build": "rm -rf ./dist && rm -f package-lock.json && npm install --also=dev && tsc && npm run copy-wasm",
     "prepublishOnly": "npm run build",
+    "copy-wasm": "cp ./wasm/* ./dist/wasm",
     "test": "jest"
   },
   "dependencies": {

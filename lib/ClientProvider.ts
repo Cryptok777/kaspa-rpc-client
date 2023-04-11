@@ -1,33 +1,44 @@
-import { RPC as Rpc } from "../types/custom-types"
+import { RPC } from "../types/custom-types"
 
 export class ClientProvider {
   constructor() {}
 
   getUtxosByAddresses(
-    data: Rpc.GetUtxosByAddressesRequestMessage
-  ): Promise<Rpc.GetUtxosByAddressesResponseMessage> {
+    data: RPC.GetUtxosByAddressesRequestMessage
+  ): Promise<RPC.GetUtxosByAddressesResponseMessage> {
     throw new Error("Not implemented")
   }
 
   getBalanceByAddress(
-    data: Rpc.GetBalanceByAddressRequestMessage
-  ): Promise<Rpc.GetBalanceByAddressResponseMessage> {
+    data: RPC.GetBalanceByAddressRequestMessage
+  ): Promise<RPC.GetBalanceByAddressResponseMessage> {
     throw new Error("Not implemented")
   }
 
   getBalancesByAddresses(
-    data: Rpc.GetBalancesByAddressesRequestMessage
-  ): Promise<Rpc.GetBalancesByAddressesResponseMessage> {
+    data: RPC.GetBalancesByAddressesRequestMessage
+  ): Promise<RPC.GetBalancesByAddressesResponseMessage> {
     throw new Error("Not implemented")
   }
 
   submitTransaction(
-    data: Rpc.SubmitTransactionRequestMessage
-  ): Promise<Rpc.SubmitTransactionResponseMessage> {
+    data: RPC.SubmitTransactionRequestMessage
+  ): Promise<RPC.SubmitTransactionResponseMessage> {
     throw new Error("Not implemented")
   }
 
   getBalances(addresses: string[]) {
+    throw new Error("Not implemented")
+  }
+
+  subscribeUtxosChanged(
+    data: RPC.NotifyUtxosChangedRequestMessage,
+    callback: RPC.callback<RPC.UtxosChangedNotificationMessage>
+  ): RPC.SubPromise<RPC.NotifyUtxosChangedResponseMessage> {
+    throw new Error("Not implemented")
+  }
+
+  unSubscribeUtxosChanged(uid: string = "") {
     throw new Error("Not implemented")
   }
 }

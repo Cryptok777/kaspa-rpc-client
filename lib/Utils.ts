@@ -205,6 +205,10 @@ export class Utils {
   }: SendProps &
     SendCommonProps &
     SendTransactionProps): Promise<Rpc.SubmitTransactionResponseMessage> {
+    if (utxos.length === 0) {
+      throw new Error("No UXTO to spend")
+    }
+
     const rustUtxos = this.convertGRpcUtxosToRustUtxos(utxos)
     const utxoSet = UtxoSet.from({ entries: rustUtxos })
 
@@ -212,7 +216,7 @@ export class Utils {
     let finalizedFee = fee
     if (fee === Config.DEFAULT_FEE) {
       finalizedFee = await this.estimateFee({
-        utxoSet,
+        utxos,
         recipient,
         amount,
       })
@@ -240,5 +244,12 @@ export class Utils {
     })
 
     return tx
+  }
+
+  static getUtxosSum(utxos: Rpc.UtxosByAddressesEntry[]) {
+    return utxos.reduce((acc, item) => {
+      if (!item.utxoEntry?.amount) return acc
+      return BigInt(acc) + BigInt(item.utxoEntry.amount)
+    }, BigInt(0))
   }
 }
