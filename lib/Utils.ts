@@ -26,6 +26,9 @@ import {
   SendCommonProps,
 } from "../types/custom-types"
 
+/**
+ * This class provides helper funcitons that can be used acorss the library
+ */
 export class Utils {
   static byteArrayToHexString(byteArray: number[]) {
     return byteArray.map((byte) => byte.toString(16).padStart(2, "0")).join("")
@@ -101,6 +104,10 @@ export class Utils {
     return new XPrivateKey(xprv, false, accountIndex)
   }
 
+  /**
+   * `estimateFee` calls `minimumTransactionFee` in WASM js to calculate the minimum fee
+   * in order to send `amount` to `recepient`, given the available `utxos`
+   */
   static async estimateFee({
     utxos,
     recipient,
@@ -153,6 +160,16 @@ export class Utils {
     return estimatedFee * BigInt(2)
   }
 
+  /**
+   * `createTransaction` returns a `MutableTransaction` object from WASM js, which can be used to sign,
+   * by calling `Utils.signTransaction`.
+   *
+   * You can call `tx.toRpcTransaction()`, which converts it to RPC object which can
+   * be used for Rust's wRPC `submitTransaction` endpoint.
+   *
+   * If you want to submit the
+   * `MutableTransaction` object to gRPC endpoint, you need to call `Utils.convertRustTransactionToGRpcTransaction`
+   */
   static async createTransaction({
     utxoSet,
     recipient,
@@ -189,6 +206,10 @@ export class Utils {
     )
   }
 
+  /**
+   * `signTransaction` calls `signTransaction` in WASM js to sign the `MutableTransaction`
+   * object given an array of privateKeys
+   */
   static signTransaction(tx: MutableTransaction, privateKeys: PrivateKey[]) {
     return signTransaction(tx, privateKeys, true)
   }

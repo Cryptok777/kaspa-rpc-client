@@ -1,14 +1,4 @@
-# Kaspa RPC Client for Node.js 📚
-
-## Table of Contents 📑
-
-- [Features](#features)
-- [Requirements](#requirements)
-- [Installation](#installation)
-- [Usage](#usage)
-- [Contribute](#contribute)
-- [Donation](#donation)
-
+# Kaspa RPC Client for Node.js
 ## Features
 
 - This library is written in TypeScript, with methods auto-generated from the Kaspa [RPC server](https://github.com/kaspanet/kaspad/blob/c5aade7e7fe2ada7d97a0e30df9b4b36b4842f9e/infrastructure/network/netadapter/server/grpcserver/protowire/rpc.md#protowire.NotifyUtxosChangedRequestMessage). All requests and responses are typed for easier development.

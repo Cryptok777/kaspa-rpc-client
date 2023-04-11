@@ -11,11 +11,12 @@
   },
   "scripts": {
     "start:dev": "rm -rf ./dist && tsc-watch --onSuccess \"npm run copy-wasm\"",
-    "build": "rm -rf ./dist && rm -f package-lock.json && npm install --also=dev && tsc && npm run copy-wasm",
+    "build": "rm -rf ./dist && rm -f package-lock.json && npm install --also=dev && tsc && npm run copy-wasm && npm run gen:doc",
     "prepublishOnly": "npm run build",
     "copy-wasm": "cp ./wasm/* ./dist/wasm",
     "test": "jest",
-    "lint": "eslint . --ext .ts"
+    "lint": "eslint . --ext .ts",
+    "gen:doc": "npx typedoc ./lib/*"
   },
   "dependencies": {
     "@grpc/grpc-js": "^1.8.13",
@@ -36,6 +37,7 @@
     "ts-jest": "^29.1.0",
     "ts-proto": "^1.146.0",
     "tsc-watch": "^6.0.0",
+    "typedoc": "^0.24.1",
     "typescript": "^5.0.3"
   },
   "files": [
