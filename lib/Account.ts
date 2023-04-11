@@ -46,11 +46,7 @@ export class Account {
     return wallet.account(index)
   }
 
-  static fromSeed(
-    clientProvider: ClientProvider,
-    seed: string,
-    index: bigint = 0n
-  ) {
+  static fromSeed(clientProvider: ClientProvider, seed: string, index = 0n) {
     const wallet = new Wallet(clientProvider)
     const xPrv = new XPrv(seed)
     wallet.setRoot(xPrv.intoString("xprv"))
@@ -60,14 +56,14 @@ export class Account {
   static fromPrivateKey(
     clientProvider: ClientProvider,
     xPrv: string,
-    index: bigint = 0n
+    index = 0n
   ) {
     const wallet = new Wallet(clientProvider)
     wallet.setRoot(xPrv)
     return wallet.account(index)
   }
 
-  async address(index: number = 0, type: AddressType = AddressType.Receive) {
+  async address(index = 0, type: AddressType = AddressType.Receive) {
     let address, key
     if (type === AddressType.Receive) {
       address = (await this.xPublicKey.receiveAddresses(index, index + 1))[0]
@@ -111,7 +107,7 @@ export class Account {
       const receivesUtxos = await Promise.all(receives.map((i) => i.utxos()))
 
       // Save to scannedAddress
-      let filtered: Address[] = receives.filter((_, index) => {
+      const filtered: Address[] = receives.filter((_, index) => {
         return receivesUtxos[index].length > 0
       })
 
@@ -139,7 +135,7 @@ export class Account {
       const changesUtxos = await Promise.all(changes.map((i) => i.utxos()))
 
       // Save to scannedAddress
-      let filtered: Address[] = changes.filter((_, index) => {
+      const filtered: Address[] = changes.filter((_, index) => {
         return changesUtxos[index].length > 0
       })
 

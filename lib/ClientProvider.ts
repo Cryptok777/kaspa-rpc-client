@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-empty-function */
+
 import { RPC } from "../types/custom-types"
 
 export class ClientProvider {
@@ -38,7 +40,7 @@ export class ClientProvider {
     throw new Error("Not implemented")
   }
 
-  unSubscribeUtxosChanged(uid: string = "") {
+  unSubscribeUtxosChanged(uid = "") {
     throw new Error("Not implemented")
   }
 }

@@ -56,7 +56,7 @@ export class Wallet {
     this.root = xPrv
   }
 
-  async account(index: bigint = 0n) {
+  async account(index = 0n) {
     const xPublicKey = await Utils.getXPublicKey(this.root, index)
     const xPrivateKey = await Utils.getXPrivateKey(this.root, index)
 

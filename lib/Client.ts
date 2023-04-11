@@ -46,7 +46,7 @@ export class Client extends ClientProvider {
     return this.rpc.subscribe<T>(method, data, callback)
   }
 
-  unSubscribe(method: string, uid: string = "") {
+  unSubscribe(method: string, uid = "") {
     return this.rpc.unSubscribe(method, uid)
   }
 
@@ -224,7 +224,7 @@ export class Client extends ClientProvider {
     >("notifyNewBlockTemplateRequest", {}, callback)
   }
 
-  unSubscribeNewBlockTemplate(uid: string = "") {
+  unSubscribeNewBlockTemplate(uid = "") {
     this.unSubscribe("notifyNewBlockTemplateRequest", uid)
   }
 
@@ -237,7 +237,7 @@ export class Client extends ClientProvider {
     >("notifyVirtualDaaScoreChangedRequest", {}, callback)
   }
 
-  unSubscribeVirtualDaaScoreChanged(uid: string = "") {
+  unSubscribeVirtualDaaScoreChanged(uid = "") {
     this.unSubscribe("notifyVirtualDaaScoreChangedRequest", uid)
   }
 
@@ -250,7 +250,7 @@ export class Client extends ClientProvider {
     >("notifyPruningPointUTXOSetOverrideRequest", {}, callback)
   }
 
-  unSubscribePruningPointUTXOSetOverride(uid: string = "") {
+  unSubscribePruningPointUTXOSetOverride(uid = "") {
     this.unSubscribe("notifyPruningPointUTXOSetOverrideRequest", uid)
   }
 
@@ -263,7 +263,7 @@ export class Client extends ClientProvider {
     >("notifyBlockAddedRequest", {}, callback)
   }
 
-  unSubscribeBlockAdded(uid: string = "") {
+  unSubscribeBlockAdded(uid = "") {
     this.unSubscribe("notifyBlockAddedRequest", uid)
   }
 
@@ -276,7 +276,7 @@ export class Client extends ClientProvider {
     >("notifyVirtualSelectedParentBlueScoreChangedRequest", {}, callback)
   }
 
-  unSubscribeVirtualSelectedParentBlueScoreChanged(uid: string = "") {
+  unSubscribeVirtualSelectedParentBlueScoreChanged(uid = "") {
     this.unSubscribe("notifyVirtualSelectedParentBlueScoreChangedRequest", uid)
   }
 
@@ -290,7 +290,7 @@ export class Client extends ClientProvider {
     >("notifyUtxosChangedRequest", data, callback)
   }
 
-  unSubscribeUtxosChanged(uid: string = "") {
+  unSubscribeUtxosChanged(uid = "") {
     this.unSubscribe("notifyUtxosChangedRequest", uid)
   }
 
@@ -304,7 +304,7 @@ export class Client extends ClientProvider {
     >("notifyVirtualSelectedParentChainChangedRequest", data, callback)
   }
 
-  unSubscribeVirtualSelectedParentChainChanged(uid: string = "") {
+  unSubscribeVirtualSelectedParentChainChanged(uid = "") {
     this.unSubscribe("notifyVirtualSelectedParentChainChangedRequest", uid)
   }
 }

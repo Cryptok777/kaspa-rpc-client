@@ -1,6 +1,6 @@
 import { Account } from "../lib/Account"
 import { ClientProvider } from "../lib/ClientProvider"
-import { Config, Wallet } from "../lib/Wallet"
+import {  Wallet } from "../lib/Wallet"
 import sinon from "sinon"
 import { Address } from "../lib/Address"
 import { AddressType, RPC } from "../types/custom-types"
@@ -13,14 +13,14 @@ describe("Account", () => {
   let xPrivateKey: any
   let index: bigint
   let account: Account
-  let privateKey = new PrivateKey(
+  const privateKey = new PrivateKey(
     "0000000000000000000000000000000000000000000000000000000000000001"
   )
-  let txResp = {
+  const txResp = {
     transactionId: "tx_id",
     error: undefined,
   }
-  let address =
+  const address =
     "kaspa:qqf92fy4af7tpnukl60n3t77wx8m2zadhc5a6h5gr053nyk74qzsvmt4xpypv"
 
   beforeEach(() => {

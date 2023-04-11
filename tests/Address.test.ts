@@ -15,7 +15,7 @@ describe("Address", () => {
   )
 
   const testAddress = new Address(client, index, address, privateKey)
-  let txResp = {
+  const txResp = {
     transactionId: "test_hash",
     error: undefined,
   }
