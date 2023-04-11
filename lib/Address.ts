@@ -23,11 +23,11 @@ export class Address {
     this.privateKey = privateKey
   }
 
-  async sendAll({
-    recipient,
-    fee = Config.DEFAULT_FEE,
-    priorityFee = 0,
-  }: SendCommonProps) {
+  /**
+   * Sends all the available balance to the specified recipient
+   */
+  async sendAll(options: SendCommonProps) {
+    const { recipient, fee = Config.DEFAULT_FEE, priorityFee = 0 } = options
     if (!recipient) {
       throw new Error("params missing")
     }
@@ -58,6 +58,9 @@ export class Address {
     })
   }
 
+  /**
+   * Sends `amount` to `recipient`
+   */
   async send({
     recipient,
     amount,
@@ -93,6 +96,9 @@ export class Address {
     })
   }
 
+  /**
+   * Return balance of the address
+   */
   balance() {
     return this.clientProvider
       .getBalanceByAddress({
@@ -101,6 +107,9 @@ export class Address {
       .then((resp) => BigInt(resp.balance))
   }
 
+  /**
+   * Return a list of UTXOs for the address
+   */
   utxos() {
     return this.clientProvider
       .getUtxosByAddresses({
@@ -109,6 +118,10 @@ export class Address {
       .then((resp) => resp.entries)
   }
 
+  /**
+   * Return a string representation of the address
+   * e.g. kaspa:xxxxxx
+   */
   toString() {
     return this.address
   }

@@ -35,6 +35,9 @@ export class Account {
     this.scannedAddresses = []
   }
 
+  /**
+   * Initialize an Account object from mnemonic pharse and account index
+   */
   static async fromPhrase(
     clientProvider: ClientProvider,
     phrase: string,
@@ -46,6 +49,9 @@ export class Account {
     return wallet.account(index)
   }
 
+  /**
+   * Initialize an Account object from seed (without password) and account index
+   */
   static fromSeed(clientProvider: ClientProvider, seed: string, index = 0n) {
     const wallet = new Wallet(clientProvider)
     const xPrv = new XPrv(seed)
@@ -53,6 +59,9 @@ export class Account {
     return wallet.account(index)
   }
 
+  /**
+   * Initialize an Account object from private key string and account index
+   */
   static fromPrivateKey(
     clientProvider: ClientProvider,
     xPrv: string,
@@ -63,6 +72,10 @@ export class Account {
     return wallet.account(index)
   }
 
+  /**
+   * Get an address at `index` with  `type`,
+   * which could be recieve/change
+   */
   async address(index = 0, type: AddressType = AddressType.Receive) {
     let address, key
     if (type === AddressType.Receive) {
@@ -75,6 +88,10 @@ export class Account {
     return new Address(this.clientProvider, index, address, key)
   }
 
+  /**
+   * Get a list of addresses from index `start` to `end`
+   * with `type`, which could be recieve/change
+   */
   async addresses(
     start: number,
     end: number,
@@ -87,6 +104,15 @@ export class Account {
     return Promise.all(addresses)
   }
 
+  /**
+   * Scans all addresses, including recieve/change
+   * up to `Config.MAX_SCAN_SIZE`, which defaults to 5000.
+   *
+   * Addresses without UTXOs will be filtered
+   *
+   * You don't have to explicitly call this method to before calling
+   * other method like `send` or `balance`, as it will be taken care of.
+   */
   async scan() {
     // Scan all addresses with balance
     const MAX_INDEX = Config.MAX_SCAN_SIZE
@@ -153,6 +179,10 @@ export class Account {
     return this.scannedAddresses
   }
 
+  /**
+   * Send `amount` to `recipient`, the UTXOs used for transaction will
+   * be randomly selected across all addresses in this `Account`
+   */
   async send({
     recipient,
     amount,
@@ -193,6 +223,9 @@ export class Account {
     })
   }
 
+  /**
+   * Send the whole balance from this `Account` to `recipient`
+   */
   async sendAll({
     recipient,
     fee = Config.DEFAULT_FEE,
@@ -229,6 +262,11 @@ export class Account {
     })
   }
 
+  /**
+   * Do compound, which send all UTXOs from this `Account`
+   * to `destination`, if `destination` is not set, the amount
+   * will be sent to the first receive address of this `Account`
+   */
   async compound(destination?: Address | string) {
     // If not set, default compound to the first address
     let to = destination?.toString()
@@ -241,11 +279,17 @@ export class Account {
     })
   }
 
+  /**
+   * Return balance of all addresses in this `Account`
+   */
   async balance() {
     const addresses = await this.scan()
     return this.balanceForAddresses(addresses)
   }
 
+  /**
+   * Return UTXOs of all addresses in this `Account`
+   */
   async utxos() {
     const addresses = await this.scan()
     return this.utxosForAddresses(addresses)

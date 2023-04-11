@@ -16,7 +16,7 @@
     "copy-wasm": "cp ./wasm/* ./dist/wasm",
     "test": "jest",
     "lint": "eslint . --ext .ts",
-    "gen:doc": "npx typedoc ./lib/*"
+    "gen:doc": "npx typedoc"
   },
   "dependencies": {
     "@grpc/grpc-js": "^1.8.13",

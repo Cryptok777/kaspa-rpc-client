@@ -77,16 +77,50 @@ export interface SendProps {
 }
 
 export interface SendCommonProps {
+  /**
+   * The recipient of the transaction, can be address string or
+   * Address Object that's created from the library
+   */
   recipient: string | Address
+  /**
+   * The transaction fee. Defaults to 0.
+   * If `fee` is not passed, the library will figure out the network
+   * fee and subtract it from the final amount
+   */
   fee?: bigint
+  /**
+   * The priority fee of the transaction. Defaults to `0`.
+   */
   priorityFee?: number
 }
 
 export interface CreateTransactionProps {
+  /**
+   * A UtxoSet object, can be created by `UtxoSet.from({ entries: UTXO_FROM_RPC })`
+   */
   utxoSet: UtxoSet
+  /**
+   * The recipient of the transaction, can be address string or
+   * Address Object that's created from the library
+   */
   recipient: string | Address
+  /**
+   * The change address of the transaction, can be address string or
+   * Address Object that's created from the library
+   */
   changeAddress: string | Address
+  /**
+   * Amount to send, the unit is sompi 
+   */
   amount: bigint
+  /**
+   * The transaction fee. Defaults to 0.
+   * If `fee` is not passed, the library will figure out the network
+   * fee and subtract it from the final amount
+   */
   fee?: bigint
+  /**
+   * The priority fee of the transaction. Defaults to `0`.
+   */
   priorityFee?: number
 }
