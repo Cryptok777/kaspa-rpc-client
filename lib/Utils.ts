@@ -17,12 +17,16 @@ import {
   TransactionInput,
   UtxoEntryReference,
 } from "../wasm/kaspa_wasm"
-import { RPC as Rpc, Rust, SendOutputProps } from "../types/custom-types"
+import {
+  RPC as Rpc,
+  Rust,
+  SendCommonProps,
+  SendOutputProps,
+} from "../types/custom-types"
 import { Config } from "./Wallet"
 import {
   CreateTransactionProps,
   SendTransactionProps,
-  SendProps,
 } from "../types/custom-types"
 
 /**
@@ -199,7 +203,7 @@ export class Utils {
           BigInt(i.amount)
         )
     )
-    
+
     return createTransaction(
       utxoSelection,
       new PaymentOutputs(payments),
@@ -224,7 +228,7 @@ export class Utils {
     changeAddress,
     fee = Config.DEFAULT_FEE,
     priorityFee = 0,
-  }: SendProps &
+  }: SendCommonProps &
     SendTransactionProps): Promise<Rpc.SubmitTransactionResponseMessage> {
     if (utxos.length === 0) {
       throw new Error("No UXTO to spend")

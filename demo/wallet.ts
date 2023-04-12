@@ -1,9 +1,5 @@
 const { ClientWrapper, Wallet } = require('kaspa-rpc-client')
 
-BigInt.prototype['toJSON'] = function () {
-  return parseInt(this.toString());
-};
-
 const MNEMONIC = {
   phrase: 'INSERT_MNEMNIC_PHRASE_HERE'
 }

@@ -3,7 +3,7 @@ const { ClientWrapper } = require('kaspa-rpc-client')
 const run = async () => {
   // Initilize the clients
   const wrapper = new ClientWrapper({
-    hosts: ["kaspadns.kaspacalc.net:16110"],
+    hosts: ["seeder2.kaspad.net:16110"],
     // verbose: true, ---> Verbose log
   })
   await wrapper.initialize()

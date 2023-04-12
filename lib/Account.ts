@@ -5,10 +5,11 @@ import {
   XPrivateKey,
 } from "../wasm/kaspa_wasm"
 import {
+  AccountSendProps,
   AddressType,
   RPC as Rpc,
   SendAllProps,
-  SendProps,
+  SendCommonProps,
 } from "../types/custom-types"
 import { ClientProvider } from "./ClientProvider"
 import { Address } from "./Address"
@@ -182,7 +183,7 @@ export class Account {
 
   /**
    * Sends transaction, where `ouputs` can be multiple `recipient`
-   * 
+   *
    * The UTXOs used for transaction will
    * be randomly selected across all addresses in this `Account`
    */
@@ -191,7 +192,8 @@ export class Account {
     changeAddress,
     fee = Config.DEFAULT_FEE,
     priorityFee = 0,
-  }: SendProps): Promise<Rpc.SubmitTransactionResponseMessage> {
+  }: AccountSendProps &
+    SendCommonProps): Promise<Rpc.SubmitTransactionResponseMessage> {
     if (outputs.length === 0 || !changeAddress) {
       throw new Error("params missing")
     }
