@@ -69,6 +69,12 @@ export interface SendTransactionProps {
   utxos: RPC.UtxosByAddressesEntry[]
   privateKeys: PrivateKey[]
   clientProvider: ClientProvider
+
+  /**
+   * The change address of the transaction, can be address string or
+   * Address Object that's created from the library
+   */
+  changeAddress: string | Address
 }
 
 export interface SendOutputProps {
@@ -84,7 +90,7 @@ export interface SendOutputProps {
   amount: bigint
 }
 
-export interface SendProps {
+export interface SendCommonProps {
   /**
    * The outputs of the transaction, each output has key
    * `recipient` and `amount`
@@ -102,7 +108,17 @@ export interface SendProps {
    * The priority fee of the transaction. Defaults to `0`.
    */
   priorityFee?: number
+}
 
+export interface AddressSendProps {
+  /**
+   * Optional, the change address of the transaction, can be address string or
+   * Address Object that's created from the library
+   */
+  changeAddress?: string | Address
+}
+
+export interface AccountSendProps {
   /**
    * The change address of the transaction, can be address string or
    * Address Object that's created from the library

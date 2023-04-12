@@ -1,6 +1,11 @@
 import { PrivateKey } from "../wasm/kaspa_wasm"
 import { ClientProvider } from "./ClientProvider"
-import { RPC, SendAllProps, SendProps } from "../types/custom-types"
+import {
+  AddressSendProps,
+  RPC,
+  SendAllProps,
+  SendCommonProps,
+} from "../types/custom-types"
 import { Utils } from "./Utils"
 import { Config } from "./Wallet"
 
@@ -69,7 +74,8 @@ export class Address {
     changeAddress = this.address,
     fee = Config.DEFAULT_FEE,
     priorityFee = 0,
-  }: SendProps): Promise<RPC.SubmitTransactionResponseMessage> {
+  }: AddressSendProps &
+    SendCommonProps): Promise<RPC.SubmitTransactionResponseMessage> {
     if (outputs.length === 0 || !changeAddress) {
       throw new Error("params missing")
     }
