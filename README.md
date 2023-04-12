@@ -13,7 +13,6 @@
 ## Installation
 
 ```bash
-
 npm install kaspa-rpc-client
 ```
 
