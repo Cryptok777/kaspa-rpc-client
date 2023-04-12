@@ -252,8 +252,8 @@ const tx2 = await account.compound(address1)
 #### Get balance and available UTXOs for an Account
 
 ```typescript
-const balance = await account1.balance()
-const utxos = await account1.utxos()
+const balance = await account.balance()
+const utxos = await account.utxos()
 ```
 
 ### Address APIs
