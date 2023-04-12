@@ -173,7 +173,9 @@ It's recommended to use the `Wallet.account()` to derive an account, see more de
 
 #### Derive Addresses from an Account
 
-You can use the following methods to derive addresses from an account, the addres index is integer
+You can use `Account.address` or `Account.addresses` methods to derive addresses from an account, the addres index is integer.
+
+See the following examples:
 
 ```typescript
 const { AddressType, Wallet, ClientWrapper } = require("kaspa-rpc-client")
@@ -261,6 +263,8 @@ It's recommended to use the `Account.address()` to derive an Address, see more d
 To send a transcation from an `Address`, define the outputs and the change address, then call the `send()` method.
 
 `Address.send()` will scan for all available UTXOs from the address, and select the UTXOs that are enough to cover the transaction amount and fee. If there are not enough UTXOs, it will throw an error.
+
+See the following examples:
 
 ```typescript
 const { Wallet, ClientWrapper } = require("kaspa-rpc-client")
