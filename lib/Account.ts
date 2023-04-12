@@ -73,7 +73,7 @@ export class Account {
   }
 
   /**
-   * Get an address at `index` with  `type`,
+   * Get an address at `index` with `type`,
    * which could be recieve/change
    */
   async address(index = 0, type: AddressType = AddressType.Receive) {
@@ -110,8 +110,9 @@ export class Account {
    *
    * Addresses without UTXOs will be filtered
    *
-   * You don't have to explicitly call this method to before calling
-   * other method like `send` or `balance`, as it will be taken care of.
+   * You don't have to explicitly call this method before calling
+   * other methods like `send` or `balance`, as it will be taken care of
+   * by the library.
    */
   async scan() {
     // Scan all addresses with balance
@@ -180,7 +181,9 @@ export class Account {
   }
 
   /**
-   * Send `amount` to `recipient`, the UTXOs used for transaction will
+   * Sends transaction, where `ouputs` can be multiple `recipient`
+   * 
+   * The UTXOs used for transaction will
    * be randomly selected across all addresses in this `Account`
    */
   async send({

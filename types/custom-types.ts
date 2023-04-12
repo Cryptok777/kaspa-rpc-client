@@ -83,6 +83,7 @@ export interface SendOutputProps {
    */
   amount: bigint
 }
+
 export interface SendProps {
   /**
    * The outputs of the transaction, each output has key

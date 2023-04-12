@@ -23,7 +23,7 @@ export class Address {
   }
 
   /**
-   * Sends all the available balance to the specified recipient
+   * Sends all the available balance to the specified `recipient`
    */
   async sendAll({
     recipient,
@@ -61,7 +61,8 @@ export class Address {
   }
 
   /**
-   * Sends `amount` to `recipient`
+   * Create and submit a transaction, where `ouputs` can contain
+   *  multiple `recipient`
    */
   async send({
     outputs,
