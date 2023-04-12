@@ -5,7 +5,8 @@
 - This library is written in TypeScript, with methods auto-generated from the Kaspa [RPC server](https://github.com/kaspanet/kaspad/blob/c5aade7e7fe2ada7d97a0e30df9b4b36b4842f9e/infrastructure/network/netadapter/server/grpcserver/protowire/rpc.md#protowire.NotifyUtxosChangedRequestMessage). All requests and responses are typed for easier development.
 - Supports multiple RPC connections with different servers and automatically handles failover if one of the servers fails to connect.
 - **[NEW]** Implemented Wallet, Account and Address feature, using the WASM library, let you create, manage the wallet and send transactions with zero effort.
-
+## Live Demo
+Check out [here](https://codesandbox.io/p/sandbox/kaspa-rpc-client-demo-3k180p?file=%2Fsrc%2Fwallet.ts&selection=%5B%7B%22endColumn%22%3A15%2C%22endLineNumber%22%3A6%2C%22startColumn%22%3A15%2C%22startLineNumber%22%3A6%7D%5D) for live demo where you can test the SDK directly in the browser
 ## Requirements
 
 - `Node >= 16.14`
