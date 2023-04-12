@@ -318,6 +318,9 @@ The above should cover most of the use cases. If you need more advanced features
 
 You can also checkout [demo/wallet.ts](https://github.com/Cryptok777/kaspa-rpc-client/blob/main/demo/wallet.ts) for full working example.
 
+## Full API Docs
+
+Full references of the classes/interfaces can be found [here](https://cryptok777.github.io/kaspa-rpc-client/)
 ## Contribute
 
 If you find that the RPC endpoint you are looking for is not exposed by the client library, feel free to create a pull request to add it:
