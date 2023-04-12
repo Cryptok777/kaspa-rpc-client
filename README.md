@@ -169,11 +169,14 @@ const account_99 = await wallet.account(BigInt(99))
 
 #### Derive an Account
 
+A `Wallet` can have many `Accounts`.
+
 It's recommended to use the `Wallet.account()` to derive an account, see more details in the Wallet APIs section. However you can also use `Account.fromPhrase()`, `Account.fromSeed()` or `Account.fromPrivateKey()` to import an account. See API doc for more details.
 
 #### Derive Addresses from an Account
+An `Account` can have many `Addresses`, with different types (`Receive`, `Change`)
 
-You can use `Account.address` or `Account.addresses` methods to derive addresses from an account, the addres index is integer.
+You can use `Account.address` or `Account.addresses` methods to derive addresses from an `Account`, the address index is integer.
 
 See the following examples:
 
@@ -256,7 +259,9 @@ const utxos = await account1.utxos()
 
 #### Derive an Address
 
-It's recommended to use the `Account.address()` to derive an Address, see more details in the Account APIs section.
+An `Account` can have many `Addresses`, with different types (`Receive`, `Change`)
+
+It's recommended to use the `Account.address()` to derive an `Address`, see more details in the `Account APIs` section.
 
 #### Send a transaction
 
