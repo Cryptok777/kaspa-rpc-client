@@ -15,8 +15,7 @@
 
 ```bash
 
-npm install  kaspa-rpc-client
-
+npm install kaspa-rpc-client
 ```
 
 ## Use the RPC client
@@ -35,7 +34,7 @@ You can pass multiple hosts to the wrapper, the wrappper will figure out which o
 
 ```javascript
 const wrapper = new ClientWrapper({
-  hosts: ["kaspadns.kaspacalc.net:16110"],
+  hosts: ["seeder2.kaspad.net:16110"],
 
   verbose: true,
 })
@@ -104,13 +103,13 @@ const { uid } = client.subscribeUtxosChanged(
 client.unsubscribeUtxosChanged(uid) // This cancels the listener
 ```
 
-Full example code can be found in [demo.ts](https://github.com/Cryptok777/kaspa-rpc-client/blob/main/demo.ts). Refer to the [API doc for all available methods](https://github.com/Cryptok777/kaspa-rpc-client/blob/main/lib/Client.ts).
+Full example code can be found in [demo/rpc.ts](https://github.com/Cryptok777/kaspa-rpc-client/blob/main/demo/rpc.ts). Refer to the [API doc for all available methods](https://cryptok777.github.io/kaspa-rpc-client/classes/lib_Client.Client.html).
 
-You can also find [interface for all requests/response](https://github.com/Cryptok777/kaspa-rpc-client/blob/main/types/rpc.d.ts), but it's likely that your IDE will show this information for you since it's written in TypeScript
+You can also find [interface for all requests/response](https://cryptok777.github.io/kaspa-rpc-client/modules/types_custom_types.RPC.html), but it's likely that your IDE will show this information for you since it's written in TypeScript
 
-## Use the Integrated Kaspa Wallet
+## [NEW] Use Kaspa Wallet APIs
 
-> Disclaimer: This is a preview version, it's not ready for production yet. Please use it at your own risk.
+> Disclaimer: This is a preview version and for demo & research purpose only. It's not ready for production yet. Please use it at your own risk.
 
 We built a super simple wallet interface, using the WASM library, let you create, manage the wallet and send transactions with zero effort.
 
@@ -120,7 +119,7 @@ To create a wallet, you will need to pass in the `client`, as it's needed to mak
 
 It's recommended to use the `ClientWrapper` to get the client, however you can also implement your own client, as long as it implements the `ClientProvider` interface.
 
-#### Create a new client to make RPC calls
+#### Create a new client so the Wallet class can use it
 
 ```typescript
 const wrapper = new ClientWrapper({
@@ -135,7 +134,7 @@ const client = await wrapper.getClient()
 ##### With random mnemonic
 
 ```typescript
-const { Wallet } = require('kaspa-rpc-client')
+const { Wallet } = require("kaspa-rpc-client")
 
 const { phrase, entropy } = Wallet.randomMnemonic()
 const wallet = Wallet.fromPhrase(client, phrase)
@@ -144,7 +143,7 @@ const wallet = Wallet.fromPhrase(client, phrase)
 ##### From a mnemonic
 
 ```typescript
-const { Wallet } = require('kaspa-rpc-client')
+const { Wallet } = require("kaspa-rpc-client")
 
 const wallet = Wallet.fromPhrase(client, "YOUR_MNEMONIC")
 ```
@@ -152,7 +151,7 @@ const wallet = Wallet.fromPhrase(client, "YOUR_MNEMONIC")
 ##### From a seed, without passpharse
 
 ```typescript
-const { Wallet } = require('kaspa-rpc-client')
+const { Wallet } = require("kaspa-rpc-client")
 
 const wallet = Wallet.fromSeed(client, "YOUR_SEED")
 ```
@@ -160,7 +159,7 @@ const wallet = Wallet.fromSeed(client, "YOUR_SEED")
 ##### From a xPrv (master private key)
 
 ```typescript
-const { Wallet } = require('kaspa-rpc-client')
+const { Wallet } = require("kaspa-rpc-client")
 
 const wallet = Wallet.fromPrivateKey(client, "YOUR_XPRV")
 ```
@@ -170,8 +169,8 @@ const wallet = Wallet.fromPrivateKey(client, "YOUR_XPRV")
 You can pass in the account index, as `Bigint` to derive the account, the default index is `0n`.
 
 ```typescript
-const account = wallet.account()
-const account_99 = wallet.account(BigInt(99))
+const account = await wallet.account()
+const account_99 = await wallet.account(BigInt(99))
 ```
 
 ### Account APIs
@@ -185,7 +184,7 @@ It's recommended to use the `Wallet.account()` to derive an account, see more de
 You can use the following methods to derive addresses from an account, the addres index is integer
 
 ```typescript
-const { AddressType } = require('kaspa-rpc-client')
+const { AddressType } = require("kaspa-rpc-client")
 
 const address1 = await account.address() // Derive 1 Receive address, default index is 0
 const address2 = await account.address(1) // Derive 1 Receive address at index 1
@@ -199,7 +198,7 @@ const addresses2 = await account.addresses(0, 10, AddressType.Change) // Derive 
 
 To send a transcation from an `Account`, define the outputs and the change address, then call the `send()` method.
 
-The `send()` method will scan for all available UTXOs from the account, and select the UTXOs that are enough to cover the transaction amount and fee. If there are not enough UTXOs, it will throw an error.
+ `Account.send()` method will scan for all available UTXOs from the account, and select the UTXOs that are enough to cover the transaction amount and fee. If there are not enough UTXOs, it will throw an error.
 
 ```typescript
 const tx = await account.send({
@@ -215,23 +214,23 @@ const tx = await account.send({
   ],
   changeAddress: "CHANGE_ADDRESS",
   fee: BigInt(1000), // optional, if not passed, the fee will be calculated automatically
-  priorityFee: 5000, // optional, default is 0
+  priorityFee: 1000, // optional, default is 0
 })
 ```
 
 `amount` and `fee` should be `BigInt`, and the unit is sompi, `priorityFee` should be integer, and the unit is sompi.
 
-You can also use `Account.sendAll()` to send all available UTXOs to the specified address.
+`Account.sendAll()` sends all available UTXOs to the specified address.
 
 ```typescript
 const tx = await account.sendAll({
   recipient: "SOME_ADDRESS",
   fee: BigInt(1000), // optional, if not passed, the fee will be calculated automatically
-  priorityFee: 5000, // optional, default is 0
+  priorityFee: 1000, // optional, default is 0
 })
 ```
 
-`Account.compound()` works similarly to `sendAll`, and will send all available UTXOs first Recieve address in the `Account`, if `destination` is not specified
+`Account.compound()` works similarly to `Account.sendAll()`, and will send all available UTXOs first Recieve address in the `Account`, if `destination` is not specified
 
 ```typescript
 const tx = await account.compound()
@@ -247,7 +246,9 @@ const tx2 = await account.compound(address1)
 const balance = await account1.balance()
 const utxos = await account1.utxos()
 ```
+
 ### Address APIs
+
 #### Derive an Address
 
 It's recommended to use the `Account.address()` to derive an Address, see more details in the Account APIs section.
@@ -256,7 +257,7 @@ It's recommended to use the `Account.address()` to derive an Address, see more d
 
 To send a transcation from an `Address`, define the outputs and the change address, then call the `send()` method.
 
-The `send()` method will scan for all available UTXOs from the address, and select the UTXOs that are enough to cover the transaction amount and fee. If there are not enough UTXOs, it will throw an error.
+`Address.send()` will scan for all available UTXOs from the address, and select the UTXOs that are enough to cover the transaction amount and fee. If there are not enough UTXOs, it will throw an error.
 
 ```typescript
 const tx = await address.send({
@@ -272,19 +273,19 @@ const tx = await address.send({
   ],
   changeAddress: "CHANGE_ADDRESS", // optional, if not passed, the change will be sent to the address itself
   fee: BigInt(1000), // optional, if not passed, the fee will be calculated automatically
-  priorityFee: 5000, // optional, default is 0
+  priorityFee: 1000, // optional, default is 0
 })
 ```
 
 `amount` and `fee` should be `BigInt`, and the unit is sompi, `priorityFee` should be integer, and the unit is sompi.
 
-You can also use `Address.sendAll()` to send all available UTXOs to the specified address.
+`Address.sendAll()` sends all available UTXOs to the specified address.
 
 ```typescript
 const tx = await address.sendAll({
   recipient: "SOME_ADDRESS",
   fee: BigInt(1000), // optional, if not passed, the fee will be calculated automatically
-  priorityFee: 5000, // optional, default is 0
+  priorityFee: 1000, // optional, default is 0
 })
 ```
 
@@ -295,7 +296,9 @@ const balance = await address.balance()
 const utxos = await address.utxos()
 ```
 
-The above should cover most of the use cases. If you need more advanced features, check out the full API doc for more details.
+The above should cover most of the use cases. If you need more advanced features, check out the [full API doc](https://cryptok777.github.io/kaspa-rpc-client/classes/lib_Wallet.Wallet.html) for more details.
+
+You can also checkout [demo/wallet.ts]((https://github.com/Cryptok777/kaspa-rpc-client/blob/main/demo/wallet.ts)) for full working example.
 
 ## Contribute
 

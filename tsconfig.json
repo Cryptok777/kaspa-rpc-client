@@ -12,5 +12,12 @@
     "noImplicitAny": true,
     "skipLibCheck": true
   },
-  "exclude": ["node_modules", "demo.ts", "jest.config.js", "./dist/**/*", "./tests"]
+  "exclude": [
+    "node_modules",
+    "demo.ts",
+    "jest.config.js",
+    "./dist/**/*",
+    "./tests",
+    "./demo"
+  ]
 }
