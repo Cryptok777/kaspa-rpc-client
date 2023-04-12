@@ -1,7 +1,7 @@
 {
   "name": "kaspa-rpc-client",
   "description": "Kaspa gRPC client for Node.js, written in Typescript",
-  "version": "1.0.8",
+  "version": "1.0.9",
   "main": "dist/index.js",
   "repository": "https://github.com/Cryptok777/kaspa-rpc-client.git",
   "author": "Cryptok777",
@@ -42,7 +42,7 @@
   },
   "files": [
     "dist",
-    "client",
+    "rpc",
     "lib",
     "proto",
     "types",
