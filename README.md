@@ -23,7 +23,7 @@ Here's an example of how to use the Kaspa RPC Client library:
 
 ### Step 1: Import `ClientWrapper`
 
-```javascript
+```typescript
 const { ClientWrapper } = require("kaspa-rpc-client")
 ```
 
@@ -31,7 +31,7 @@ const { ClientWrapper } = require("kaspa-rpc-client")
 
 You can pass multiple hosts to the wrapper, the wrappper will figure out which one to use. You can also enable the verbose log by `verbose: true`
 
-```javascript
+```typescript
 const wrapper = new ClientWrapper({
   hosts: ["seeder2.kaspad.net:16110"],
 
@@ -45,7 +45,7 @@ await wrapper.initialize()
 
 The `.getClient()` method ensures that you will always get the server that is ready to handle requests
 
-```javascript
+```typescript
 const client = await wrapper.getClient()
 ```
 
@@ -53,7 +53,7 @@ const client = await wrapper.getClient()
 
 #### Get a block by hash
 
-```javascript
+```typescript
 const block = await client.getBlock({
   hash: "6ef1913d30316304254aa5ce6c34ff9dd2b519231bb80194d4b5e5449412e924",
 
@@ -63,7 +63,7 @@ const block = await client.getBlock({
 
 #### Get unspent transaction outputs (UTXOs) for a list of addresses
 
-```javascript
+```typescript
 const utxos = await client.getUtxosByAddresses({
   addresses: [
     "kaspa:qrrzeucwfetuty3qserqydw4z4ax9unxd23zwp7tndvg7cs3ls8dvwldeayv5",
@@ -73,7 +73,7 @@ const utxos = await client.getUtxosByAddresses({
 
 #### Get balance by address
 
-```javascript
+```typescript
 const balance = await client.getBalanceByAddress({
   address:
     "kaspa:qrrzeucwfetuty3qserqydw4z4ax9unxd23zwp7tndvg7cs3ls8dvwldeayv5",
@@ -84,7 +84,7 @@ const balance = await client.getBalanceByAddress({
 
 All listener methods will return a uid where you can call its corresponding unsubscribe method to stop the listener.
 
-```javascript
+```typescript
 const { uid } = client.subscribeUtxosChanged(
   {
     addresses: [
@@ -118,9 +118,11 @@ To create a wallet, you will need to pass in the `client`, as it's needed to mak
 
 It's recommended to use the `ClientWrapper` to get the client, however you can also implement your own client, as long as it implements the `ClientProvider` interface.
 
-#### Create a new client so the Wallet class can use it
+#### First, create a new client so the Wallet class can use it
 
 ```typescript
+const { ClientWrapper, Wallet } = require("kaspa-rpc-client")
+
 const wrapper = new ClientWrapper({
   hosts: ["seeder2.kaspad.net:16110"],
 })
@@ -133,8 +135,6 @@ const client = await wrapper.getClient()
 ##### With random mnemonic
 
 ```typescript
-const { Wallet } = require("kaspa-rpc-client")
-
 const { phrase, entropy } = Wallet.randomMnemonic()
 const wallet = Wallet.fromPhrase(client, phrase)
 ```
@@ -142,24 +142,18 @@ const wallet = Wallet.fromPhrase(client, phrase)
 ##### From a mnemonic
 
 ```typescript
-const { Wallet } = require("kaspa-rpc-client")
-
 const wallet = Wallet.fromPhrase(client, "YOUR_MNEMONIC")
 ```
 
 ##### From a seed, without passpharse
 
 ```typescript
-const { Wallet } = require("kaspa-rpc-client")
-
 const wallet = Wallet.fromSeed(client, "YOUR_SEED")
 ```
 
 ##### From a xPrv (master private key)
 
 ```typescript
-const { Wallet } = require("kaspa-rpc-client")
-
 const wallet = Wallet.fromPrivateKey(client, "YOUR_XPRV")
 ```
 
@@ -183,7 +177,18 @@ It's recommended to use the `Wallet.account()` to derive an account, see more de
 You can use the following methods to derive addresses from an account, the addres index is integer
 
 ```typescript
-const { AddressType } = require("kaspa-rpc-client")
+const { AddressType, Wallet, ClientWrapper } = require("kaspa-rpc-client")
+
+const wrapper = new ClientWrapper({
+  hosts: ["seeder2.kaspad.net:16110"],
+})
+await wrapper.initialize()
+const client = await wrapper.getClient()
+
+const { phrase, entropy } = Wallet.randomMnemonic()
+const wallet = Wallet.fromPhrase(client, phrase)
+
+const account = await wallet.account()
 
 const address1 = await account.address() // Derive 1 Receive address, default index is 0
 const address2 = await account.address(1) // Derive 1 Receive address at index 1
@@ -259,6 +264,20 @@ To send a transcation from an `Address`, define the outputs and the change addre
 `Address.send()` will scan for all available UTXOs from the address, and select the UTXOs that are enough to cover the transaction amount and fee. If there are not enough UTXOs, it will throw an error.
 
 ```typescript
+const { Wallet, ClientWrapper } = require("kaspa-rpc-client")
+
+const wrapper = new ClientWrapper({
+  hosts: ["seeder2.kaspad.net:16110"],
+})
+await wrapper.initialize()
+const client = await wrapper.getClient()
+
+const { phrase, entropy } = Wallet.randomMnemonic()
+const wallet = Wallet.fromPhrase(client, phrase)
+
+const account = await wallet.account()
+const address = await account.address()
+
 const tx = await address.send({
   outputs: [
     {
