@@ -224,20 +224,20 @@ function makeMutClosure(arg0, arg1, dtor, f) {
 
     return real;
 }
-function __wbg_adapter_52(arg0, arg1, arg2) {
-    wasm._dyn_core__ops__function__FnMut__A____Output___R_as_wasm_bindgen__closure__WasmClosure___describe__invoke__h99cc04b08d824b35(arg0, arg1, addHeapObject(arg2));
+function __wbg_adapter_54(arg0, arg1, arg2) {
+    wasm._dyn_core__ops__function__FnMut__A____Output___R_as_wasm_bindgen__closure__WasmClosure___describe__invoke__h0e33a75d7a1e43ec(arg0, arg1, addHeapObject(arg2));
 }
 
-function __wbg_adapter_55(arg0, arg1) {
-    wasm._dyn_core__ops__function__FnMut_____Output___R_as_wasm_bindgen__closure__WasmClosure___describe__invoke__h4c3e8ff6fcf1314c(arg0, arg1);
+function __wbg_adapter_57(arg0, arg1) {
+    wasm._dyn_core__ops__function__FnMut_____Output___R_as_wasm_bindgen__closure__WasmClosure___describe__invoke__he87520860a471314(arg0, arg1);
 }
 
-function __wbg_adapter_58(arg0, arg1, arg2) {
-    wasm._dyn_core__ops__function__FnMut__A____Output___R_as_wasm_bindgen__closure__WasmClosure___describe__invoke__h1433b3f4c03ac8d9(arg0, arg1, addHeapObject(arg2));
+function __wbg_adapter_60(arg0, arg1, arg2) {
+    wasm._dyn_core__ops__function__FnMut__A____Output___R_as_wasm_bindgen__closure__WasmClosure___describe__invoke__h675495322a5729be(arg0, arg1, addHeapObject(arg2));
 }
 
-function __wbg_adapter_63(arg0, arg1) {
-    wasm._dyn_core__ops__function__FnMut_____Output___R_as_wasm_bindgen__closure__WasmClosure___describe__invoke__h5ed8c88434b19645(arg0, arg1);
+function __wbg_adapter_65(arg0, arg1) {
+    wasm._dyn_core__ops__function__FnMut_____Output___R_as_wasm_bindgen__closure__WasmClosure___describe__invoke__h8000d0182d9660ab(arg0, arg1);
 }
 
 function handleError(f, args) {
@@ -247,13 +247,10 @@ function handleError(f, args) {
         wasm.__wbindgen_exn_store(addHeapObject(e));
     }
 }
-function __wbg_adapter_108(arg0, arg1, arg2, arg3) {
-    wasm.wasm_bindgen__convert__closures__invoke2_mut__h8c0aee77f1aad5c1(arg0, arg1, addHeapObject(arg2), addHeapObject(arg3));
+function __wbg_adapter_114(arg0, arg1, arg2, arg3) {
+    wasm.wasm_bindgen__convert__closures__invoke2_mut__h5f1c96a181010bab(arg0, arg1, addHeapObject(arg2), addHeapObject(arg3));
 }
 
-function getArrayU8FromWasm0(ptr, len) {
-    return getUint8Memory0().subarray(ptr / 1, ptr / 1 + len);
-}
 /**
 * Present panic logs to the user
 */
@@ -318,155 +315,10 @@ function _assertClass(instance, klass) {
     }
     return instance.ptr;
 }
-/**
-* is_transaction_output_dust returns whether or not the passed transaction output
-* amount is considered dust or not based on the configured minimum transaction
-* relay fee.
-*
-* Dust is defined in terms of the minimum transaction relay fee. In particular,
-* if the cost to the network to spend coins is more than 1/3 of the minimum
-* transaction relay fee, it is considered dust.
-*
-* It is exposed by [MiningManager] for use by transaction generators and wallets.
-* @param {TransactionOutput} transaction_output
-* @returns {boolean}
-*/
-module.exports.isTransactionOutputDust = function(transaction_output) {
-    _assertClass(transaction_output, TransactionOutput);
-    const ret = wasm.isTransactionOutputDust(transaction_output.ptr);
-    return ret !== 0;
-};
 
-/**
-* @returns {Keypair}
-*/
-module.exports.generate_random_keypair_not_secure = function() {
-    try {
-        const retptr = wasm.__wbindgen_add_to_stack_pointer(-16);
-        wasm.generate_random_keypair_not_secure(retptr);
-        var r0 = getInt32Memory0()[retptr / 4 + 0];
-        var r1 = getInt32Memory0()[retptr / 4 + 1];
-        var r2 = getInt32Memory0()[retptr / 4 + 2];
-        if (r2) {
-            throw takeObject(r1);
-        }
-        return Keypair.__wrap(r0);
-    } finally {
-        wasm.__wbindgen_add_to_stack_pointer(16);
-    }
-};
-
-/**
-* @param {string} text
-* @param {string} password
-* @returns {string}
-*/
-module.exports.encrypt = function(text, password) {
-    try {
-        const retptr = wasm.__wbindgen_add_to_stack_pointer(-16);
-        const ptr0 = passStringToWasm0(text, wasm.__wbindgen_malloc, wasm.__wbindgen_realloc);
-        const len0 = WASM_VECTOR_LEN;
-        const ptr1 = passStringToWasm0(password, wasm.__wbindgen_malloc, wasm.__wbindgen_realloc);
-        const len1 = WASM_VECTOR_LEN;
-        wasm.encrypt(retptr, ptr0, len0, ptr1, len1);
-        var r0 = getInt32Memory0()[retptr / 4 + 0];
-        var r1 = getInt32Memory0()[retptr / 4 + 1];
-        var r2 = getInt32Memory0()[retptr / 4 + 2];
-        var r3 = getInt32Memory0()[retptr / 4 + 3];
-        var ptr2 = r0;
-        var len2 = r1;
-        if (r3) {
-            ptr2 = 0; len2 = 0;
-            throw takeObject(r2);
-        }
-        return getStringFromWasm0(ptr2, len2);
-    } finally {
-        wasm.__wbindgen_add_to_stack_pointer(16);
-        wasm.__wbindgen_free(ptr2, len2);
-    }
-};
-
-/**
-* @param {string} text
-* @param {string} password
-* @returns {string}
-*/
-module.exports.decrypt = function(text, password) {
-    try {
-        const retptr = wasm.__wbindgen_add_to_stack_pointer(-16);
-        const ptr0 = passStringToWasm0(text, wasm.__wbindgen_malloc, wasm.__wbindgen_realloc);
-        const len0 = WASM_VECTOR_LEN;
-        const ptr1 = passStringToWasm0(password, wasm.__wbindgen_malloc, wasm.__wbindgen_realloc);
-        const len1 = WASM_VECTOR_LEN;
-        wasm.decrypt(retptr, ptr0, len0, ptr1, len1);
-        var r0 = getInt32Memory0()[retptr / 4 + 0];
-        var r1 = getInt32Memory0()[retptr / 4 + 1];
-        var r2 = getInt32Memory0()[retptr / 4 + 2];
-        var r3 = getInt32Memory0()[retptr / 4 + 3];
-        var ptr2 = r0;
-        var len2 = r1;
-        if (r3) {
-            ptr2 = 0; len2 = 0;
-            throw takeObject(r2);
-        }
-        return getStringFromWasm0(ptr2, len2);
-    } finally {
-        wasm.__wbindgen_add_to_stack_pointer(16);
-        wasm.__wbindgen_free(ptr2, len2);
-    }
-};
-
-/**
-* `signTransaction()` is a helper function to sign a transaction using a private key array or a signer array.
-* @param {MutableTransaction} mtx
-* @param {PrivateKey[] | Signer} signer
-* @param {boolean} verify_sig
-* @returns {MutableTransaction}
-*/
-module.exports.signTransaction = function(mtx, signer, verify_sig) {
-    try {
-        const retptr = wasm.__wbindgen_add_to_stack_pointer(-16);
-        _assertClass(mtx, MutableTransaction);
-        var ptr0 = mtx.__destroy_into_raw();
-        wasm.signTransaction(retptr, ptr0, addHeapObject(signer), verify_sig);
-        var r0 = getInt32Memory0()[retptr / 4 + 0];
-        var r1 = getInt32Memory0()[retptr / 4 + 1];
-        var r2 = getInt32Memory0()[retptr / 4 + 2];
-        if (r2) {
-            throw takeObject(r1);
-        }
-        return MutableTransaction.__wrap(r0);
-    } finally {
-        wasm.__wbindgen_add_to_stack_pointer(16);
-    }
-};
-
-/**
-* @param {any} script_hash
-* @param {PrivateKey} privkey
-* @returns {string}
-*/
-module.exports.signScriptHash = function(script_hash, privkey) {
-    try {
-        const retptr = wasm.__wbindgen_add_to_stack_pointer(-16);
-        _assertClass(privkey, PrivateKey);
-        wasm.signScriptHash(retptr, addHeapObject(script_hash), privkey.ptr);
-        var r0 = getInt32Memory0()[retptr / 4 + 0];
-        var r1 = getInt32Memory0()[retptr / 4 + 1];
-        var r2 = getInt32Memory0()[retptr / 4 + 2];
-        var r3 = getInt32Memory0()[retptr / 4 + 3];
-        var ptr0 = r0;
-        var len0 = r1;
-        if (r3) {
-            ptr0 = 0; len0 = 0;
-            throw takeObject(r2);
-        }
-        return getStringFromWasm0(ptr0, len0);
-    } finally {
-        wasm.__wbindgen_add_to_stack_pointer(16);
-        wasm.__wbindgen_free(ptr0, len0);
-    }
-};
+function getArrayU8FromWasm0(ptr, len) {
+    return getUint8Memory0().subarray(ptr / 1, ptr / 1 + len);
+}
 
 function passArray8ToWasm0(arg, malloc) {
     const ptr = malloc(arg.length * 1);
@@ -568,6 +420,156 @@ module.exports.calculateTransactionMass = function(tx, network_type, estimate_si
 };
 
 /**
+* @returns {Keypair}
+*/
+module.exports.generate_random_keypair_not_secure = function() {
+    try {
+        const retptr = wasm.__wbindgen_add_to_stack_pointer(-16);
+        wasm.generate_random_keypair_not_secure(retptr);
+        var r0 = getInt32Memory0()[retptr / 4 + 0];
+        var r1 = getInt32Memory0()[retptr / 4 + 1];
+        var r2 = getInt32Memory0()[retptr / 4 + 2];
+        if (r2) {
+            throw takeObject(r1);
+        }
+        return Keypair.__wrap(r0);
+    } finally {
+        wasm.__wbindgen_add_to_stack_pointer(16);
+    }
+};
+
+/**
+* `signTransaction()` is a helper function to sign a transaction using a private key array or a signer array.
+* @param {MutableTransaction} mtx
+* @param {PrivateKey[] | Signer} signer
+* @param {boolean} verify_sig
+* @returns {MutableTransaction}
+*/
+module.exports.signTransaction = function(mtx, signer, verify_sig) {
+    try {
+        const retptr = wasm.__wbindgen_add_to_stack_pointer(-16);
+        _assertClass(mtx, MutableTransaction);
+        var ptr0 = mtx.__destroy_into_raw();
+        wasm.signTransaction(retptr, ptr0, addHeapObject(signer), verify_sig);
+        var r0 = getInt32Memory0()[retptr / 4 + 0];
+        var r1 = getInt32Memory0()[retptr / 4 + 1];
+        var r2 = getInt32Memory0()[retptr / 4 + 2];
+        if (r2) {
+            throw takeObject(r1);
+        }
+        return MutableTransaction.__wrap(r0);
+    } finally {
+        wasm.__wbindgen_add_to_stack_pointer(16);
+    }
+};
+
+/**
+* @param {any} script_hash
+* @param {PrivateKey} privkey
+* @returns {string}
+*/
+module.exports.signScriptHash = function(script_hash, privkey) {
+    try {
+        const retptr = wasm.__wbindgen_add_to_stack_pointer(-16);
+        _assertClass(privkey, PrivateKey);
+        wasm.signScriptHash(retptr, addHeapObject(script_hash), privkey.ptr);
+        var r0 = getInt32Memory0()[retptr / 4 + 0];
+        var r1 = getInt32Memory0()[retptr / 4 + 1];
+        var r2 = getInt32Memory0()[retptr / 4 + 2];
+        var r3 = getInt32Memory0()[retptr / 4 + 3];
+        var ptr0 = r0;
+        var len0 = r1;
+        if (r3) {
+            ptr0 = 0; len0 = 0;
+            throw takeObject(r2);
+        }
+        return getStringFromWasm0(ptr0, len0);
+    } finally {
+        wasm.__wbindgen_add_to_stack_pointer(16);
+        wasm.__wbindgen_free(ptr0, len0);
+    }
+};
+
+/**
+* is_transaction_output_dust returns whether or not the passed transaction output
+* amount is considered dust or not based on the configured minimum transaction
+* relay fee.
+*
+* Dust is defined in terms of the minimum transaction relay fee. In particular,
+* if the cost to the network to spend coins is more than 1/3 of the minimum
+* transaction relay fee, it is considered dust.
+*
+* It is exposed by [MiningManager] for use by transaction generators and wallets.
+* @param {TransactionOutput} transaction_output
+* @returns {boolean}
+*/
+module.exports.isTransactionOutputDust = function(transaction_output) {
+    _assertClass(transaction_output, TransactionOutput);
+    const ret = wasm.isTransactionOutputDust(transaction_output.ptr);
+    return ret !== 0;
+};
+
+/**
+* @param {string} text
+* @param {string} password
+* @returns {string}
+*/
+module.exports.encrypt = function(text, password) {
+    try {
+        const retptr = wasm.__wbindgen_add_to_stack_pointer(-16);
+        const ptr0 = passStringToWasm0(text, wasm.__wbindgen_malloc, wasm.__wbindgen_realloc);
+        const len0 = WASM_VECTOR_LEN;
+        const ptr1 = passStringToWasm0(password, wasm.__wbindgen_malloc, wasm.__wbindgen_realloc);
+        const len1 = WASM_VECTOR_LEN;
+        wasm.encrypt(retptr, ptr0, len0, ptr1, len1);
+        var r0 = getInt32Memory0()[retptr / 4 + 0];
+        var r1 = getInt32Memory0()[retptr / 4 + 1];
+        var r2 = getInt32Memory0()[retptr / 4 + 2];
+        var r3 = getInt32Memory0()[retptr / 4 + 3];
+        var ptr2 = r0;
+        var len2 = r1;
+        if (r3) {
+            ptr2 = 0; len2 = 0;
+            throw takeObject(r2);
+        }
+        return getStringFromWasm0(ptr2, len2);
+    } finally {
+        wasm.__wbindgen_add_to_stack_pointer(16);
+        wasm.__wbindgen_free(ptr2, len2);
+    }
+};
+
+/**
+* @param {string} text
+* @param {string} password
+* @returns {string}
+*/
+module.exports.decrypt = function(text, password) {
+    try {
+        const retptr = wasm.__wbindgen_add_to_stack_pointer(-16);
+        const ptr0 = passStringToWasm0(text, wasm.__wbindgen_malloc, wasm.__wbindgen_realloc);
+        const len0 = WASM_VECTOR_LEN;
+        const ptr1 = passStringToWasm0(password, wasm.__wbindgen_malloc, wasm.__wbindgen_realloc);
+        const len1 = WASM_VECTOR_LEN;
+        wasm.decrypt(retptr, ptr0, len0, ptr1, len1);
+        var r0 = getInt32Memory0()[retptr / 4 + 0];
+        var r1 = getInt32Memory0()[retptr / 4 + 1];
+        var r2 = getInt32Memory0()[retptr / 4 + 2];
+        var r3 = getInt32Memory0()[retptr / 4 + 3];
+        var ptr2 = r0;
+        var len2 = r1;
+        if (r3) {
+            ptr2 = 0; len2 = 0;
+            throw takeObject(r2);
+        }
+        return getStringFromWasm0(ptr2, len2);
+    } finally {
+        wasm.__wbindgen_add_to_stack_pointer(16);
+        wasm.__wbindgen_free(ptr2, len2);
+    }
+};
+
+/**
 * Supported languages.
 *
 * Presently only English is specified by the BIP39 standard
@@ -599,30 +601,15 @@ ScriptHash:8,"8":"ScriptHash", });
 */
 module.exports.Encoding = Object.freeze({ Borsh:0,"0":"Borsh",SerdeJson:1,"1":"SerdeJson", });
 /**
-* [`NotificationMode`] controls notification delivery process
+* UtxoOrdering enum denotes UTXO sort order (`Unordered`, `AscendingAmount`, `AscendingDaaScore`)
 */
-module.exports.NotificationMode = Object.freeze({
-/**
-* Local notifier is used for notification processing.
-*
-* Multiple listeners can register and subscribe independently.
-*/
-MultiListeners:0,"0":"MultiListeners",
-/**
-* No notifier is present, notifications are relayed
-* directly through the internal channel to a single listener.
-*/
-Direct:1,"1":"Direct", });
-/**
-*/
-module.exports.NetworkType = Object.freeze({ Mainnet:0,"0":"Mainnet",Testnet:1,"1":"Testnet", });
+module.exports.UtxoOrdering = Object.freeze({ Unordered:0,"0":"Unordered",AscendingAmount:1,"1":"AscendingAmount",AscendingDaaScore:2,"2":"AscendingDaaScore", });
 /**
 */
 module.exports.AccountKind = Object.freeze({ V0:0,"0":"V0",Bip32:1,"1":"Bip32",MultiSig:2,"2":"MultiSig", });
 /**
-* UtxoOrdering enum denotes UTXO sort order (`Unordered`, `AscendingAmount`, `AscendingDaaScore`)
 */
-module.exports.UtxoOrdering = Object.freeze({ Unordered:0,"0":"Unordered",AscendingAmount:1,"1":"AscendingAmount",AscendingDaaScore:2,"2":"AscendingDaaScore", });
+module.exports.NetworkType = Object.freeze({ Mainnet:0,"0":"Mainnet",Testnet:1,"1":"Testnet", });
 /**
 * Wallet `Account` data structure. An account is typically a single
 * HD-key derivation (derived from a wallet or from an an external secret)
@@ -733,22 +720,6 @@ class Address {
         try {
             const retptr = wasm.__wbindgen_add_to_stack_pointer(-16);
             wasm.address_toString(retptr, this.ptr);
-            var r0 = getInt32Memory0()[retptr / 4 + 0];
-            var r1 = getInt32Memory0()[retptr / 4 + 1];
-            return getStringFromWasm0(r0, r1);
-        } finally {
-            wasm.__wbindgen_add_to_stack_pointer(16);
-            wasm.__wbindgen_free(r0, r1);
-        }
-    }
-    /**
-    * Convert an address to a string.
-    * @returns {string}
-    */
-    toJSON() {
-        try {
-            const retptr = wasm.__wbindgen_add_to_stack_pointer(-16);
-            wasm.address_toJSON(retptr, this.ptr);
             var r0 = getInt32Memory0()[retptr / 4 + 0];
             var r1 = getInt32Memory0()[retptr / 4 + 1];
             return getStringFromWasm0(r0, r1);
@@ -997,19 +968,6 @@ class Hash {
         return obj;
     }
 
-    toJSON() {
-        return {
-        };
-    }
-
-    toString() {
-        return JSON.stringify(this);
-    }
-
-    [inspect.custom]() {
-        return Object.assign(Object.create({constructor: this.constructor}), this.toJSON());
-    }
-
     __destroy_into_raw() {
         const ptr = this.ptr;
         this.ptr = 0;
@@ -1030,8 +988,99 @@ class Hash {
         const ret = wasm.hash_constructor(ptr0, len0);
         return Hash.__wrap(ret);
     }
+    /**
+    * @returns {string}
+    */
+    toString() {
+        try {
+            const retptr = wasm.__wbindgen_add_to_stack_pointer(-16);
+            wasm.hash_toString(retptr, this.ptr);
+            var r0 = getInt32Memory0()[retptr / 4 + 0];
+            var r1 = getInt32Memory0()[retptr / 4 + 1];
+            return getStringFromWasm0(r0, r1);
+        } finally {
+            wasm.__wbindgen_add_to_stack_pointer(16);
+            wasm.__wbindgen_free(r0, r1);
+        }
+    }
 }
 module.exports.Hash = Hash;
+/**
+*/
+class Header {
+
+    static __wrap(ptr) {
+        const obj = Object.create(Header.prototype);
+        obj.ptr = ptr;
+
+        return obj;
+    }
+
+    __destroy_into_raw() {
+        const ptr = this.ptr;
+        this.ptr = 0;
+
+        return ptr;
+    }
+
+    free() {
+        const ptr = this.__destroy_into_raw();
+        wasm.__wbg_header_free(ptr);
+    }
+    /**
+    * @param {number} version
+    * @param {Array<any>} parents_by_level_array
+    * @param {string} hash_merkle_root
+    * @param {string} accepted_id_merkle_root
+    * @param {string} utxo_commitment
+    * @param {bigint} timestamp
+    * @param {number} bits
+    * @param {bigint} nonce
+    * @param {bigint} daa_score
+    * @param {bigint} blue_work
+    * @param {bigint} blue_score
+    * @param {string} pruning_point
+    */
+    constructor(version, parents_by_level_array, hash_merkle_root, accepted_id_merkle_root, utxo_commitment, timestamp, bits, nonce, daa_score, blue_work, blue_score, pruning_point) {
+        try {
+            const retptr = wasm.__wbindgen_add_to_stack_pointer(-16);
+            const ptr0 = passStringToWasm0(hash_merkle_root, wasm.__wbindgen_malloc, wasm.__wbindgen_realloc);
+            const len0 = WASM_VECTOR_LEN;
+            const ptr1 = passStringToWasm0(accepted_id_merkle_root, wasm.__wbindgen_malloc, wasm.__wbindgen_realloc);
+            const len1 = WASM_VECTOR_LEN;
+            const ptr2 = passStringToWasm0(utxo_commitment, wasm.__wbindgen_malloc, wasm.__wbindgen_realloc);
+            const len2 = WASM_VECTOR_LEN;
+            const ptr3 = passStringToWasm0(pruning_point, wasm.__wbindgen_malloc, wasm.__wbindgen_realloc);
+            const len3 = WASM_VECTOR_LEN;
+            wasm.header_new(retptr, version, addHeapObject(parents_by_level_array), ptr0, len0, ptr1, len1, ptr2, len2, timestamp, bits, nonce, daa_score, blue_work, blue_score, ptr3, len3);
+            var r0 = getInt32Memory0()[retptr / 4 + 0];
+            var r1 = getInt32Memory0()[retptr / 4 + 1];
+            var r2 = getInt32Memory0()[retptr / 4 + 2];
+            if (r2) {
+                throw takeObject(r1);
+            }
+            return Header.__wrap(r0);
+        } finally {
+            wasm.__wbindgen_add_to_stack_pointer(16);
+        }
+    }
+    /**
+    * @returns {string}
+    */
+    calculateHash() {
+        try {
+            const retptr = wasm.__wbindgen_add_to_stack_pointer(-16);
+            wasm.header_calculateHash(retptr, this.ptr);
+            var r0 = getInt32Memory0()[retptr / 4 + 0];
+            var r1 = getInt32Memory0()[retptr / 4 + 1];
+            return getStringFromWasm0(r0, r1);
+        } finally {
+            wasm.__wbindgen_add_to_stack_pointer(16);
+            wasm.__wbindgen_free(r0, r1);
+        }
+    }
+}
+module.exports.Header = Header;
 /**
 * Data structure that contains a secret and public keys.
 */
@@ -1348,6 +1397,29 @@ class MutableTransaction {
         _assertClass(entries, UtxoEntries);
         const ret = wasm.mutabletransaction_new(tx.ptr, entries.ptr);
         return MutableTransaction.__wrap(ret);
+    }
+    /**
+    * @returns {string}
+    */
+    get id() {
+        try {
+            const retptr = wasm.__wbindgen_add_to_stack_pointer(-16);
+            wasm.mutabletransaction_id(retptr, this.ptr);
+            var r0 = getInt32Memory0()[retptr / 4 + 0];
+            var r1 = getInt32Memory0()[retptr / 4 + 1];
+            var r2 = getInt32Memory0()[retptr / 4 + 2];
+            var r3 = getInt32Memory0()[retptr / 4 + 3];
+            var ptr0 = r0;
+            var len0 = r1;
+            if (r3) {
+                ptr0 = 0; len0 = 0;
+                throw takeObject(r2);
+            }
+            return getStringFromWasm0(ptr0, len0);
+        } finally {
+            wasm.__wbindgen_add_to_stack_pointer(16);
+            wasm.__wbindgen_free(ptr0, len0);
+        }
     }
     /**
     * @returns {string}
@@ -2120,6 +2192,196 @@ class RpcClient {
 }
 module.exports.RpcClient = RpcClient;
 /**
+*
+*  ScriptBuilder provides a facility for building custom scripts. It allows
+* you to push opcodes, ints, and data while respecting canonical encoding. In
+* general it does not ensure the script will execute correctly, however any
+* data pushes which would exceed the maximum allowed script engine limits and
+* are therefore guaranteed not to execute will not be pushed and will result in
+* the Script function returning an error.
+*/
+class ScriptBuilder {
+
+    static __wrap(ptr) {
+        const obj = Object.create(ScriptBuilder.prototype);
+        obj.ptr = ptr;
+
+        return obj;
+    }
+
+    __destroy_into_raw() {
+        const ptr = this.ptr;
+        this.ptr = 0;
+
+        return ptr;
+    }
+
+    free() {
+        const ptr = this.__destroy_into_raw();
+        wasm.__wbg_scriptbuilder_free(ptr);
+    }
+    /**
+    * Get script bytes represented by a hex string.
+    * @returns {string}
+    */
+    script() {
+        try {
+            const retptr = wasm.__wbindgen_add_to_stack_pointer(-16);
+            wasm.scriptbuilder_script(retptr, this.ptr);
+            var r0 = getInt32Memory0()[retptr / 4 + 0];
+            var r1 = getInt32Memory0()[retptr / 4 + 1];
+            return getStringFromWasm0(r0, r1);
+        } finally {
+            wasm.__wbindgen_add_to_stack_pointer(16);
+            wasm.__wbindgen_free(r0, r1);
+        }
+    }
+    /**
+    * Drains (empties) the script builder, returning the
+    * script bytes represented by a hex string.
+    * @returns {string}
+    */
+    drain() {
+        try {
+            const retptr = wasm.__wbindgen_add_to_stack_pointer(-16);
+            wasm.scriptbuilder_drain(retptr, this.ptr);
+            var r0 = getInt32Memory0()[retptr / 4 + 0];
+            var r1 = getInt32Memory0()[retptr / 4 + 1];
+            return getStringFromWasm0(r0, r1);
+        } finally {
+            wasm.__wbindgen_add_to_stack_pointer(16);
+            wasm.__wbindgen_free(r0, r1);
+        }
+    }
+    /**
+    * Pushes the passed opcode to the end of the script. The script will not
+    * be modified if pushing the opcode would cause the script to exceed the
+    * maximum allowed script engine size.
+    * @param {number} opcode
+    * @returns {ScriptBuilder}
+    */
+    addOp(opcode) {
+        try {
+            const retptr = wasm.__wbindgen_add_to_stack_pointer(-16);
+            wasm.scriptbuilder_addOp(retptr, this.ptr, opcode);
+            var r0 = getInt32Memory0()[retptr / 4 + 0];
+            var r1 = getInt32Memory0()[retptr / 4 + 1];
+            var r2 = getInt32Memory0()[retptr / 4 + 2];
+            if (r2) {
+                throw takeObject(r1);
+            }
+            return ScriptBuilder.__wrap(r0);
+        } finally {
+            wasm.__wbindgen_add_to_stack_pointer(16);
+        }
+    }
+    /**
+    * @param {any} opcodes
+    * @returns {ScriptBuilder}
+    */
+    addOps(opcodes) {
+        try {
+            const retptr = wasm.__wbindgen_add_to_stack_pointer(-16);
+            wasm.scriptbuilder_addOps(retptr, this.ptr, addHeapObject(opcodes));
+            var r0 = getInt32Memory0()[retptr / 4 + 0];
+            var r1 = getInt32Memory0()[retptr / 4 + 1];
+            var r2 = getInt32Memory0()[retptr / 4 + 2];
+            if (r2) {
+                throw takeObject(r1);
+            }
+            return ScriptBuilder.__wrap(r0);
+        } finally {
+            wasm.__wbindgen_add_to_stack_pointer(16);
+        }
+    }
+    /**
+    * AddData pushes the passed data to the end of the script. It automatically
+    * chooses canonical opcodes depending on the length of the data.
+    *
+    * A zero length buffer will lead to a push of empty data onto the stack (Op0 = OpFalse)
+    * and any push of data greater than [`MAX_SCRIPT_ELEMENT_SIZE`] will not modify
+    * the script since that is not allowed by the script engine.
+    *
+    * Also, the script will not be modified if pushing the data would cause the script to
+    * exceed the maximum allowed script engine size [`MAX_SCRIPTS_SIZE`].
+    * @param {any} data
+    * @returns {ScriptBuilder}
+    */
+    addData(data) {
+        try {
+            const retptr = wasm.__wbindgen_add_to_stack_pointer(-16);
+            wasm.scriptbuilder_addData(retptr, this.ptr, addHeapObject(data));
+            var r0 = getInt32Memory0()[retptr / 4 + 0];
+            var r1 = getInt32Memory0()[retptr / 4 + 1];
+            var r2 = getInt32Memory0()[retptr / 4 + 2];
+            if (r2) {
+                throw takeObject(r1);
+            }
+            return ScriptBuilder.__wrap(r0);
+        } finally {
+            wasm.__wbindgen_add_to_stack_pointer(16);
+        }
+    }
+    /**
+    * @param {bigint} val
+    * @returns {ScriptBuilder}
+    */
+    addI64(val) {
+        try {
+            const retptr = wasm.__wbindgen_add_to_stack_pointer(-16);
+            wasm.scriptbuilder_addI64(retptr, this.ptr, val);
+            var r0 = getInt32Memory0()[retptr / 4 + 0];
+            var r1 = getInt32Memory0()[retptr / 4 + 1];
+            var r2 = getInt32Memory0()[retptr / 4 + 2];
+            if (r2) {
+                throw takeObject(r1);
+            }
+            return ScriptBuilder.__wrap(r0);
+        } finally {
+            wasm.__wbindgen_add_to_stack_pointer(16);
+        }
+    }
+    /**
+    * @param {bigint} lock_time
+    * @returns {ScriptBuilder}
+    */
+    addLockTime(lock_time) {
+        try {
+            const retptr = wasm.__wbindgen_add_to_stack_pointer(-16);
+            wasm.scriptbuilder_addLockTime(retptr, this.ptr, lock_time);
+            var r0 = getInt32Memory0()[retptr / 4 + 0];
+            var r1 = getInt32Memory0()[retptr / 4 + 1];
+            var r2 = getInt32Memory0()[retptr / 4 + 2];
+            if (r2) {
+                throw takeObject(r1);
+            }
+            return ScriptBuilder.__wrap(r0);
+        } finally {
+            wasm.__wbindgen_add_to_stack_pointer(16);
+        }
+    }
+    /**
+    * @param {bigint} sequence
+    * @returns {ScriptBuilder}
+    */
+    addSequence(sequence) {
+        try {
+            const retptr = wasm.__wbindgen_add_to_stack_pointer(-16);
+            wasm.scriptbuilder_addSequence(retptr, this.ptr, sequence);
+            var r0 = getInt32Memory0()[retptr / 4 + 0];
+            var r1 = getInt32Memory0()[retptr / 4 + 1];
+            var r2 = getInt32Memory0()[retptr / 4 + 2];
+            if (r2) {
+                throw takeObject(r1);
+            }
+            return ScriptBuilder.__wrap(r0);
+        } finally {
+            wasm.__wbindgen_add_to_stack_pointer(16);
+        }
+    }
+}
+module.exports.ScriptBuilder = ScriptBuilder;
+/**
 * Represents a Kaspad ScriptPublicKey
 */
 class ScriptPublicKey {
@@ -2358,6 +2620,46 @@ class Signer {
 }
 module.exports.Signer = Signer;
 /**
+*/
+class State {
+
+    static __wrap(ptr) {
+        const obj = Object.create(State.prototype);
+        obj.ptr = ptr;
+
+        return obj;
+    }
+
+    __destroy_into_raw() {
+        const ptr = this.ptr;
+        this.ptr = 0;
+
+        return ptr;
+    }
+
+    free() {
+        const ptr = this.__destroy_into_raw();
+        wasm.__wbg_state_free(ptr);
+    }
+    /**
+    * @param {Header} header
+    */
+    constructor(header) {
+        _assertClass(header, Header);
+        const ret = wasm.state_new(header.ptr);
+        return State.__wrap(ret);
+    }
+    /**
+    * @param {bigint} nonce
+    * @returns {Array<any>}
+    */
+    checkPow(nonce) {
+        const ret = wasm.state_checkPow(this.ptr, nonce);
+        return takeObject(ret);
+    }
+}
+module.exports.State = State;
+/**
 * Wallet file storage interface
 */
 class Store {
@@ -2477,11 +2779,19 @@ class Transaction {
     }
     /**
     * Returns the transaction ID
-    * @returns {Hash}
+    * @returns {string}
     */
     get id() {
-        const ret = wasm.transaction_id(this.ptr);
-        return Hash.__wrap(ret);
+        try {
+            const retptr = wasm.__wbindgen_add_to_stack_pointer(-16);
+            wasm.transaction_id(retptr, this.ptr);
+            var r0 = getInt32Memory0()[retptr / 4 + 0];
+            var r1 = getInt32Memory0()[retptr / 4 + 1];
+            return getStringFromWasm0(r0, r1);
+        } finally {
+            wasm.__wbindgen_add_to_stack_pointer(16);
+            wasm.__wbindgen_free(r0, r1);
+        }
     }
     /**
     * @param {any} js_value
@@ -2777,27 +3087,58 @@ class TransactionOutpoint {
         wasm.__wbg_transactionoutpoint_free(ptr);
     }
     /**
-    * @param {Hash} transaction_id
+    * @param {string} transaction_id
     * @param {number} index
     */
     constructor(transaction_id, index) {
-        _assertClass(transaction_id, Hash);
-        const ret = wasm.transactionoutpoint_new(transaction_id.ptr, index);
-        return TransactionOutpoint.__wrap(ret);
+        try {
+            const retptr = wasm.__wbindgen_add_to_stack_pointer(-16);
+            const ptr0 = passStringToWasm0(transaction_id, wasm.__wbindgen_malloc, wasm.__wbindgen_realloc);
+            const len0 = WASM_VECTOR_LEN;
+            wasm.transactionoutpoint_new(retptr, ptr0, len0, index);
+            var r0 = getInt32Memory0()[retptr / 4 + 0];
+            var r1 = getInt32Memory0()[retptr / 4 + 1];
+            var r2 = getInt32Memory0()[retptr / 4 + 2];
+            if (r2) {
+                throw takeObject(r1);
+            }
+            return TransactionOutpoint.__wrap(r0);
+        } finally {
+            wasm.__wbindgen_add_to_stack_pointer(16);
+        }
     }
     /**
-    * @returns {Hash}
+    * @returns {string}
     */
     get transactionId() {
-        const ret = wasm.transactionoutpoint_transactionId(this.ptr);
-        return Hash.__wrap(ret);
+        try {
+            const retptr = wasm.__wbindgen_add_to_stack_pointer(-16);
+            wasm.transactionoutpoint_transactionId(retptr, this.ptr);
+            var r0 = getInt32Memory0()[retptr / 4 + 0];
+            var r1 = getInt32Memory0()[retptr / 4 + 1];
+            return getStringFromWasm0(r0, r1);
+        } finally {
+            wasm.__wbindgen_add_to_stack_pointer(16);
+            wasm.__wbindgen_free(r0, r1);
+        }
     }
     /**
-    * @param {Hash} transaction_id
+    * @param {string} transaction_id
     */
     set transactionId(transaction_id) {
-        _assertClass(transaction_id, Hash);
-        wasm.transactionoutpoint_set_transactionId(this.ptr, transaction_id.ptr);
+        try {
+            const retptr = wasm.__wbindgen_add_to_stack_pointer(-16);
+            const ptr0 = passStringToWasm0(transaction_id, wasm.__wbindgen_malloc, wasm.__wbindgen_realloc);
+            const len0 = WASM_VECTOR_LEN;
+            wasm.transactionoutpoint_set_transactionId(retptr, this.ptr, ptr0, len0);
+            var r0 = getInt32Memory0()[retptr / 4 + 0];
+            var r1 = getInt32Memory0()[retptr / 4 + 1];
+            if (r1) {
+                throw takeObject(r0);
+            }
+        } finally {
+            wasm.__wbindgen_add_to_stack_pointer(16);
+        }
     }
     /**
     * @returns {number}
@@ -3083,6 +3424,210 @@ class TxUtxoEntryList {
 module.exports.TxUtxoEntryList = TxUtxoEntryList;
 /**
 */
+class Uint192 {
+
+    static __wrap(ptr) {
+        const obj = Object.create(Uint192.prototype);
+        obj.ptr = ptr;
+
+        return obj;
+    }
+
+    toJSON() {
+        return {
+            value: this.value,
+        };
+    }
+
+    toString() {
+        return JSON.stringify(this);
+    }
+
+    [inspect.custom]() {
+        return Object.assign(Object.create({constructor: this.constructor}), this.toJSON());
+    }
+
+    __destroy_into_raw() {
+        const ptr = this.ptr;
+        this.ptr = 0;
+
+        return ptr;
+    }
+
+    free() {
+        const ptr = this.__destroy_into_raw();
+        wasm.__wbg_uint192_free(ptr);
+    }
+    /**
+    * @param {bigint} n
+    */
+    constructor(n) {
+        const ret = wasm.uint192_new(n);
+        return Uint192.__wrap(ret);
+    }
+    /**
+    * @param {string} hex
+    * @returns {Uint192}
+    */
+    static fromHex(hex) {
+        try {
+            const retptr = wasm.__wbindgen_add_to_stack_pointer(-16);
+            const ptr0 = passStringToWasm0(hex, wasm.__wbindgen_malloc, wasm.__wbindgen_realloc);
+            const len0 = WASM_VECTOR_LEN;
+            wasm.uint192_fromHex(retptr, ptr0, len0);
+            var r0 = getInt32Memory0()[retptr / 4 + 0];
+            var r1 = getInt32Memory0()[retptr / 4 + 1];
+            var r2 = getInt32Memory0()[retptr / 4 + 2];
+            if (r2) {
+                throw takeObject(r1);
+            }
+            return Uint192.__wrap(r0);
+        } finally {
+            wasm.__wbindgen_add_to_stack_pointer(16);
+        }
+    }
+    /**
+    * @returns {bigint}
+    */
+    toBigInt() {
+        try {
+            const retptr = wasm.__wbindgen_add_to_stack_pointer(-16);
+            wasm.uint192_toBigInt(retptr, this.ptr);
+            var r0 = getInt32Memory0()[retptr / 4 + 0];
+            var r1 = getInt32Memory0()[retptr / 4 + 1];
+            var r2 = getInt32Memory0()[retptr / 4 + 2];
+            if (r2) {
+                throw takeObject(r1);
+            }
+            return takeObject(r0);
+        } finally {
+            wasm.__wbindgen_add_to_stack_pointer(16);
+        }
+    }
+    /**
+    * @returns {bigint}
+    */
+    get value() {
+        try {
+            const retptr = wasm.__wbindgen_add_to_stack_pointer(-16);
+            wasm.uint192_toBigInt(retptr, this.ptr);
+            var r0 = getInt32Memory0()[retptr / 4 + 0];
+            var r1 = getInt32Memory0()[retptr / 4 + 1];
+            var r2 = getInt32Memory0()[retptr / 4 + 2];
+            if (r2) {
+                throw takeObject(r1);
+            }
+            return takeObject(r0);
+        } finally {
+            wasm.__wbindgen_add_to_stack_pointer(16);
+        }
+    }
+}
+module.exports.Uint192 = Uint192;
+/**
+*/
+class Uint256 {
+
+    static __wrap(ptr) {
+        const obj = Object.create(Uint256.prototype);
+        obj.ptr = ptr;
+
+        return obj;
+    }
+
+    toJSON() {
+        return {
+            value: this.value,
+        };
+    }
+
+    toString() {
+        return JSON.stringify(this);
+    }
+
+    [inspect.custom]() {
+        return Object.assign(Object.create({constructor: this.constructor}), this.toJSON());
+    }
+
+    __destroy_into_raw() {
+        const ptr = this.ptr;
+        this.ptr = 0;
+
+        return ptr;
+    }
+
+    free() {
+        const ptr = this.__destroy_into_raw();
+        wasm.__wbg_uint256_free(ptr);
+    }
+    /**
+    * @param {bigint} n
+    */
+    constructor(n) {
+        const ret = wasm.uint256_new(n);
+        return Uint256.__wrap(ret);
+    }
+    /**
+    * @param {string} hex
+    * @returns {Uint256}
+    */
+    static fromHex(hex) {
+        try {
+            const retptr = wasm.__wbindgen_add_to_stack_pointer(-16);
+            const ptr0 = passStringToWasm0(hex, wasm.__wbindgen_malloc, wasm.__wbindgen_realloc);
+            const len0 = WASM_VECTOR_LEN;
+            wasm.uint256_fromHex(retptr, ptr0, len0);
+            var r0 = getInt32Memory0()[retptr / 4 + 0];
+            var r1 = getInt32Memory0()[retptr / 4 + 1];
+            var r2 = getInt32Memory0()[retptr / 4 + 2];
+            if (r2) {
+                throw takeObject(r1);
+            }
+            return Uint256.__wrap(r0);
+        } finally {
+            wasm.__wbindgen_add_to_stack_pointer(16);
+        }
+    }
+    /**
+    * @returns {bigint}
+    */
+    toBigInt() {
+        try {
+            const retptr = wasm.__wbindgen_add_to_stack_pointer(-16);
+            wasm.uint256_toBigInt(retptr, this.ptr);
+            var r0 = getInt32Memory0()[retptr / 4 + 0];
+            var r1 = getInt32Memory0()[retptr / 4 + 1];
+            var r2 = getInt32Memory0()[retptr / 4 + 2];
+            if (r2) {
+                throw takeObject(r1);
+            }
+            return takeObject(r0);
+        } finally {
+            wasm.__wbindgen_add_to_stack_pointer(16);
+        }
+    }
+    /**
+    * @returns {bigint}
+    */
+    get value() {
+        try {
+            const retptr = wasm.__wbindgen_add_to_stack_pointer(-16);
+            wasm.uint256_toBigInt(retptr, this.ptr);
+            var r0 = getInt32Memory0()[retptr / 4 + 0];
+            var r1 = getInt32Memory0()[retptr / 4 + 1];
+            var r2 = getInt32Memory0()[retptr / 4 + 2];
+            if (r2) {
+                throw takeObject(r1);
+            }
+            return takeObject(r0);
+        } finally {
+            wasm.__wbindgen_add_to_stack_pointer(16);
+        }
+    }
+}
+module.exports.Uint256 = Uint256;
+/**
+*/
 class UtxoEntries {
 
     static __wrap(ptr) {
@@ -3179,18 +3724,21 @@ class UtxoEntry {
         wasm.__wbg_utxoentry_free(ptr);
     }
     /**
-    * @returns {Address}
+    * @returns {Address | undefined}
     */
     get address() {
         const ret = wasm.__wbg_get_utxoentry_address(this.ptr);
-        return Address.__wrap(ret);
+        return ret === 0 ? undefined : Address.__wrap(ret);
     }
     /**
-    * @param {Address} arg0
+    * @param {Address | undefined} arg0
     */
     set address(arg0) {
-        _assertClass(arg0, Address);
-        var ptr0 = arg0.__destroy_into_raw();
+        let ptr0 = 0;
+        if (!isLikeNone(arg0)) {
+            _assertClass(arg0, Address);
+            ptr0 = arg0.__destroy_into_raw();
+        }
         wasm.__wbg_set_utxoentry_address(this.ptr, ptr0);
     }
     /**
@@ -4051,6 +4599,16 @@ module.exports.__wbg_instanceof_ArrayBuffer_a69f02ee4c4f5065 = function(arg0) {
     return ret;
 };
 
+module.exports.__wbg_BigInt_5584c686fbfa65cf = function() { return handleError(function (arg0) {
+    const ret = BigInt(getObject(arg0));
+    return addHeapObject(ret);
+}, arguments) };
+
+module.exports.__wbg_toString_cec163b212643722 = function(arg0) {
+    const ret = getObject(arg0).toString();
+    return addHeapObject(ret);
+};
+
 module.exports.__wbg_call_9495de66fdbe016b = function() { return handleError(function (arg0, arg1, arg2) {
     const ret = getObject(arg0).call(getObject(arg1), getObject(arg2));
     return addHeapObject(ret);
@@ -4083,7 +4641,7 @@ module.exports.__wbg_new_9d3a9ce4282a18a8 = function(arg0, arg1) {
             const a = state0.a;
             state0.a = 0;
             try {
-                return __wbg_adapter_108(a, state0.b, arg0, arg1);
+                return __wbg_adapter_114(a, state0.b, arg0, arg1);
             } finally {
                 state0.a = a;
             }
@@ -4107,6 +4665,11 @@ module.exports.__wbg_then_ec5db6d509eb475f = function(arg0, arg1) {
 
 module.exports.__wbg_buffer_cf65c07de34b9a08 = function(arg0) {
     const ret = getObject(arg0).buffer;
+    return addHeapObject(ret);
+};
+
+module.exports.__wbg_newwithbyteoffsetandlength_9fb2f11355ecadf5 = function(arg0, arg1, arg2) {
+    const ret = new Uint8Array(getObject(arg0), arg1 >>> 0, arg2 >>> 0);
     return addHeapObject(ret);
 };
 
@@ -4143,6 +4706,79 @@ module.exports.__wbg_newwithlength_b56c882b57805732 = function(arg0) {
 module.exports.__wbg_subarray_7526649b91a252a6 = function(arg0, arg1, arg2) {
     const ret = getObject(arg0).subarray(arg1 >>> 0, arg2 >>> 0);
     return addHeapObject(ret);
+};
+
+module.exports.__wbg_getRandomValues_3774744e221a22ad = function() { return handleError(function (arg0, arg1) {
+    getObject(arg0).getRandomValues(getObject(arg1));
+}, arguments) };
+
+module.exports.__wbg_randomFillSync_e950366c42764a07 = function() { return handleError(function (arg0, arg1) {
+    getObject(arg0).randomFillSync(takeObject(arg1));
+}, arguments) };
+
+module.exports.__wbg_crypto_70a96de3b6b73dac = function(arg0) {
+    const ret = getObject(arg0).crypto;
+    return addHeapObject(ret);
+};
+
+module.exports.__wbg_process_dd1577445152112e = function(arg0) {
+    const ret = getObject(arg0).process;
+    return addHeapObject(ret);
+};
+
+module.exports.__wbg_versions_58036bec3add9e6f = function(arg0) {
+    const ret = getObject(arg0).versions;
+    return addHeapObject(ret);
+};
+
+module.exports.__wbg_node_6a9d28205ed5b0d8 = function(arg0) {
+    const ret = getObject(arg0).node;
+    return addHeapObject(ret);
+};
+
+module.exports.__wbg_msCrypto_adbc770ec9eca9c7 = function(arg0) {
+    const ret = getObject(arg0).msCrypto;
+    return addHeapObject(ret);
+};
+
+module.exports.__wbg_require_f05d779769764e82 = function() { return handleError(function () {
+    const ret = module.require;
+    return addHeapObject(ret);
+}, arguments) };
+
+module.exports.__wbg_apply_5435e78b95a524a6 = function() { return handleError(function (arg0, arg1, arg2) {
+    const ret = Reflect.apply(getObject(arg0), getObject(arg1), getObject(arg2));
+    return addHeapObject(ret);
+}, arguments) };
+
+module.exports.__wbg_set_6aa458a4ebdb65cb = function() { return handleError(function (arg0, arg1, arg2) {
+    const ret = Reflect.set(getObject(arg0), getObject(arg1), getObject(arg2));
+    return ret;
+}, arguments) };
+
+module.exports.__wbindgen_is_bigint = function(arg0) {
+    const ret = typeof(getObject(arg0)) === 'bigint';
+    return ret;
+};
+
+module.exports.__wbindgen_bigint_from_u64 = function(arg0) {
+    const ret = BigInt.asUintN(64, arg0);
+    return addHeapObject(ret);
+};
+
+module.exports.__wbindgen_jsval_eq = function(arg0, arg1) {
+    const ret = getObject(arg0) === getObject(arg1);
+    return ret;
+};
+
+module.exports.__wbindgen_cb_drop = function(arg0) {
+    const obj = takeObject(arg0).original;
+    if (obj.cnt-- == 1) {
+        obj.a = 0;
+        return true;
+    }
+    const ret = false;
+    return ret;
 };
 
 module.exports.__wbg_innerHTML_7356669f2f5a2c18 = function(arg0, arg1) {
@@ -4186,6 +4822,11 @@ module.exports.__wbg_now_c644db5194be8437 = function(arg0) {
     return ret;
 };
 
+module.exports.__wbg_document_950215a728589a2d = function(arg0) {
+    const ret = getObject(arg0).document;
+    return isLikeNone(ret) ? 0 : addHeapObject(ret);
+};
+
 module.exports.__wbg_body_be46234bb33edd63 = function(arg0) {
     const ret = getObject(arg0).body;
     return isLikeNone(ret) ? 0 : addHeapObject(ret);
@@ -4195,84 +4836,6 @@ module.exports.__wbg_createElement_e2a0e21263eb5416 = function() { return handle
     const ret = getObject(arg0).createElement(getStringFromWasm0(arg1, arg2));
     return addHeapObject(ret);
 }, arguments) };
-
-module.exports.__wbg_document_950215a728589a2d = function(arg0) {
-    const ret = getObject(arg0).document;
-    return isLikeNone(ret) ? 0 : addHeapObject(ret);
-};
-
-module.exports.__wbg_randomFillSync_6894564c2c334c42 = function() { return handleError(function (arg0, arg1, arg2) {
-    getObject(arg0).randomFillSync(getArrayU8FromWasm0(arg1, arg2));
-}, arguments) };
-
-module.exports.__wbg_getRandomValues_805f1c3d65988a5a = function() { return handleError(function (arg0, arg1) {
-    getObject(arg0).getRandomValues(getObject(arg1));
-}, arguments) };
-
-module.exports.__wbg_crypto_e1d53a1d73fb10b8 = function(arg0) {
-    const ret = getObject(arg0).crypto;
-    return addHeapObject(ret);
-};
-
-module.exports.__wbg_process_038c26bf42b093f8 = function(arg0) {
-    const ret = getObject(arg0).process;
-    return addHeapObject(ret);
-};
-
-module.exports.__wbg_versions_ab37218d2f0b24a8 = function(arg0) {
-    const ret = getObject(arg0).versions;
-    return addHeapObject(ret);
-};
-
-module.exports.__wbg_node_080f4b19d15bc1fe = function(arg0) {
-    const ret = getObject(arg0).node;
-    return addHeapObject(ret);
-};
-
-module.exports.__wbg_msCrypto_6e7d3e1f92610cbb = function(arg0) {
-    const ret = getObject(arg0).msCrypto;
-    return addHeapObject(ret);
-};
-
-module.exports.__wbg_require_78a3dcfbdba9cbce = function() { return handleError(function () {
-    const ret = module.require;
-    return addHeapObject(ret);
-}, arguments) };
-
-module.exports.__wbg_apply_5435e78b95a524a6 = function() { return handleError(function (arg0, arg1, arg2) {
-    const ret = Reflect.apply(getObject(arg0), getObject(arg1), getObject(arg2));
-    return addHeapObject(ret);
-}, arguments) };
-
-module.exports.__wbg_set_6aa458a4ebdb65cb = function() { return handleError(function (arg0, arg1, arg2) {
-    const ret = Reflect.set(getObject(arg0), getObject(arg1), getObject(arg2));
-    return ret;
-}, arguments) };
-
-module.exports.__wbindgen_is_bigint = function(arg0) {
-    const ret = typeof(getObject(arg0)) === 'bigint';
-    return ret;
-};
-
-module.exports.__wbindgen_bigint_from_u64 = function(arg0) {
-    const ret = BigInt.asUintN(64, arg0);
-    return addHeapObject(ret);
-};
-
-module.exports.__wbindgen_jsval_eq = function(arg0, arg1) {
-    const ret = getObject(arg0) === getObject(arg1);
-    return ret;
-};
-
-module.exports.__wbindgen_cb_drop = function(arg0) {
-    const obj = takeObject(arg0).original;
-    if (obj.cnt-- == 1) {
-        obj.a = 0;
-        return true;
-    }
-    const ret = false;
-    return ret;
-};
 
 module.exports.__wbg_error_ca426489ad8f13ff = function(arg0, arg1) {
     try {
@@ -4319,18 +4882,9 @@ module.exports.__wbindgen_is_array = function(arg0) {
     return ret;
 };
 
-module.exports.__wbindgen_bigint_from_i64 = function(arg0) {
-    const ret = arg0;
+module.exports.__wbg_address_new = function(arg0) {
+    const ret = Address.__wrap(arg0);
     return addHeapObject(ret);
-};
-
-module.exports.__wbg_getwithrefkey_15c62c2b8546208d = function(arg0, arg1) {
-    const ret = getObject(arg0)[getObject(arg1)];
-    return addHeapObject(ret);
-};
-
-module.exports.__wbg_set_20cbc34131e76824 = function(arg0, arg1, arg2) {
-    getObject(arg0)[takeObject(arg1)] = takeObject(arg2);
 };
 
 module.exports.__wbindgen_is_falsy = function(arg0) {
@@ -4338,13 +4892,13 @@ module.exports.__wbindgen_is_falsy = function(arg0) {
     return ret;
 };
 
-module.exports.__wbg_txutxoentry_new = function(arg0) {
-    const ret = TxUtxoEntry.__wrap(arg0);
+module.exports.__wbg_uint256_new = function(arg0) {
+    const ret = Uint256.__wrap(arg0);
     return addHeapObject(ret);
 };
 
-module.exports.__wbg_address_new = function(arg0) {
-    const ret = Address.__wrap(arg0);
+module.exports.__wbg_txutxoentry_new = function(arg0) {
+    const ret = TxUtxoEntry.__wrap(arg0);
     return addHeapObject(ret);
 };
 
@@ -4358,8 +4912,27 @@ module.exports.__wbg_clearTimeout_76877dbc010e786d = function(arg0) {
     return addHeapObject(ret);
 };
 
-module.exports.__wbg_log_5e73b07532c2b0ea = function(arg0, arg1) {
+module.exports.__wbg_log_c5e20a54f20cb2d3 = function(arg0, arg1) {
     console.log(getStringFromWasm0(arg0, arg1));
+};
+
+module.exports.__wbindgen_bigint_from_i64 = function(arg0) {
+    const ret = arg0;
+    return addHeapObject(ret);
+};
+
+module.exports.__wbindgen_bigint_from_u128 = function(arg0, arg1) {
+    const ret = BigInt.asUintN(64, arg0) << BigInt(64) | BigInt.asUintN(64, arg1);
+    return addHeapObject(ret);
+};
+
+module.exports.__wbg_getwithrefkey_15c62c2b8546208d = function(arg0, arg1) {
+    const ret = getObject(arg0)[getObject(arg1)];
+    return addHeapObject(ret);
+};
+
+module.exports.__wbg_set_20cbc34131e76824 = function(arg0, arg1, arg2) {
+    getObject(arg0)[takeObject(arg1)] = takeObject(arg2);
 };
 
 module.exports.__wbindgen_jsval_loose_eq = function(arg0, arg1) {
@@ -4367,21 +4940,9 @@ module.exports.__wbindgen_jsval_loose_eq = function(arg0, arg1) {
     return ret;
 };
 
-module.exports.__wbg_data_af909e5dfe73e68c = function(arg0) {
-    const ret = getObject(arg0).data;
-    return addHeapObject(ret);
-};
-
-module.exports.__wbg_log_3c28499e191de9c9 = function(arg0, arg1) {
-    console.log(getStringFromWasm0(arg0, arg1));
-};
-
-module.exports.__wbg_warn_4c7424f622fc320d = function(arg0, arg1) {
-    console.warn(getStringFromWasm0(arg0, arg1));
-};
-
-module.exports.__wbg_error_05d0092975a19b61 = function(arg0, arg1) {
-    console.error(getStringFromWasm0(arg0, arg1));
+module.exports.__wbindgen_in = function(arg0, arg1) {
+    const ret = getObject(arg0) in getObject(arg1);
+    return ret;
 };
 
 module.exports.__wbg_setonopen_b91a933a10be7d48 = function(arg0, arg1) {
@@ -4421,6 +4982,18 @@ module.exports.__wbg_send_c1c0838681688262 = function() { return handleError(fun
     getObject(arg0).send(getArrayU8FromWasm0(arg1, arg2));
 }, arguments) };
 
+module.exports.__wbg_log_3c28499e191de9c9 = function(arg0, arg1) {
+    console.log(getStringFromWasm0(arg0, arg1));
+};
+
+module.exports.__wbg_warn_4c7424f622fc320d = function(arg0, arg1) {
+    console.warn(getStringFromWasm0(arg0, arg1));
+};
+
+module.exports.__wbg_error_05d0092975a19b61 = function(arg0, arg1) {
+    console.error(getStringFromWasm0(arg0, arg1));
+};
+
 module.exports.__wbg_isnodejs_fe13f21a8144b4ff = function(arg0) {
     const ret = getObject(arg0).is_node_js;
     return ret;
@@ -4431,13 +5004,8 @@ module.exports.__wbg_isnodewebkit_d4324d72606b18f5 = function(arg0) {
     return ret;
 };
 
-module.exports.__wbindgen_in = function(arg0, arg1) {
-    const ret = getObject(arg0) in getObject(arg1);
-    return ret;
-};
-
-module.exports.__wbg_transactioninput_new = function(arg0) {
-    const ret = TransactionInput.__wrap(arg0);
+module.exports.__wbg_data_af909e5dfe73e68c = function(arg0) {
+    const ret = getObject(arg0).data;
     return addHeapObject(ret);
 };
 
@@ -4448,6 +5016,11 @@ module.exports.__wbg_transactionoutput_new = function(arg0) {
 
 module.exports.__wbg_utxoentry_new = function(arg0) {
     const ret = UtxoEntry.__wrap(arg0);
+    return addHeapObject(ret);
+};
+
+module.exports.__wbg_transactioninput_new = function(arg0) {
+    const ret = TransactionInput.__wrap(arg0);
     return addHeapObject(ret);
 };
 
@@ -4466,33 +5039,33 @@ module.exports.__wbg_xpublickey_new = function(arg0) {
     return addHeapObject(ret);
 };
 
-module.exports.__wbindgen_closure_wrapper1474 = function(arg0, arg1, arg2) {
-    const ret = makeMutClosure(arg0, arg1, 173, __wbg_adapter_52);
+module.exports.__wbindgen_closure_wrapper1191 = function(arg0, arg1, arg2) {
+    const ret = makeMutClosure(arg0, arg1, 162, __wbg_adapter_54);
     return addHeapObject(ret);
 };
 
-module.exports.__wbindgen_closure_wrapper2142 = function(arg0, arg1, arg2) {
-    const ret = makeMutClosure(arg0, arg1, 423, __wbg_adapter_55);
+module.exports.__wbindgen_closure_wrapper2185 = function(arg0, arg1, arg2) {
+    const ret = makeMutClosure(arg0, arg1, 468, __wbg_adapter_57);
     return addHeapObject(ret);
 };
 
-module.exports.__wbindgen_closure_wrapper3947 = function(arg0, arg1, arg2) {
-    const ret = makeMutClosure(arg0, arg1, 866, __wbg_adapter_58);
+module.exports.__wbindgen_closure_wrapper3837 = function(arg0, arg1, arg2) {
+    const ret = makeMutClosure(arg0, arg1, 955, __wbg_adapter_60);
     return addHeapObject(ret);
 };
 
-module.exports.__wbindgen_closure_wrapper3948 = function(arg0, arg1, arg2) {
-    const ret = makeMutClosure(arg0, arg1, 866, __wbg_adapter_58);
+module.exports.__wbindgen_closure_wrapper3838 = function(arg0, arg1, arg2) {
+    const ret = makeMutClosure(arg0, arg1, 955, __wbg_adapter_60);
     return addHeapObject(ret);
 };
 
-module.exports.__wbindgen_closure_wrapper3949 = function(arg0, arg1, arg2) {
-    const ret = makeMutClosure(arg0, arg1, 866, __wbg_adapter_63);
+module.exports.__wbindgen_closure_wrapper3839 = function(arg0, arg1, arg2) {
+    const ret = makeMutClosure(arg0, arg1, 955, __wbg_adapter_65);
     return addHeapObject(ret);
 };
 
-module.exports.__wbindgen_closure_wrapper3950 = function(arg0, arg1, arg2) {
-    const ret = makeMutClosure(arg0, arg1, 866, __wbg_adapter_58);
+module.exports.__wbindgen_closure_wrapper3840 = function(arg0, arg1, arg2) {
+    const ret = makeMutClosure(arg0, arg1, 955, __wbg_adapter_60);
     return addHeapObject(ret);
 };
 

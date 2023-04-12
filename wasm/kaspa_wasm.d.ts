@@ -24,50 +24,6 @@ export function defer(): Promise<any>;
 */
 export function init_workflow(workflow: any, modules: any): void;
 /**
-* is_transaction_output_dust returns whether or not the passed transaction output
-* amount is considered dust or not based on the configured minimum transaction
-* relay fee.
-*
-* Dust is defined in terms of the minimum transaction relay fee. In particular,
-* if the cost to the network to spend coins is more than 1/3 of the minimum
-* transaction relay fee, it is considered dust.
-*
-* It is exposed by [MiningManager] for use by transaction generators and wallets.
-* @param {TransactionOutput} transaction_output
-* @returns {boolean}
-*/
-export function isTransactionOutputDust(transaction_output: TransactionOutput): boolean;
-/**
-* @returns {Keypair}
-*/
-export function generate_random_keypair_not_secure(): Keypair;
-/**
-* @param {string} text
-* @param {string} password
-* @returns {string}
-*/
-export function encrypt(text: string, password: string): string;
-/**
-* @param {string} text
-* @param {string} password
-* @returns {string}
-*/
-export function decrypt(text: string, password: string): string;
-/**
-* `signTransaction()` is a helper function to sign a transaction using a private key array or a signer array.
-* @param {MutableTransaction} mtx
-* @param {PrivateKey[] | Signer} signer
-* @param {boolean} verify_sig
-* @returns {MutableTransaction}
-*/
-export function signTransaction(mtx: MutableTransaction, signer: PrivateKey[] | Signer, verify_sig: boolean): MutableTransaction;
-/**
-* @param {any} script_hash
-* @param {PrivateKey} privkey
-* @returns {string}
-*/
-export function signScriptHash(script_hash: any, privkey: PrivateKey): string;
-/**
 * @param {SelectionContext} utxo_selection
 * @param {PaymentOutputs} outputs
 * @param {Address} change_address
@@ -98,6 +54,50 @@ export function minimumTransactionFee(tx: Transaction, network_type: number): bi
 * @returns {bigint}
 */
 export function calculateTransactionMass(tx: Transaction, network_type: number, estimate_signature_mass: boolean): bigint;
+/**
+* @returns {Keypair}
+*/
+export function generate_random_keypair_not_secure(): Keypair;
+/**
+* `signTransaction()` is a helper function to sign a transaction using a private key array or a signer array.
+* @param {MutableTransaction} mtx
+* @param {PrivateKey[] | Signer} signer
+* @param {boolean} verify_sig
+* @returns {MutableTransaction}
+*/
+export function signTransaction(mtx: MutableTransaction, signer: PrivateKey[] | Signer, verify_sig: boolean): MutableTransaction;
+/**
+* @param {any} script_hash
+* @param {PrivateKey} privkey
+* @returns {string}
+*/
+export function signScriptHash(script_hash: any, privkey: PrivateKey): string;
+/**
+* is_transaction_output_dust returns whether or not the passed transaction output
+* amount is considered dust or not based on the configured minimum transaction
+* relay fee.
+*
+* Dust is defined in terms of the minimum transaction relay fee. In particular,
+* if the cost to the network to spend coins is more than 1/3 of the minimum
+* transaction relay fee, it is considered dust.
+*
+* It is exposed by [MiningManager] for use by transaction generators and wallets.
+* @param {TransactionOutput} transaction_output
+* @returns {boolean}
+*/
+export function isTransactionOutputDust(transaction_output: TransactionOutput): boolean;
+/**
+* @param {string} text
+* @param {string} password
+* @returns {string}
+*/
+export function encrypt(text: string, password: string): string;
+/**
+* @param {string} text
+* @param {string} password
+* @returns {string}
+*/
+export function decrypt(text: string, password: string): string;
 /**
 * Supported languages.
 *
@@ -135,26 +135,12 @@ export enum Encoding {
   SerdeJson = 1,
 }
 /**
-* [`NotificationMode`] controls notification delivery process
+* UtxoOrdering enum denotes UTXO sort order (`Unordered`, `AscendingAmount`, `AscendingDaaScore`)
 */
-export enum NotificationMode {
-/**
-* Local notifier is used for notification processing.
-*
-* Multiple listeners can register and subscribe independently.
-*/
-  MultiListeners = 0,
-/**
-* No notifier is present, notifications are relayed
-* directly through the internal channel to a single listener.
-*/
-  Direct = 1,
-}
-/**
-*/
-export enum NetworkType {
-  Mainnet = 0,
-  Testnet = 1,
+export enum UtxoOrdering {
+  Unordered = 0,
+  AscendingAmount = 1,
+  AscendingDaaScore = 2,
 }
 /**
 */
@@ -164,12 +150,10 @@ export enum AccountKind {
   MultiSig = 2,
 }
 /**
-* UtxoOrdering enum denotes UTXO sort order (`Unordered`, `AscendingAmount`, `AscendingDaaScore`)
 */
-export enum UtxoOrdering {
-  Unordered = 0,
-  AscendingAmount = 1,
-  AscendingDaaScore = 2,
+export enum NetworkType {
+  Mainnet = 0,
+  Testnet = 1,
 }
 /**
 * Wallet `Account` data structure. An account is typically a single
@@ -214,11 +198,6 @@ export class Address {
 * @returns {string}
 */
   toString(): string;
-/**
-* Convert an address to a string.
-* @returns {string}
-*/
-  toJSON(): string;
 /**
 */
   readonly payload: string;
@@ -292,19 +271,39 @@ export class DerivationPath {
 /**
 */
 export class Hash {
-/**
-** Return copy of self without private attributes.
-*/
-  toJSON(): Object;
-/**
-* Return stringified version of self.
-*/
-  toString(): string;
   free(): void;
 /**
 * @param {string} hex_str
 */
   constructor(hex_str: string);
+/**
+* @returns {string}
+*/
+  toString(): string;
+}
+/**
+*/
+export class Header {
+  free(): void;
+/**
+* @param {number} version
+* @param {Array<any>} parents_by_level_array
+* @param {string} hash_merkle_root
+* @param {string} accepted_id_merkle_root
+* @param {string} utxo_commitment
+* @param {bigint} timestamp
+* @param {number} bits
+* @param {bigint} nonce
+* @param {bigint} daa_score
+* @param {bigint} blue_work
+* @param {bigint} blue_score
+* @param {string} pruning_point
+*/
+  constructor(version: number, parents_by_level_array: Array<any>, hash_merkle_root: string, accepted_id_merkle_root: string, utxo_commitment: string, timestamp: bigint, bits: number, nonce: bigint, daa_score: bigint, blue_work: bigint, blue_score: bigint, pruning_point: string);
+/**
+* @returns {string}
+*/
+  calculateHash(): string;
 }
 /**
 * Data structure that contains a secret and public keys.
@@ -423,6 +422,9 @@ export class MutableTransaction {
 * UTXO entry data
 */
   entries: UtxoEntries;
+/**
+*/
+  readonly id: string;
 /**
 */
   readonly inputs: Array<any>;
@@ -741,6 +743,71 @@ export class RpcClient {
   getUtxosByAddresses(request: any): Promise<any>;
 }
 /**
+*
+*  ScriptBuilder provides a facility for building custom scripts. It allows
+* you to push opcodes, ints, and data while respecting canonical encoding. In
+* general it does not ensure the script will execute correctly, however any
+* data pushes which would exceed the maximum allowed script engine limits and
+* are therefore guaranteed not to execute will not be pushed and will result in
+* the Script function returning an error.
+*/
+export class ScriptBuilder {
+  free(): void;
+/**
+* Get script bytes represented by a hex string.
+* @returns {string}
+*/
+  script(): string;
+/**
+* Drains (empties) the script builder, returning the
+* script bytes represented by a hex string.
+* @returns {string}
+*/
+  drain(): string;
+/**
+* Pushes the passed opcode to the end of the script. The script will not
+* be modified if pushing the opcode would cause the script to exceed the
+* maximum allowed script engine size.
+* @param {number} opcode
+* @returns {ScriptBuilder}
+*/
+  addOp(opcode: number): ScriptBuilder;
+/**
+* @param {any} opcodes
+* @returns {ScriptBuilder}
+*/
+  addOps(opcodes: any): ScriptBuilder;
+/**
+* AddData pushes the passed data to the end of the script. It automatically
+* chooses canonical opcodes depending on the length of the data.
+*
+* A zero length buffer will lead to a push of empty data onto the stack (Op0 = OpFalse)
+* and any push of data greater than [`MAX_SCRIPT_ELEMENT_SIZE`] will not modify
+* the script since that is not allowed by the script engine.
+*
+* Also, the script will not be modified if pushing the data would cause the script to
+* exceed the maximum allowed script engine size [`MAX_SCRIPTS_SIZE`].
+* @param {any} data
+* @returns {ScriptBuilder}
+*/
+  addData(data: any): ScriptBuilder;
+/**
+* @param {bigint} val
+* @returns {ScriptBuilder}
+*/
+  addI64(val: bigint): ScriptBuilder;
+/**
+* @param {bigint} lock_time
+* @returns {ScriptBuilder}
+*/
+  addLockTime(lock_time: bigint): ScriptBuilder;
+/**
+* @param {bigint} sequence
+* @returns {ScriptBuilder}
+*/
+  addSequence(sequence: bigint): ScriptBuilder;
+}
+/**
 * Represents a Kaspad ScriptPublicKey
 */
 export class ScriptPublicKey {
@@ -804,6 +871,20 @@ export class Signer {
   verify: boolean;
 }
 /**
+*/
+export class State {
+  free(): void;
+/**
+* @param {Header} header
+*/
+  constructor(header: Header);
+/**
+* @param {bigint} nonce
+* @returns {Array<any>}
+*/
+  checkPow(nonce: bigint): Array<any>;
+}
+/**
 * Wallet file storage interface
 */
 export class Store {
@@ -855,7 +936,7 @@ export class Transaction {
 /**
 * Returns the transaction ID
 */
-  readonly id: Hash;
+  readonly id: string;
 /**
 */
   inputs: any;
@@ -919,16 +1000,16 @@ export class TransactionOutpoint {
   toString(): string;
   free(): void;
 /**
-* @param {Hash} transaction_id
+* @param {string} transaction_id
 * @param {number} index
 */
-  constructor(transaction_id: Hash, index: number);
+  constructor(transaction_id: string, index: number);
 /**
 */
   index: number;
 /**
 */
-  transactionId: Hash;
+  transactionId: string;
 }
 /**
 * Represents a Kaspad transaction output
@@ -1015,6 +1096,64 @@ export class TxUtxoEntryList {
 }
 /**
 */
+export class Uint192 {
+/**
+** Return copy of self without private attributes.
+*/
+  toJSON(): Object;
+/**
+* Return stringified version of self.
+*/
+  toString(): string;
+  free(): void;
+/**
+* @param {bigint} n
+*/
+  constructor(n: bigint);
+/**
+* @param {string} hex
+* @returns {Uint192}
+*/
+  static fromHex(hex: string): Uint192;
+/**
+* @returns {bigint}
+*/
+  toBigInt(): bigint;
+/**
+*/
+  readonly value: bigint;
+}
+/**
+*/
+export class Uint256 {
+/**
+** Return copy of self without private attributes.
+*/
+  toJSON(): Object;
+/**
+* Return stringified version of self.
+*/
+  toString(): string;
+  free(): void;
+/**
+* @param {bigint} n
+*/
+  constructor(n: bigint);
+/**
+* @param {string} hex
+* @returns {Uint256}
+*/
+  static fromHex(hex: string): Uint256;
+/**
+* @returns {bigint}
+*/
+  toBigInt(): bigint;
+/**
+*/
+  readonly value: bigint;
+}
+/**
+*/
 export class UtxoEntries {
   free(): void;
 /**
@@ -1039,7 +1178,7 @@ export class UtxoEntry {
   free(): void;
 /**
 */
-  address: Address;
+  address?: Address;
 /**
 */
   entry: TxUtxoEntry;
