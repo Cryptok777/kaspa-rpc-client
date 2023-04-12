@@ -13,7 +13,6 @@
 ## Installation
 
 ```bash
-
 npm install kaspa-rpc-client
 ```
 
@@ -338,3 +337,5 @@ If you find that the RPC endpoint you are looking for is not exposed by the clie
 ## Donation
 
 This project is built by the team that brought you [Kas.fyi](https://kas.fyi/). If you find this library useful, feel free to donate to `kaspa:qpnsy5fc592kcnu6vnx8aknskhmu6x9qksec084v043pjk5hur6vw9e87wpg2`. Your support is greatly appreciated!
+
+Test string
