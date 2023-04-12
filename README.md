@@ -115,7 +115,7 @@ We built a super simple wallet interface, using the WASM library, let you create
 
 To create a wallet, you will need to pass in the `client`, as it's needed to make RPC calls to the Kaspa network and fetch data and submit transaction.
 
-It's recommended to use the `ClientWrapper` to get the client, however you can also implement your own client, as long as it implements the `ClientProvider` interface.
+It's recommended to use the `ClientWrapper` to get the client, however you can also implement your own client, as long as it implements the [`ClientProvider` interface](https://github.com/Cryptok777/kaspa-rpc-client/blob/main/lib/ClientProvider.ts).
 
 #### First, create a new client so the Wallet class can use it
 
@@ -138,19 +138,19 @@ const { phrase, entropy } = Wallet.randomMnemonic()
 const wallet = Wallet.fromPhrase(client, phrase)
 ```
 
-##### From a mnemonic
+##### From mnemonic
 
 ```typescript
 const wallet = Wallet.fromPhrase(client, "YOUR_MNEMONIC")
 ```
 
-##### From a seed, without passpharse
+##### From seed, without passpharse
 
 ```typescript
 const wallet = Wallet.fromSeed(client, "YOUR_SEED")
 ```
 
-##### From a xPrv (master private key)
+##### From xPrv (master private key)
 
 ```typescript
 const wallet = Wallet.fromPrivateKey(client, "YOUR_XPRV")
@@ -171,12 +171,12 @@ const account_99 = await wallet.account(BigInt(99))
 
 A `Wallet` can have many `Accounts`.
 
-It's recommended to use the `Wallet.account()` to derive an account, see more details in the Wallet APIs section. However you can also use `Account.fromPhrase()`, `Account.fromSeed()` or `Account.fromPrivateKey()` to import an account. See API doc for more details.
+It's recommended to use the `Wallet.account()` to derive an account, see more details in the `Wallet APIs` section. However you can also use `Account.fromPhrase()`, `Account.fromSeed()` or `Account.fromPrivateKey()` to import an account. See [API doc](https://cryptok777.github.io/kaspa-rpc-client/classes/lib_Account.Account.html#fromPhrase) for more details.
 
 #### Derive Addresses from an Account
 An `Account` can have many `Addresses`, with different types (`Receive`, `Change`)
 
-You can use `Account.address` or `Account.addresses` methods to derive addresses from an `Account`, the address index is integer.
+You can use `Account.address()` or `Account.addresses()` to derive addresses from an `Account`, the address index is integer.
 
 See the following examples:
 
@@ -261,7 +261,7 @@ const utxos = await account1.utxos()
 
 An `Account` can have many `Addresses`, with different types (`Receive`, `Change`)
 
-It's recommended to use the `Account.address()` to derive an `Address`, see more details in the `Account APIs` section.
+It's recommended to use `Account.address()` to derive an `Address`, see more details in the `Account APIs` section.
 
 #### Send a transaction
 
