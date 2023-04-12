@@ -120,7 +120,7 @@ export class Utils {
 
     const utxoSelection = await utxoSet.select(
       BigInt(amount),
-      UtxoOrdering.AscendingAmount
+      UtxoOrdering.AscendingDaaScore
     )
 
     const inputs = utxoSelection.utxos.map(

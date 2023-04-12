@@ -318,6 +318,10 @@ The above should cover most of the use cases. If you need more advanced features
 
 You can also checkout [demo/wallet.ts](https://github.com/Cryptok777/kaspa-rpc-client/blob/main/demo/wallet.ts) for full working example.
 
+## Known Bugs
+- [ ] When the transaction contains too many inputs, e.g. when calling `sendAll`, therefore the mass of the transaction is too large, the transaction will be rejected by the network. You can workaround by splitting the transaction into multiple smaller transactions.
+- [ ] It doesn't track the in-use UXTOs, so when you send a transcation using some UTXOs, and try to send another transaction right after, the node might still return the same set of UTXOs that are already being used, therefore the transaction will be rejected by the network. You can workaround by waiting for a few seconds before sending the next transaction.
+- [ ] There is a bug in the WASM lib when calculating the `minimumTransactionFee`, so the estimated fee is always lower than actual fee. We doubled the estimated fee to workaround this issue, most likely that the actual fee will be lower, any change will be sent back to the sender.
 ## Full API Docs
 
 Full references of the classes/interfaces can be found [here](https://cryptok777.github.io/kaspa-rpc-client/)
