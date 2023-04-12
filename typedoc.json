@@ -1,0 +1,10 @@
+{
+  "entryPoints": ["./lib/*", "./types/custom-types.ts"],
+  "out": "docs",
+  "exclude": ["**/*+(spec|test).ts"],
+  "name": "Kaspa RPC Client",
+  "excludePrivate": true,
+  "excludeProtected": true,
+  "excludeExternals": true,
+  "includeVersion": true
+}

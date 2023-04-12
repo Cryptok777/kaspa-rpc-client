@@ -10,7 +10,7 @@ import {
   KaspadPackage,
   SubscriberItem,
   SubscriberItemMap,
-  RPC as Rpc,
+  RPC,
   SetTimeoutType,
   ClientOptionsTypes,
   ClientProps,
@@ -296,7 +296,7 @@ export class RpcClient {
     subject: string,
     data: any = {},
     callback: Function
-  ): Rpc.SubPromise<T> {
+  ): RPC.SubPromise<T> {
     if (typeof data == "function") {
       callback = data
       data = {}
@@ -304,7 +304,7 @@ export class RpcClient {
 
     this.log("subscribe to", subject)
     if (!this.client)
-      return Promise.reject("not connected") as Rpc.SubPromise<T>
+      return Promise.reject("not connected") as RPC.SubPromise<T>
 
     const eventName = this.subjectToEventName(subject)
     this.log("subscribe:eventName", eventName)
@@ -318,7 +318,7 @@ export class RpcClient {
     const uid = (Math.random() * 100000 + Date.now()).toFixed(0)
     subscribers.push({ uid, callback })
 
-    const p = this.call(subject, data) as Rpc.SubPromise<T>
+    const p = this.call(subject, data) as RPC.SubPromise<T>
 
     p.uid = uid
     return p
