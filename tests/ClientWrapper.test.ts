@@ -15,13 +15,13 @@ describe("ClientWrapper (Sinon)", () => {
     sinon.stub(Client.prototype, "ping").resolves()
     sinon
       .stub(Client.prototype, "getVirtualSelectedParentBlueScore")
-      .resolves({ blueScore: 10000, error: undefined })
+      .resolves({ blueScore: 10000n, error: undefined })
     sinon.stub(Client.prototype, "isReady").returns(true)
 
     await wrapper.initialize()
     const client = await wrapper.getClient()
     const result = await client.getVirtualSelectedParentBlueScore()
-    expect(result).toEqual({ blueScore: 10000, error: undefined })
+    expect(result).toEqual({ blueScore: 10000n, error: undefined })
   })
 
   test("Initialize class with one host and test re-connection", async () => {
@@ -32,7 +32,7 @@ describe("ClientWrapper (Sinon)", () => {
     sinon.stub(Client.prototype, "ping").resolves()
     sinon
       .stub(Client.prototype, "getVirtualSelectedParentBlueScore")
-      .resolves({ blueScore: 10000, error: undefined })
+      .resolves({ blueScore: 10000n, error: undefined })
     const isReadyStub: SinonStub = sinon.stub(Client.prototype, "isReady")
 
     isReadyStub.onFirstCall().returns(false)
@@ -44,6 +44,6 @@ describe("ClientWrapper (Sinon)", () => {
 
     const client = await wrapper.getClient()
     const result = await client.getVirtualSelectedParentBlueScore()
-    expect(result).toEqual({ blueScore: 10000, error: undefined })
+    expect(result).toEqual({ blueScore: 10000n, error: undefined })
   })
 })
