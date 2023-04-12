@@ -19,7 +19,7 @@ export class ClientWrapper {
   async getClient(): Promise<Client> {
     let client = this.clients.find((client) => client.isReady())
     while (!client) {
-      await this.sleep(500)
+      await this.sleep()
       await this.initialize()
       client = this.clients.find((client) => client.isReady())
     }
