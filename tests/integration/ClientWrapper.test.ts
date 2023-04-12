@@ -31,6 +31,8 @@ describe("Kaspa RPC Client Integration Test", () => {
     const account = await wallet.account()
     const address = await account.address()
 
+    expect(address.toString().length).toBeGreaterThan(1)
+
     const balance = await address.balance()
     const utxos = await address.utxos()
 
