@@ -3,7 +3,6 @@
 ## Features
 
 - This library is written in TypeScript, with methods auto-generated from the Kaspa [RPC server](https://github.com/kaspanet/kaspad/blob/c5aade7e7fe2ada7d97a0e30df9b4b36b4842f9e/infrastructure/network/netadapter/server/grpcserver/protowire/rpc.md#protowire.NotifyUtxosChangedRequestMessage). All requests and responses are typed for easier development.
-
 - Supports multiple RPC connections with different servers and automatically handles failover if one of the servers fails to connect.
 - **[NEW]** Implemented Wallet, Account and Address feature, using the WASM library, let you create, manage the wallet and send transactions with zero effort.
 
@@ -198,7 +197,7 @@ const addresses2 = await account.addresses(0, 10, AddressType.Change) // Derive 
 
 To send a transcation from an `Account`, define the outputs and the change address, then call the `send()` method.
 
- `Account.send()` method will scan for all available UTXOs from the account, and select the UTXOs that are enough to cover the transaction amount and fee. If there are not enough UTXOs, it will throw an error.
+`Account.send()` method will scan for all available UTXOs from the account, and select the UTXOs that are enough to cover the transaction amount and fee. If there are not enough UTXOs, it will throw an error.
 
 ```typescript
 const tx = await account.send({
@@ -298,7 +297,7 @@ const utxos = await address.utxos()
 
 The above should cover most of the use cases. If you need more advanced features, check out the [full API doc](https://cryptok777.github.io/kaspa-rpc-client/classes/lib_Wallet.Wallet.html) for more details.
 
-You can also checkout [demo/wallet.ts]((https://github.com/Cryptok777/kaspa-rpc-client/blob/main/demo/wallet.ts)) for full working example.
+You can also checkout [demo/wallet.ts](https://github.com/Cryptok777/kaspa-rpc-client/blob/main/demo/wallet.ts) for full working example.
 
 ## Contribute
 

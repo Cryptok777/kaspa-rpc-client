@@ -29,10 +29,6 @@ export class ClientProvider {
     throw new Error("Not implemented")
   }
 
-  getBalances(addresses: string[]) {
-    throw new Error("Not implemented")
-  }
-
   subscribeUtxosChanged(
     data: RPC.NotifyUtxosChangedRequestMessage,
     callback: RPC.callback<RPC.UtxosChangedNotificationMessage>
