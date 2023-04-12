@@ -71,12 +71,45 @@ export interface SendTransactionProps {
   clientProvider: ClientProvider
 }
 
-export interface SendProps {
-  changeAddress: string | Address
+export interface SendOutputProps {
+  /**
+   * The recipient of the transaction, can be address string or
+   * Address Object that's created from the library
+   */
+  recipient: string | Address
+
+  /**
+   * Amount to send, the unit is sompi
+   */
   amount: bigint
 }
+export interface SendProps {
+  /**
+   * The outputs of the transaction, each output has key
+   * `recipient` and `amount`
+   */
+  outputs: SendOutputProps[]
 
-export interface SendCommonProps {
+  /**
+   * The transaction fee. Defaults to 0.
+   * If `fee` is not passed, the library will figure out the network
+   * fee and subtract it from the final amount
+   */
+  fee?: bigint
+
+  /**
+   * The priority fee of the transaction. Defaults to `0`.
+   */
+  priorityFee?: number
+
+  /**
+   * The change address of the transaction, can be address string or
+   * Address Object that's created from the library
+   */
+  changeAddress: string | Address
+}
+
+export interface SendAllProps {
   /**
    * The recipient of the transaction, can be address string or
    * Address Object that's created from the library
@@ -99,26 +132,26 @@ export interface CreateTransactionProps {
    * A UtxoSet object, can be created by `UtxoSet.from({ entries: UTXO_FROM_RPC })`
    */
   utxoSet: UtxoSet
+
   /**
-   * The recipient of the transaction, can be address string or
-   * Address Object that's created from the library
+   * The outputs of the transaction, each output has key
+   * `recipient` and `amount`
    */
-  recipient: string | Address
+  outputs: SendOutputProps[]
+
   /**
    * The change address of the transaction, can be address string or
    * Address Object that's created from the library
    */
   changeAddress: string | Address
-  /**
-   * Amount to send, the unit is sompi 
-   */
-  amount: bigint
+
   /**
    * The transaction fee. Defaults to 0.
    * If `fee` is not passed, the library will figure out the network
    * fee and subtract it from the final amount
    */
   fee?: bigint
+
   /**
    * The priority fee of the transaction. Defaults to `0`.
    */

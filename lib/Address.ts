@@ -1,7 +1,6 @@
 import { PrivateKey } from "../wasm/kaspa_wasm"
-import { RPC } from "../types/custom-types"
 import { ClientProvider } from "./ClientProvider"
-import { SendCommonProps, SendProps } from "../types/custom-types"
+import { RPC, SendAllProps, SendProps } from "../types/custom-types"
 import { Utils } from "./Utils"
 import { Config } from "./Wallet"
 
@@ -26,32 +25,35 @@ export class Address {
   /**
    * Sends all the available balance to the specified recipient
    */
-  async sendAll(options: SendCommonProps) {
-    const { recipient, fee = Config.DEFAULT_FEE, priorityFee = 0 } = options
+  async sendAll({
+    recipient,
+    fee = Config.DEFAULT_FEE,
+    priorityFee = 0,
+  }: SendAllProps) {
     if (!recipient) {
       throw new Error("params missing")
     }
 
     const utxos = await this.utxos()
     const balance = Utils.getUtxosSum(utxos)
+    const outputs = [{ recipient, amount: balance }]
 
     let finalizedFee = fee
     if (fee === Config.DEFAULT_FEE) {
       finalizedFee = await Utils.estimateFee({
         utxos,
-        recipient,
-        amount: balance,
+        outputs,
       })
     }
 
     const amountAfterFee = balance - finalizedFee - BigInt(priorityFee)
+    outputs[0].amount = amountAfterFee
 
     return Utils.sendTransaction({
       clientProvider: this.clientProvider,
       utxos,
       privateKeys: [this.privateKey],
-      recipient,
-      amount: amountAfterFee,
+      outputs,
       changeAddress: recipient,
       fee: finalizedFee,
       priorityFee,
@@ -62,14 +64,12 @@ export class Address {
    * Sends `amount` to `recipient`
    */
   async send({
-    recipient,
-    amount,
+    outputs,
     changeAddress = this.address,
     fee = Config.DEFAULT_FEE,
     priorityFee = 0,
-  }: SendProps &
-    SendCommonProps): Promise<RPC.SubmitTransactionResponseMessage> {
-    if (!recipient || !amount || !changeAddress) {
+  }: SendProps): Promise<RPC.SubmitTransactionResponseMessage> {
+    if (outputs.length === 0 || !changeAddress) {
       throw new Error("params missing")
     }
 
@@ -79,8 +79,7 @@ export class Address {
     if (fee === Config.DEFAULT_FEE) {
       finalizedFee = await Utils.estimateFee({
         utxos,
-        recipient,
-        amount,
+        outputs,
       })
     }
 
@@ -88,8 +87,7 @@ export class Address {
       clientProvider: this.clientProvider,
       utxos,
       privateKeys: [this.privateKey],
-      recipient,
-      amount,
+      outputs,
       changeAddress,
       fee: finalizedFee,
       priorityFee,

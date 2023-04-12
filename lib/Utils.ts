@@ -1,3 +1,4 @@
+import _ from "lodash"
 import {
   XPublicKey,
   XPrivateKey,
@@ -16,14 +17,12 @@ import {
   TransactionInput,
   UtxoEntryReference,
 } from "../wasm/kaspa_wasm"
-import { RPC as Rpc, Rust } from "../types/custom-types"
-import { Address } from "./Address"
+import { RPC as Rpc, Rust, SendOutputProps } from "../types/custom-types"
 import { Config } from "./Wallet"
 import {
   CreateTransactionProps,
   SendTransactionProps,
   SendProps,
-  SendCommonProps,
 } from "../types/custom-types"
 
 /**
@@ -110,15 +109,14 @@ export class Utils {
    */
   static async estimateFee({
     utxos,
-    recipient,
-    amount,
+    outputs,
   }: {
     utxos: Rpc.UtxosByAddressesEntry[]
-    recipient: string | Address
-    amount: bigint
+    outputs: SendOutputProps[]
   }): Promise<bigint> {
     const rustUtxos = Utils.convertGRpcUtxosToRustUtxos(utxos)
     const utxoSet = UtxoSet.from({ entries: rustUtxos })
+    const amount = Utils.getOutputSum(outputs)
 
     const utxoSelection = await utxoSet.select(
       BigInt(amount),
@@ -136,15 +134,17 @@ export class Utils {
       }
     )
 
-    const payment = new PaymentOutput(
-      new RustAddress(recipient.toString()),
-      amount
+    const payments = outputs.map(
+      (i) =>
+        new PaymentOutput(
+          new RustAddress(i.recipient.toString()),
+          BigInt(i.amount)
+        )
     )
-    const outputs = new PaymentOutputs([payment])
 
     const tx = new Transaction({
       inputs,
-      outputs,
+      outputs: new PaymentOutputs(payments),
       lockTime: 0,
       subnetworkId: [
         0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
@@ -172,16 +172,16 @@ export class Utils {
    */
   static async createTransaction({
     utxoSet,
-    recipient,
-    amount,
+    outputs,
     changeAddress,
     fee = Config.DEFAULT_FEE,
     priorityFee = 0,
   }: CreateTransactionProps): Promise<MutableTransaction> {
-    const totalAmount = BigInt(amount) + BigInt(fee) + BigInt(priorityFee)
+    const totalAmount =
+      Utils.getOutputSum(outputs) + BigInt(fee) + BigInt(priorityFee)
     const utxoSelection = await utxoSet.select(
       totalAmount,
-      UtxoOrdering.AscendingAmount
+      UtxoOrdering.AscendingDaaScore
     )
 
     console.log(utxoSelection.totalAmount, utxoSelection.amount)
@@ -192,15 +192,17 @@ export class Utils {
     }
 
     // Build output
-    const payment = new PaymentOutput(
-      new RustAddress(recipient.toString()),
-      amount
+    const payments = outputs.map(
+      (i) =>
+        new PaymentOutput(
+          new RustAddress(i.recipient.toString()),
+          BigInt(i.amount)
+        )
     )
-    const outputs = new PaymentOutputs([payment])
-
+    
     return createTransaction(
       utxoSelection,
-      outputs,
+      new PaymentOutputs(payments),
       new RustAddress(changeAddress.toString()),
       priorityFee
     )
@@ -218,13 +220,11 @@ export class Utils {
     clientProvider,
     utxos,
     privateKeys,
-    recipient,
-    amount,
+    outputs,
     changeAddress,
     fee = Config.DEFAULT_FEE,
     priorityFee = 0,
   }: SendProps &
-    SendCommonProps &
     SendTransactionProps): Promise<Rpc.SubmitTransactionResponseMessage> {
     if (utxos.length === 0) {
       throw new Error("No UXTO to spend")
@@ -238,17 +238,15 @@ export class Utils {
     if (fee === Config.DEFAULT_FEE) {
       finalizedFee = await this.estimateFee({
         utxos,
-        recipient,
-        amount,
+        outputs,
       })
     }
     console.log("finalizedFee", finalizedFee)
 
     const mutableTransaction = await this.createTransaction({
       utxoSet,
-      recipient,
+      outputs,
       changeAddress,
-      amount,
       fee: finalizedFee,
       priorityFee,
     })
@@ -272,5 +270,12 @@ export class Utils {
       if (!item.utxoEntry?.amount) return acc
       return BigInt(acc) + BigInt(item.utxoEntry.amount)
     }, BigInt(0))
+  }
+
+  static getOutputSum(outputs: SendOutputProps[]) {
+    return outputs.reduce(
+      (acc, item) => BigInt(acc) + BigInt(item.amount || 0),
+      BigInt(0)
+    )
   }
 }

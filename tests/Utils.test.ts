@@ -40,8 +40,7 @@ describe("Utils", () => {
 
       const estimatedFee = await Utils.estimateFee({
         utxos,
-        recipient,
-        amount,
+        outputs: [{ recipient, amount }],
       })
 
       expect(estimatedFee).toBeGreaterThanOrEqual(0n)
@@ -61,8 +60,7 @@ describe("Utils", () => {
 
       const mutableTransaction = await Utils.createTransaction({
         utxoSet,
-        recipient,
-        amount,
+        outputs: [{ recipient, amount }],
         changeAddress,
         fee,
         priorityFee,
@@ -130,8 +128,7 @@ describe("Utils", () => {
       await expect(
         Utils.createTransaction({
           utxoSet,
-          recipient,
-          amount,
+          outputs: [{ recipient, amount }],
           changeAddress,
           fee,
           priorityFee,
@@ -153,8 +150,7 @@ describe("Utils", () => {
       const utxoSet = UtxoSet.from({ entries: rustUtxos })
       const mutableTransaction = await Utils.createTransaction({
         utxoSet,
-        recipient,
-        amount,
+        outputs: [{ recipient, amount }],
         changeAddress,
         fee,
         priorityFee,
@@ -172,8 +168,7 @@ describe("Utils", () => {
         clientProvider: client,
         utxos,
         privateKeys,
-        recipient,
-        amount,
+        outputs: [{ recipient, amount }],
         changeAddress,
         fee,
         priorityFee,
@@ -204,8 +199,7 @@ describe("Utils", () => {
           clientProvider: client,
           utxos,
           privateKeys,
-          recipient,
-          amount,
+          outputs: [{ recipient, amount }],
           changeAddress,
           fee,
           priorityFee,

@@ -87,16 +87,16 @@ describe("Address", () => {
         fee: Config.DEFAULT_FEE,
         priorityFee,
       })
+      const amount = balance - fee - BigInt(priorityFee)
 
       expect(estimateFeeStub.calledOnce).toBeTruthy()
       expect(
         sendTransactionStub.calledOnceWith({
           clientProvider: client,
           utxos,
+          outputs: [{ recipient, amount }],
           privateKeys: [privateKey],
-          recipient,
           changeAddress: recipient,
-          amount: balance - fee - BigInt(priorityFee),
           fee,
           priorityFee: 0,
         })
@@ -148,8 +148,7 @@ describe("Address", () => {
       sendTransactionStub.resolves(txResp)
 
       const result = await testAddress.send({
-        recipient,
-        amount,
+        outputs: [{ recipient, amount }],
         changeAddress,
         fee,
         priorityFee,
@@ -186,8 +185,7 @@ describe("Address", () => {
       sendTransactionStub.resolves(txResp)
 
       const result = await testAddress.send({
-        recipient,
-        amount,
+        outputs: [{ recipient, amount }],
         changeAddress,
       })
 
@@ -196,10 +194,9 @@ describe("Address", () => {
         sendTransactionStub.calledOnceWith({
           clientProvider: client,
           utxos,
+          outputs: [{ recipient, amount }],
           privateKeys: [privateKey],
-          recipient,
           changeAddress,
-          amount,
           fee: 1000n,
           priorityFee: 0,
         })
@@ -218,8 +215,7 @@ describe("Address", () => {
 
       await expect(
         testAddress.send({
-          recipient,
-          amount,
+          outputs: [{ recipient, amount }],
           changeAddress,
           fee,
           priorityFee,

@@ -7,7 +7,7 @@ import {
 import {
   AddressType,
   RPC as Rpc,
-  SendCommonProps,
+  SendAllProps,
   SendProps,
 } from "../types/custom-types"
 import { ClientProvider } from "./ClientProvider"
@@ -184,14 +184,12 @@ export class Account {
    * be randomly selected across all addresses in this `Account`
    */
   async send({
-    recipient,
-    amount,
+    outputs,
     changeAddress,
     fee = Config.DEFAULT_FEE,
     priorityFee = 0,
-  }: SendProps &
-    SendCommonProps): Promise<Rpc.SubmitTransactionResponseMessage> {
-    if (!recipient || !amount || !changeAddress) {
+  }: SendProps): Promise<Rpc.SubmitTransactionResponseMessage> {
+    if (outputs.length === 0 || !changeAddress) {
       throw new Error("params missing")
     }
 
@@ -206,8 +204,7 @@ export class Account {
     if (fee === Config.DEFAULT_FEE) {
       finalizedFee = await Utils.estimateFee({
         utxos,
-        recipient,
-        amount,
+        outputs,
       })
     }
 
@@ -215,8 +212,7 @@ export class Account {
       clientProvider: this.clientProvider,
       utxos,
       privateKeys: addresses.map((i) => i.privateKey),
-      recipient,
-      amount,
+      outputs,
       changeAddress,
       fee: finalizedFee,
       priorityFee,
@@ -230,7 +226,7 @@ export class Account {
     recipient,
     fee = Config.DEFAULT_FEE,
     priorityFee = 0,
-  }: SendCommonProps) {
+  }: SendAllProps) {
     if (!recipient) {
       throw new Error("params missing")
     }
@@ -238,24 +234,24 @@ export class Account {
     const addresses = await this.scan()
     const utxos = await this.utxosForAddresses(addresses)
     const balance = Utils.getUtxosSum(utxos)
+    const outputs = [{ recipient, amount: balance }]
 
     let finalizedFee = fee
     if (fee === Config.DEFAULT_FEE) {
       finalizedFee = await Utils.estimateFee({
         utxos,
-        recipient,
-        amount: balance,
+        outputs,
       })
     }
 
     const amountAfterFee = balance - finalizedFee - BigInt(priorityFee)
+    outputs[0].amount = amountAfterFee
 
     return Utils.sendTransaction({
       clientProvider: this.clientProvider,
       utxos,
+      outputs,
       privateKeys: addresses.map((i) => i.privateKey),
-      recipient,
-      amount: amountAfterFee,
       changeAddress: recipient,
       fee: finalizedFee,
       priorityFee,

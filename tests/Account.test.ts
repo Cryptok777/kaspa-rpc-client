@@ -1,6 +1,6 @@
 import { Account } from "../lib/Account"
 import { ClientProvider } from "../lib/ClientProvider"
-import {  Wallet } from "../lib/Wallet"
+import { Wallet } from "../lib/Wallet"
 import sinon from "sinon"
 import { Address } from "../lib/Address"
 import { AddressType, RPC } from "../types/custom-types"
@@ -252,8 +252,7 @@ describe("Account", () => {
       const changeAddress = "change_address"
 
       const result = await account.send({
-        recipient,
-        amount,
+        outputs: [{ recipient, amount }],
         changeAddress,
       })
 
@@ -264,8 +263,7 @@ describe("Account", () => {
           clientProvider: client,
           utxos,
           privateKeys: [privateKey],
-          recipient,
-          amount,
+          outputs: [{ recipient, amount }],
           changeAddress,
           fee: 1000n,
           priorityFee: 0,
@@ -303,6 +301,7 @@ describe("Account", () => {
       sendTransactionStub.resolves(txResp)
 
       const result = await account.sendAll({ recipient: address })
+      const amount = 100000n - 1000n
 
       expect(result).toBe(txResp)
       expect(
@@ -310,8 +309,7 @@ describe("Account", () => {
           clientProvider: client,
           utxos,
           privateKeys: [privateKey],
-          recipient: address,
-          amount: 100000n - 1000n,
+          outputs: [{ recipient: address, amount }],
           changeAddress: address,
           fee: 1000n,
           priorityFee: 0,
