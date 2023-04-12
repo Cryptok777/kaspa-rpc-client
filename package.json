@@ -1,7 +1,7 @@
 {
   "name": "kaspa-rpc-client",
   "description": "Kaspa gRPC client for Node.js, written in Typescript",
-  "version": "1.1.2",
+  "version": "1.1.3",
   "main": "dist/index.js",
   "repository": "https://github.com/Cryptok777/kaspa-rpc-client.git",
   "author": "Cryptok777",
@@ -10,11 +10,13 @@
     "node": ">=16.14"
   },
   "scripts": {
-    "start:dev": "rm -rf ./dist && tsc-watch --onSuccess \"npm run copy-wasm\"",
-    "build": "rm -rf ./dist && rm -f package-lock.json && npm install --also=dev && tsc && npm run copy-wasm",
+    "start:dev": "rm -rf ./dist && tsc-watch --onSuccess \"npm run copy-assets\"",
+    "build": "rm -rf ./dist && rm -f package-lock.json && npm install --also=dev && tsc && npm run copy-assets",
     "prepublishOnly": "npm run build",
+    "copy-assets": "npm run copy-wasm && npm run copy-proto",
     "copy-wasm": "cp ./wasm/* ./dist/wasm",
-    "test": "jest",
+    "copy-proto": "cp ./rpc/*.proto ./dist/rpc",
+    "test": "jest --runInBand  --forceExit",
     "lint": "eslint . --ext .ts",
     "gen:doc": "npx typedoc"
   },
@@ -44,7 +46,6 @@
     "dist",
     "rpc",
     "lib",
-    "proto",
     "types",
     "README.md",
     "index.ts",
