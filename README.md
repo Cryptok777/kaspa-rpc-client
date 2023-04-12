@@ -6,7 +6,7 @@
 - Supports multiple RPC connections with different servers and automatically handles failover if one of the servers fails to connect.
 - **[NEW]** Implemented Wallet, Account and Address feature, using the WASM library, let you create, manage the wallet and send transactions with zero effort.
 ## Live Demo
-Check out [here](https://codesandbox.io/p/sandbox/kaspa-rpc-client-demo-3k180p?file=%2Fsrc%2Fwallet.ts&selection=%5B%7B%22endColumn%22%3A15%2C%22endLineNumber%22%3A6%2C%22startColumn%22%3A15%2C%22startLineNumber%22%3A6%7D%5D) for live demo where you can test the SDK directly in the browser
+Check out [here](https://codesandbox.io/p/sandbox/kaspa-rpc-client-demo-3k180p?file=%2Fsrc%2Fwallet.ts&selection=%5B%7B%22endColumn%22%3A15%2C%22endLineNumber%22%3A6%2C%22startColumn%22%3A15%2C%22startLineNumber%22%3A6%7D%5D) for live demo, you can make any change to fork the playground and then you can test the SDK directly in the browser
 ## Requirements
 
 - `Node >= 16.14`
