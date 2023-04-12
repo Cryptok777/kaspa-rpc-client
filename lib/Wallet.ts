@@ -62,6 +62,17 @@ export class Wallet {
   }
 
   /**
+   * Return a random mnemonic phrase that can be used to initialize a wallet
+   */
+  static randomMnemonic(): { phrase: string, entropy: string } {
+    const mnemonic = RustMnemonic.random()
+    return {
+      phrase: mnemonic.phrase,
+      entropy: mnemonic.entropy,
+    }
+  }
+
+  /**
    * Set `xPrv` of the wallet, you don't have to explicitly call this,
    * as it's used by factory methods
    */
