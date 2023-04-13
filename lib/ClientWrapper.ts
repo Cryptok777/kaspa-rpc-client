@@ -12,6 +12,10 @@ export class ClientWrapper {
     await Promise.any(this.clients.map((client) => client.ping()))
   }
 
+  disconnect() {
+    this.clients.forEach((client) => client.disconnect())
+  }
+
   async sleep(ms = 1000) {
     await new Promise((resolve) => setTimeout(resolve, ms))
   }
