@@ -201,7 +201,10 @@ export class RpcClient {
       delete this.reconnectDelay
     }
     this.options.reconnect = false
+
     this.stream && this.stream.end()
+    this.client && this.client.close();
+
     this.clearPending()
   }
 
@@ -211,10 +214,6 @@ export class RpcClient {
       list.forEach((o) => o.reject(reason || "closing by force"))
       this.pending[key] = []
     })
-  }
-
-  close() {
-    this.disconnect()
   }
 
   createStream() {

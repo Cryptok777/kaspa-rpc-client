@@ -19,7 +19,7 @@ export class Client extends ClientProvider {
   }
 
   disconnect() {
-    this.rpc?.disconnect()
+    this.rpc.disconnect()
   }
 
   isReady(): boolean {
