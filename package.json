@@ -47,6 +47,7 @@
     "rpc",
     "lib",
     "types",
+    "wasm",
     "README.md",
     "index.ts",
     "tsconfig.json"
