@@ -1,5 +1,5 @@
 import * as gRPC from "@grpc/grpc-js"
-import * as protoLoader from "@grpc/proto-loader"
+import * as protoLoader from "@grpc/proto-loader/build/src/index"
 import {
   PendingReqs,
   IData,
