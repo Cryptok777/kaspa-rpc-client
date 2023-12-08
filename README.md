@@ -1,3 +1,5 @@
+# DEPRECATING SOON, PLEASE USE [WASM JS LIB](https://kaspa-mdbook.aspectron.com/) INSTEAD
+-----
 # Kaspa RPC Client for Node.js
 
 ## Features
